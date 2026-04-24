@@ -340,16 +340,42 @@ function renderizarCarrinho(){
   document.getElementById("cart-total-val").textContent="R$ "+total.toFixed(2).replace(".",",");
 }
 function alterarQtd(id,delta){const idx=carrinho.findIndex(i=>i.id===id);if(idx===-1)return;carrinho[idx].qtd+=delta;if(carrinho[idx].qtd<=0)carrinho.splice(idx,1);atualizarBadge();renderizarCarrinho();}
+function registrarPedido(endereco, total) {
+  const hoje = new Date();
+  const dataStr = hoje.toISOString().slice(0,10);
+  const horaStr = hoje.toTimeString().slice(0,5);
+
+  const pedidos = (() => { try { return JSON.parse(localStorage.getItem('bh_pedidos')) || []; } catch { return []; } })();
+  const doDia = pedidos.filter(p => p.data === dataStr);
+  const num = doDia.length + 1;
+
+  const adicionaisTodos = carrinho.filter(i => i.adicionais.length).map(i => i.adicionais.map(a=>a.nome).join(", ")).join(", ");
+
+  pedidos.push({
+    id: Date.now().toString(),
+    num,
+    data: dataStr,
+    hora: horaStr,
+    status: "pendente",
+    total,
+    endereco,
+    itens: carrinho.map(i => ({ nome: i.produto.nome, qtd: i.qtd })),
+    adicionais: adicionaisTodos || null,
+  });
+  localStorage.setItem('bh_pedidos', JSON.stringify(pedidos));
+}
+
 function enviarWhatsApp(){
   if(!carrinho.length)return alert("Adicione itens ao carrinho primeiro!");
   const end=document.getElementById("entrega-input").value.trim();
   if(!end){alert("Por favor, informe o endereço de entrega.");document.getElementById("entrega-input").focus();return;}
+  const total=carrinho.reduce((s,i)=>s+i.precoUnit*i.qtd,0);
+  registrarPedido(end, total);
   let msg=`🍔 *Novo Pedido — ${CFG.nome}*\n\n📋 *Itens:*\n`;
   carrinho.forEach(item=>{
     msg+=`• ${item.qtd}x ${item.produto.nome} — R$ ${(item.precoUnit*item.qtd).toFixed(2).replace(".",",")}\n`;
     if(item.adicionais.length)msg+=`  _Adicionais: ${item.adicionais.map(a=>a.nome).join(", ")}_\n`;
   });
-  const total=carrinho.reduce((s,i)=>s+i.precoUnit*i.qtd,0);
   msg+=`\n💰 *Subtotal: R$ ${total.toFixed(2).replace(".",",")}*\n⚠️ _Taxa de entrega será informada separadamente_\n\n📍 *Endereço: ${end}*`;
   window.open(`https://wa.me/${CFG.wpp||""}?text=${encodeURIComponent(msg)}`,"_blank");
 }
