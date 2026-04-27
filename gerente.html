@@ -611,11 +611,41 @@ function salvarAdicionais() {
   mostrarToast("✅ Adicionais salvos!");
 }
 
-// ===== PEDIDOS (Google Sheets) =====
+// ===== PEDIDOS (Google Sheets via JSONP) =====
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwa3VKQEkUI9jsx5VzLYZqg8ddiYDAxindVBFUxsPlDPqiMn5Db0MgPto3MmzR-jQzHxQ/exec";
 
 function hojeStr() {
   return new Date().toISOString().slice(0,10);
+}
+
+// Chamada via JSONP para evitar bloqueio CORS do Apps Script
+function chamarScript(params) {
+  return new Promise((resolve, reject) => {
+    const cbName = "cb_" + Date.now();
+    const timeout = setTimeout(() => {
+      delete window[cbName];
+      reject(new Error("Tempo esgotado. Verifique sua conexão."));
+    }, 10000);
+
+    window[cbName] = (data) => {
+      clearTimeout(timeout);
+      delete window[cbName];
+      resolve(data);
+    };
+
+    const qs = Object.entries({ ...params, callback: cbName })
+      .map(([k,v]) => `${k}=${encodeURIComponent(v)}`).join("&");
+
+    const script = document.createElement("script");
+    script.src = `${SCRIPT_URL}?${qs}`;
+    script.onerror = () => {
+      clearTimeout(timeout);
+      delete window[cbName];
+      reject(new Error("Erro de conexão com o servidor."));
+    };
+    document.head.appendChild(script);
+    setTimeout(() => script.remove(), 15000);
+  });
 }
 
 async function renderizarPedidos() {
@@ -627,8 +657,7 @@ async function renderizarPedidos() {
   lista.innerHTML = `<div style="text-align:center;padding:40px;color:var(--text2);">⏳ Carregando pedidos...</div>`;
 
   try {
-    const resp = await fetch(`${SCRIPT_URL}?data=${data}`);
-    const json = await resp.json();
+    const json = await chamarScript({ data });
     if (!json.ok) throw new Error(json.erro || "Erro desconhecido");
 
     const doDia = (json.pedidos || []).filter(p => p.data === data);
@@ -687,7 +716,7 @@ async function renderizarPedidos() {
 
 async function mudarStatus(id, status) {
   try {
-    await fetch(`${SCRIPT_URL}?acao=status&id=${id}&status=${status}`);
+    await chamarScript({ acao: "status", id, status });
     mostrarToast(status==="pago" ? "✅ Marcado como pago!" : "❌ Marcado como abandonado.");
     renderizarPedidos();
   } catch(e) {
