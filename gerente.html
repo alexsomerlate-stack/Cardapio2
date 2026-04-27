@@ -611,87 +611,92 @@ function salvarAdicionais() {
   mostrarToast("✅ Adicionais salvos!");
 }
 
-// ===== PEDIDOS =====
+// ===== PEDIDOS (Google Sheets) =====
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwa3VKQEkUI9jsx5VzLYZqg8ddiYDAxindVBFUxsPlDPqiMn5Db0MgPto3MmzR-jQzHxQ/exec";
+
 function hojeStr() {
   return new Date().toISOString().slice(0,10);
 }
 
-function renderizarPedidos() {
-  const todos = getDados("pedidos") || [];
+async function renderizarPedidos() {
+  const lista = document.getElementById("lista-pedidos");
   const filtroEl = document.getElementById("filtro-data");
   const data = filtroEl.value || hojeStr();
   filtroEl.value = data;
 
-  const doDia = todos.filter(p => p.data === data);
-  const pagos = doDia.filter(p => p.status === "pago");
-  const pendentes = doDia.filter(p => p.status === "pendente");
-  const abandonados = doDia.filter(p => p.status === "abandonado");
+  lista.innerHTML = `<div style="text-align:center;padding:40px;color:var(--text2);">⏳ Carregando pedidos...</div>`;
 
-  const totalDia = pagos.reduce((s, p) => s + p.total, 0);
-  document.getElementById("res-total-dia").textContent = "R$ " + totalDia.toFixed(2).replace(".",",");
-  document.getElementById("res-qtd-dia").textContent = pagos.length + " pago" + (pagos.length!==1?"s":"");
-  document.getElementById("res-pendentes").textContent = pendentes.length;
-  document.getElementById("res-abandonados").textContent = abandonados.length;
+  try {
+    const resp = await fetch(`${SCRIPT_URL}?data=${data}`);
+    const json = await resp.json();
+    if (!json.ok) throw new Error(json.erro || "Erro desconhecido");
 
-  const lista = document.getElementById("lista-pedidos");
-  if (!doDia.length) {
-    lista.innerHTML = `<div style="text-align:center;padding:40px;color:var(--text2);">Nenhum pedido nesta data.</div>`;
-    return;
+    const doDia = (json.pedidos || []).filter(p => p.data === data);
+    const pagos = doDia.filter(p => p.status === "pago");
+    const pendentes = doDia.filter(p => p.status === "pendente");
+    const abandonados = doDia.filter(p => p.status === "abandonado");
+
+    const totalDia = pagos.reduce((s, p) => s + parseFloat(p.total || 0), 0);
+    document.getElementById("res-total-dia").textContent = "R$ " + totalDia.toFixed(2).replace(".",",");
+    document.getElementById("res-qtd-dia").textContent = pagos.length + " pago" + (pagos.length!==1?"s":"");
+    document.getElementById("res-pendentes").textContent = pendentes.length;
+    document.getElementById("res-abandonados").textContent = abandonados.length;
+
+    if (!doDia.length) {
+      lista.innerHTML = `<div style="text-align:center;padding:40px;color:var(--text2);">Nenhum pedido nesta data.</div>`;
+      return;
+    }
+
+    const ordem = { pendente:0, pago:1, abandonado:2 };
+    doDia.sort((a,b) => ordem[a.status]-ordem[b.status]);
+
+    lista.innerHTML = doDia.map(p => {
+      const cor = p.status==="pago" ? "var(--green)" : p.status==="abandonado" ? "#555" : "var(--gold)";
+      const emoji = p.status==="pago" ? "✅" : p.status==="abandonado" ? "❌" : "⏳";
+      return `
+      <div style="background:var(--bg2);border-radius:var(--radius);border:1.5px solid #2a2a2a;margin-bottom:10px;overflow:hidden;">
+        <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;">
+          <div style="flex-shrink:0;text-align:center;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:${cor};">#${String(p.num).padStart(2,"0")}</div>
+            <div style="font-size:10px;color:var(--text2);">${p.hora}</div>
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:13px;font-weight:800;margin-bottom:2px;">👤 ${p.cliente || "—"}</div>
+            <div style="font-size:12px;color:var(--text2);margin-bottom:2px;">🛒 ${p.itens || "—"}</div>
+            ${p.adicionais ? `<div style="font-size:11px;color:var(--text2);">+ ${p.adicionais}</div>` : ""}
+            <div style="font-size:12px;color:var(--text2);">📍 ${p.endereco || "—"}</div>
+          </div>
+          <div style="text-align:right;flex-shrink:0;">
+            <div style="font-size:15px;font-weight:800;color:var(--gold);">R$ ${parseFloat(p.total||0).toFixed(2).replace(".",",")}</div>
+            <div style="font-size:13px;margin-top:4px;">${emoji} <span style="color:${cor};font-weight:700;text-transform:capitalize;">${p.status}</span></div>
+          </div>
+        </div>
+        ${p.status==="pendente" ? `
+        <div style="display:flex;gap:8px;padding:0 16px 14px;">
+          <button onclick="mudarStatus('${p.id}','pago')" style="flex:1;padding:8px;background:var(--green);border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">✅ Pago</button>
+          <button onclick="mudarStatus('${p.id}','abandonado')" style="flex:1;padding:8px;background:var(--bg3);border:1.5px solid #555;border-radius:50px;color:#888;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">❌ Abandonado</button>
+        </div>` : ""}
+      </div>`;
+    }).join("");
+
+  } catch(err) {
+    lista.innerHTML = `<div style="text-align:center;padding:40px;color:var(--red);">❌ Erro ao carregar pedidos.<br><small>${err.message}</small><br><br>
+      <button onclick="renderizarPedidos()" style="padding:10px 20px;background:var(--brand);border:none;border-radius:50px;color:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;">Tentar novamente</button></div>`;
   }
-
-  // Ordena: pendentes primeiro, depois pagos, depois abandonados
-  const ordem = { pendente:0, pago:1, abandonado:2 };
-  doDia.sort((a,b) => ordem[a.status]-ordem[b.status] || b.num-a.num);
-
-  lista.innerHTML = doDia.map(p => {
-    const cor = p.status==="pago" ? "var(--green)" : p.status==="abandonado" ? "#555" : "var(--gold)";
-    const emoji = p.status==="pago" ? "✅" : p.status==="abandonado" ? "❌" : "⏳";
-    const itens = p.itens.map(i => `${i.qtd}x ${i.nome}`).join(", ");
-    return `
-    <div style="background:var(--bg2);border-radius:var(--radius);border:1.5px solid #2a2a2a;margin-bottom:10px;overflow:hidden;">
-      <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;">
-        <div style="flex-shrink:0;text-align:center;">
-          <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:${cor};">#${String(p.num).padStart(2,"0")}</div>
-          <div style="font-size:10px;color:var(--text2);">${p.hora}</div>
-        </div>
-        <div style="flex:1;">
-          <div style="font-size:13px;font-weight:700;margin-bottom:3px;">${itens}</div>
-          <div style="font-size:13px;font-weight:800;margin-bottom:2px;">👤 ${p.cliente || "Não informado"}</div>
-          <div style="font-size:12px;color:var(--text2);">📍 ${p.endereco || "—"}</div>
-          ${p.adicionais ? `<div style="font-size:11px;color:var(--text2);">+ ${p.adicionais}</div>` : ""}
-        </div>
-        <div style="text-align:right;flex-shrink:0;">
-          <div style="font-size:15px;font-weight:800;color:var(--gold);">R$ ${p.total.toFixed(2).replace(".",",")}</div>
-          <div style="font-size:13px;margin-top:4px;">${emoji} <span style="color:${cor};font-weight:700;text-transform:capitalize;">${p.status}</span></div>
-        </div>
-      </div>
-      ${p.status==="pendente" ? `
-      <div style="display:flex;gap:8px;padding:0 16px 14px;">
-        <button onclick="mudarStatus('${p.id}','pago')" style="flex:1;padding:8px;background:var(--green);border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">✅ Marcar como Pago</button>
-        <button onclick="mudarStatus('${p.id}','abandonado')" style="flex:1;padding:8px;background:var(--bg3);border:1.5px solid #555;border-radius:50px;color:#888;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">❌ Abandonado</button>
-      </div>` : ""}
-    </div>`;
-  }).join("");
 }
 
-function mudarStatus(id, status) {
-  const pedidos = getDados("pedidos") || [];
-  const idx = pedidos.findIndex(p => p.id === id);
-  if (idx === -1) return;
-  pedidos[idx].status = status;
-  salvar("pedidos", pedidos);
-  renderizarPedidos();
-  mostrarToast(status==="pago" ? "✅ Pedido marcado como pago!" : "❌ Pedido abandonado.");
+async function mudarStatus(id, status) {
+  try {
+    await fetch(`${SCRIPT_URL}?acao=status&id=${id}&status=${status}`);
+    mostrarToast(status==="pago" ? "✅ Marcado como pago!" : "❌ Marcado como abandonado.");
+    renderizarPedidos();
+  } catch(e) {
+    mostrarToast("❌ Erro ao atualizar. Tente novamente.");
+  }
 }
 
 function limparPedidosAntigos() {
-  if (!confirm("Remover todos os pedidos com mais de 7 dias?")) return;
-  const pedidos = getDados("pedidos") || [];
-  const limite = new Date(); limite.setDate(limite.getDate()-7);
-  const novos = pedidos.filter(p => new Date(p.data) >= limite);
-  salvar("pedidos", novos);
-  renderizarPedidos();
-  mostrarToast("🗑 Pedidos antigos removidos.");
+  mostrarToast("ℹ️ Para limpar, acesse a planilha Google Sheets e apague as linhas desejadas.");
 }
 
 // ===== CATEGORIAS =====
