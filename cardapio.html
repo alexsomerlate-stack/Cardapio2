@@ -169,6 +169,8 @@
     </div>
     <div id="cart-items-list"></div>
     <div id="entrega-box">
+      <label style="display:block;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:8px;">👤 Seu nome</label>
+      <input type="text" id="cliente-nome" placeholder="Como podemos te chamar?" style="width:100%;background:var(--bg2);border:1.5px solid #333;border-radius:10px;color:var(--text);font-family:'Nunito',sans-serif;font-size:14px;padding:10px 14px;margin-bottom:14px;">
       <label>📍 Endereço de entrega</label>
       <input type="text" id="entrega-input" placeholder="Rua, número, bairro...">
       <p id="entrega-aviso">⚠️ <span id="taxa-texto"></span></p>
@@ -340,26 +342,18 @@ function renderizarCarrinho(){
   document.getElementById("cart-total-val").textContent="R$ "+total.toFixed(2).replace(".",",");
 }
 function alterarQtd(id,delta){const idx=carrinho.findIndex(i=>i.id===id);if(idx===-1)return;carrinho[idx].qtd+=delta;if(carrinho[idx].qtd<=0)carrinho.splice(idx,1);atualizarBadge();renderizarCarrinho();}
-function registrarPedido(endereco, total) {
+function registrarPedido(nome, endereco, total) {
   const hoje = new Date();
   const dataStr = hoje.toISOString().slice(0,10);
   const horaStr = hoje.toTimeString().slice(0,5);
-
   const pedidos = (() => { try { return JSON.parse(localStorage.getItem('bh_pedidos')) || []; } catch { return []; } })();
   const doDia = pedidos.filter(p => p.data === dataStr);
   const num = doDia.length + 1;
-
-  const adicionaisTodos = carrinho.filter(i => i.adicionais.length).map(i => i.adicionais.map(a=>a.nome).join(", ")).join(", ");
-
+  const adicionaisTodos = carrinho.filter(i=>i.adicionais.length).map(i=>i.adicionais.map(a=>a.nome).join(", ")).join(", ");
   pedidos.push({
-    id: Date.now().toString(),
-    num,
-    data: dataStr,
-    hora: horaStr,
-    status: "pendente",
-    total,
-    endereco,
-    itens: carrinho.map(i => ({ nome: i.produto.nome, qtd: i.qtd })),
+    id: Date.now().toString(), num, data: dataStr, hora: horaStr,
+    status: "pendente", total, endereco, cliente: nome || "Não informado",
+    itens: carrinho.map(i=>({ nome: i.produto.nome, qtd: i.qtd })),
     adicionais: adicionaisTodos || null,
   });
   localStorage.setItem('bh_pedidos', JSON.stringify(pedidos));
@@ -367,11 +361,13 @@ function registrarPedido(endereco, total) {
 
 function enviarWhatsApp(){
   if(!carrinho.length)return alert("Adicione itens ao carrinho primeiro!");
+  const nome=document.getElementById("cliente-nome").value.trim();
   const end=document.getElementById("entrega-input").value.trim();
+  if(!nome){alert("Por favor, informe seu nome.");document.getElementById("cliente-nome").focus();return;}
   if(!end){alert("Por favor, informe o endereço de entrega.");document.getElementById("entrega-input").focus();return;}
   const total=carrinho.reduce((s,i)=>s+i.precoUnit*i.qtd,0);
-  registrarPedido(end, total);
-  let msg=`🍔 *Novo Pedido — ${CFG.nome}*\n\n📋 *Itens:*\n`;
+  registrarPedido(nome, end, total);
+  let msg=`🍔 *Novo Pedido — ${CFG.nome}*\n\n👤 *Cliente: ${nome}*\n\n📋 *Itens:*\n`;
   carrinho.forEach(item=>{
     msg+=`• ${item.qtd}x ${item.produto.nome} — R$ ${(item.precoUnit*item.qtd).toFixed(2).replace(".",",")}\n`;
     if(item.adicionais.length)msg+=`  _Adicionais: ${item.adicionais.map(a=>a.nome).join(", ")}_\n`;
