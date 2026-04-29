@@ -177,12 +177,10 @@ function chamarGet(params){
 
 async function iniciar(){
   try {
-    // Carrega config, produtos e adicionais em paralelo
-    const [resConfig, resProd, resAdd] = await Promise.all([
-      chamarGet({acao:"config"}),
-      chamarGet({acao:"produtos"}),
-      chamarGet({acao:"adicionais"}),
-    ]);
+    // Carrega sequencialmente para evitar conflito de callbacks JSONP
+    const resConfig = await chamarGet({acao:"config"});
+    const resProd = await chamarGet({acao:"produtos"});
+    const resAdd = await chamarGet({acao:"adicionais"});
 
     if(resConfig.ok) CFG={...CFG,...resConfig.config};
     if(resProd.ok) produtos=(resProd.produtos||[]).filter(p=>String(p.ativo).toLowerCase()!=="nao").map(p=>({
