@@ -131,13 +131,28 @@ input:checked+.slider:before{transform:translateX(20px);}
       <div class="secao-titulo">Informações da Hamburgueria</div>
       <div class="config-card"><label>Nome</label><input type="text" id="cfg-nome" placeholder="Ex: Quality Burger"></div>
       <div class="config-card"><label>Slogan</label><input type="text" id="cfg-slogan" placeholder="Ex: O melhor da cidade!"></div>
+
+      <!-- LOGO -->
       <div class="config-card">
-        <label>URL da Logo</label>
-        <input type="url" id="cfg-logo" placeholder="https://i.imgur.com/..." oninput="previewLogo(this.value)">
-        <p class="input-hint">Suba no <a href="https://imgur.com" target="_blank" style="color:var(--brand)">imgur.com</a>, clique com botão direito na imagem → "Copiar endereço da imagem"</p>
-        <img id="preview-logo" src="" alt="Preview">
+        <label>Logo da Hamburgueria</label>
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:10px;">
+          <div id="logo-preview-wrap" style="width:80px;height:80px;border-radius:50%;border:2px solid var(--brand);overflow:hidden;background:var(--bg3);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;color:var(--text2);">LOGO</div>
+          <div style="flex:1;">
+            <label for="logo-file" style="display:inline-block;padding:10px 18px;background:var(--brand);border-radius:50px;cursor:pointer;font-size:13px;font-weight:800;color:#fff;text-transform:none;letter-spacing:0;">📷 Escolher foto</label>
+            <input type="file" id="logo-file" accept="image/*" style="display:none;" onchange="uploadImagem(this,'cfg-logo','logo-preview-wrap','logo')">
+            <p style="font-size:11px;color:var(--text2);margin-top:6px;">ou cole um link direto:</p>
+            <input type="url" id="cfg-logo" placeholder="https://..." oninput="previewLogoUrl(this.value)" style="width:100%;padding:8px 12px;background:var(--bg3);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;margin-top:4px;">
+          </div>
+        </div>
       </div>
-      <div class="config-card"><label>URL do Vídeo (YouTube)</label><input type="url" id="cfg-video" placeholder="https://youtube.com/watch?v=..."></div>
+
+      <!-- VÍDEO -->
+      <div class="config-card">
+        <label>Vídeo do cardápio</label>
+        <input type="url" id="cfg-video" placeholder="https://youtube.com/watch?v=..." style="width:100%;padding:11px 14px;background:var(--bg3);border:1.5px solid #333;border-radius:10px;color:var(--text);font-family:'Nunito',sans-serif;font-size:14px;">
+        <p class="input-hint">Cole o link do YouTube. Ex: https://youtube.com/watch?v=XXXXXXX</p>
+      </div>
+
       <div class="config-card"><label>WhatsApp (só números com DDI)</label><input type="text" id="cfg-wpp" placeholder="5531999999999"></div>
       <div class="config-card"><label>Taxa de Entrega (texto)</label><textarea id="cfg-taxa" placeholder="Ex: R$ 5,00 para bairros próximos."></textarea></div>
       <button class="btn-salvar" id="btn-salvar-cfg" onclick="salvarConfiguracoes()">💾 Salvar e sincronizar</button>
@@ -285,7 +300,7 @@ async function carregarTudo(){
       document.getElementById("cfg-video").value = c.video||"";
       document.getElementById("cfg-wpp").value = c.wpp||"";
       document.getElementById("cfg-taxa").value = c.taxa||"";
-      if(c.logo) previewLogo(c.logo);
+      if(c.logo) previewLogoUrl(c.logo);
     }
   } catch(e){ console.warn("Erro ao carregar config:", e); }
 
@@ -327,11 +342,54 @@ function salvarSenha(){
   mostrarToast("🔒 Acesso atualizado!");
 }
 
-function previewLogo(url){
-  const img=document.getElementById("preview-logo");
-  if(url){img.src=url;img.style.display="block";}
-  else img.style.display="none";
+// ===== UPLOAD DE IMAGEM (ImgBB - gratuito) =====
+const IMGBB_KEY = "5a9a3f66dd6dff21b1a09f555fe43ad2"; // chave pública gratuita
+
+async function uploadImagem(input, campoId, prevId, tipo) {
+  const file = input.files[0];
+  if (!file) return;
+  const prev = document.getElementById(prevId);
+  const campo = document.getElementById(campoId);
+
+  // Preview local imediato
+  const reader = new FileReader();
+  reader.onload = e => {
+    if (prev) {
+      if (tipo === 'logo') {
+        prev.innerHTML = `<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+      } else {
+        prev.src = e.target.result;
+        prev.style.display = "block";
+      }
+    }
+  };
+  reader.readAsDataURL(file);
+
+  // Upload para ImgBB
+  mostrarToast("⏳ Enviando imagem...", "#555");
+  const form = new FormData();
+  form.append("image", file);
+  try {
+    const resp = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, {method:"POST", body:form});
+    const data = await resp.json();
+    if (data.success) {
+      campo.value = data.data.url;
+      mostrarToast("✅ Imagem enviada!");
+    } else {
+      mostrarToast("❌ Erro no upload. Cole o link manualmente.", "var(--red)");
+    }
+  } catch(e) {
+    mostrarToast("❌ Erro de conexão. Cole o link manualmente.", "var(--red)");
+  }
 }
+
+function previewLogoUrl(url) {
+  const wrap = document.getElementById("logo-preview-wrap");
+  if (url) wrap.innerHTML = `<img src="${url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+  else wrap.innerHTML = "LOGO";
+}
+
+function previewLogo(url) { previewLogoUrl(url); }
 
 // ===== PRODUTOS =====
 let produtos=[];
@@ -378,7 +436,15 @@ function renderizarProdutos(){
         </div>
         <div class="form-row">
           <div class="form-group"><label>Preço (R$)</label><input type="number" id="p-preco-${p.id}" value="${p.preco}" step="0.01" min="0"></div>
-          <div class="form-group"><label>URL da Foto</label><input type="url" id="p-foto-${p.id}" value="${p.foto||''}" placeholder="https://i.imgur.com/..."></div>
+          <div class="form-group">
+            <label>Foto do Produto</label>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <img id="p-foto-prev-${p.id}" src="${p.foto||''}" style="width:44px;height:44px;border-radius:8px;object-fit:cover;background:var(--bg3);flex-shrink:0;${p.foto?'':'display:none;'}">
+              <label for="p-foto-file-${p.id}" style="padding:8px 12px;background:var(--brand);border-radius:50px;cursor:pointer;font-size:12px;font-weight:800;color:#fff;white-space:nowrap;">📷 Foto</label>
+              <input type="file" id="p-foto-file-${p.id}" accept="image/*" style="display:none;" onchange="uploadImagem(this,'p-foto-${p.id}','p-foto-prev-${p.id}','produto')">
+            </div>
+            <input type="url" id="p-foto-${p.id}" value="${p.foto||''}" placeholder="ou cole link..." style="width:100%;margin-top:6px;padding:8px 12px;background:var(--bg3);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:12px;">
+          </div>
         </div>
         <div class="form-row full">
           <div class="form-group"><label>Descrição</label><textarea id="p-desc-${p.id}">${p.descricao}</textarea></div>
