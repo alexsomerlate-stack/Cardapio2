@@ -634,7 +634,10 @@ async function renderizarPedidos(){
         ${p.status==="pendente"?`<div style="display:flex;gap:8px;padding:0 16px 14px;">
           <button onclick="mudarStatus('${p.id}','pago')" style="flex:1;padding:8px;background:var(--green);border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">✅ Pago</button>
           <button onclick="mudarStatus('${p.id}','abandonado')" style="flex:1;padding:8px;background:var(--bg3);border:1.5px solid #555;border-radius:50px;color:#888;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">❌ Abandonado</button>
-        </div>`:""}
+          <button onclick="imprimirPedido('${p.id}','${p.num}','${p.hora}','${p.data}','${(p.cliente||'').replace(/'/g,'`')}','${(p.itens||'').replace(/'/g,'`')}','${(p.adicionais||'').replace(/'/g,'`')}','${(p.endereco||'').replace(/'/g,'`')}','${p.total}','${p.status}')" style="padding:8px 12px;background:#444;border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">🖨️</button>
+        </div>`:`<div style="display:flex;justify-content:flex-end;padding:0 16px 14px;">
+          <button onclick="imprimirPedido('${p.id}','${p.num}','${p.hora}','${p.data}','${(p.cliente||'').replace(/'/g,'`')}','${(p.itens||'').replace(/'/g,'`')}','${(p.adicionais||'').replace(/'/g,'`')}','${(p.endereco||'').replace(/'/g,'`')}','${p.total}','${p.status}')" style="padding:8px 16px;background:#444;border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">🖨️ Imprimir</button>
+        </div>`}
       </div>`;
     }).join("");
   } catch(err){
@@ -649,6 +652,93 @@ async function mudarStatus(id,status){
     mostrarToast(status==="pago"?"✅ Marcado como pago!":"❌ Marcado como abandonado.");
     renderizarPedidos();
   }catch(e){mostrarToast("❌ Erro ao atualizar","var(--red)");}
+}
+
+function imprimirPedido(id,num,hora,data,cliente,itens,adicionais,endereco,total,status){
+  const nomeLoja = document.getElementById("cfg-nome").value || "Hamburgueria";
+  const dataFormatada = data.split("-").reverse().join("/");
+  const statusTexto = status==="pago" ? "✅ PAGO" : status==="abandonado" ? "❌ ABANDONADO" : "⏳ PENDENTE";
+
+  // Pergunta a taxa de entrega antes de imprimir
+  const taxaInput = prompt("💰 Informe a taxa de entrega (deixe em branco se retirada no local):", "R$ 0,00");
+  if (taxaInput === null) return; // cancelou
+  const taxa = taxaInput.trim();
+  const totalNum = parseFloat(total) || 0;
+  const taxaNum = parseFloat(taxa.replace("R$","").replace(",",".").trim()) || 0;
+  const totalFinal = totalNum + taxaNum;
+  const taxaTexto = taxa || "Retirada no local";
+
+  const html = `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Pedido #${String(num).padStart(2,"0")}</title>
+<style>
+  @page { margin: 10mm; size: 80mm auto; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Courier New', monospace; font-size: 13px; color: #000; width: 100%; }
+  .center { text-align: center; }
+  .bold { font-weight: bold; }
+  .linha { border-top: 1px dashed #000; margin: 8px 0; }
+  .titulo { font-size: 18px; font-weight: bold; text-align: center; margin-bottom: 2px; }
+  .subtitulo { font-size: 11px; text-align: center; color: #333; margin-bottom: 8px; }
+  .pedido-num { font-size: 28px; font-weight: bold; text-align: center; margin: 6px 0; }
+  .label { color: #555; font-size: 11px; text-transform: uppercase; }
+  .valor { font-weight: bold; }
+  .total-box { background: #000; color: #fff; padding: 8px; border-radius: 4px; text-align: center; margin: 10px 0; }
+  .total-val { font-size: 20px; font-weight: bold; }
+  .status-box { text-align: center; font-size: 14px; font-weight: bold; margin: 6px 0; }
+  .rodape { text-align: center; font-size: 10px; color: #888; margin-top: 10px; }
+  .linha-val { display:flex; justify-content:space-between; margin: 3px 0; font-size:12px; }
+  @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+</style>
+</head>
+<body>
+  <div class="titulo">${nomeLoja}</div>
+  <div class="subtitulo">Comprovante de Pedido</div>
+  <div class="linha"></div>
+
+  <div class="pedido-num">PEDIDO #${String(num).padStart(2,"0")}</div>
+  <div class="center" style="font-size:11px;color:#555;">${dataFormatada} às ${hora}</div>
+
+  <div class="linha"></div>
+
+  <div class="label">Cliente</div>
+  <div class="valor" style="margin-bottom:6px;">${cliente}</div>
+
+  <div class="label">Itens</div>
+  <div class="valor" style="margin-bottom:4px;">${itens.replace(/,/g,'\n')}</div>
+
+  ${adicionais ? `<div class="label" style="margin-top:4px;">Adicionais</div>
+  <div style="font-size:12px;margin-bottom:4px;">+ ${adicionais}</div>` : ""}
+
+  <div class="linha"></div>
+
+  <div class="label">Endereço de entrega</div>
+  <div class="valor" style="margin-bottom:6px;">${endereco}</div>
+
+  <div class="linha"></div>
+
+  <div class="linha-val"><span>Subtotal dos itens:</span><span><b>R$ ${totalNum.toFixed(2).replace(".",",")}</b></span></div>
+  <div class="linha-val"><span>Taxa de entrega:</span><span><b>${taxaTexto}</b></span></div>
+
+  <div class="total-box">
+    <div style="font-size:11px;letter-spacing:1px;">TOTAL FINAL</div>
+    <div class="total-val">R$ ${totalFinal.toFixed(2).replace(".",",")}</div>
+  </div>
+
+  <div class="status-box">${statusTexto}</div>
+
+  <div class="linha"></div>
+  <div class="rodape">Obrigado pela preferência!<br>${nomeLoja}</div>
+</body>
+</html>`;
+
+  const janela = window.open("","_blank","width=400,height=600");
+  janela.document.write(html);
+  janela.document.close();
+  janela.focus();
+  setTimeout(() => { janela.print(); janela.close(); }, 500);
 }
 </script>
 </body>
