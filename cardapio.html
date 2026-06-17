@@ -142,6 +142,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <input type="text" id="cliente-nome" class="entrega-input" placeholder="Como podemos te chamar?">
       <label>📍 Endereço de entrega</label>
       <input type="text" id="entrega-input" class="entrega-input" placeholder="Rua, número, bairro...">
+      <label>📝 Observação <span style="font-size:11px;font-weight:400;text-transform:none;letter-spacing:0;opacity:.6;">(opcional)</span></label>
+      <input type="text" id="pedido-obs" class="entrega-input" placeholder="Ex: sem cebola, bem passado, troco para..." style="margin-bottom:4px;">
       <p id="entrega-aviso">⚠️ <span id="taxa-texto"></span></p>
     </div>
     <div id="cart-total-row">
@@ -177,19 +179,13 @@ function chamarGet(params){
 
 async function iniciar(){
   try {
-    // Carrega sequencialmente para evitar conflito de callbacks JSONP
     const resConfig = await chamarGet({acao:"config"});
-    const resProd = await chamarGet({acao:"produtos"});
-    const resAdd = await chamarGet({acao:"adicionais"});
-
+    const resProd   = await chamarGet({acao:"produtos"});
+    const resAdd    = await chamarGet({acao:"adicionais"});
     if(resConfig.ok) CFG={...CFG,...resConfig.config};
-    if(resProd.ok) produtos=(resProd.produtos||[]).filter(p=>String(p.ativo).toLowerCase()!=="nao").map(p=>({
-      ...p, id:String(p.id), preco:parseFloat(p.preco)||0
-    }));
-    if(resAdd.ok) adicionais=(resAdd.adicionais||[]).map(a=>({nome:String(a.nome),preco:parseFloat(a.preco)||0}));
-
+    if(resProd.ok)   produtos=(resProd.produtos||[]).filter(p=>String(p.ativo).toLowerCase()!=="nao").map(p=>({...p,id:String(p.id),preco:parseFloat(p.preco)||0}));
+    if(resAdd.ok)    adicionais=(resAdd.adicionais||[]).map(a=>({nome:String(a.nome),preco:parseFloat(a.preco)||0}));
   } catch(e){ console.warn("Erro ao carregar dados:",e); }
-
   aplicarConfig();
   inicializarCategorias();
   document.getElementById("loading-screen").style.display="none";
@@ -200,11 +196,9 @@ function aplicarConfig(){
   document.getElementById("hero-name").textContent=CFG.nome||"";
   document.getElementById("hero-slogan").textContent=CFG.slogan||"";
   document.getElementById("taxa-texto").textContent=CFG.taxa||"";
-
   const lc=document.getElementById("logo-container");
   if(CFG.logo) lc.innerHTML=`<img id="hero-logo" src="${CFG.logo}" alt="Logo">`;
   else lc.innerHTML=`<div id="hero-logo-placeholder">LOGO</div>`;
-
   const vc=document.getElementById("video-container");
   if(CFG.video){
     const isYT=CFG.video.includes("youtube")||CFG.video.includes("youtu.be");
@@ -281,18 +275,32 @@ function adicionarAoCarrinho(){
   if(!produtoAtual)return;
   const adds=adicionaisSel.map(i=>adicionais[i]);
   const extra=adds.reduce((s,a)=>s+a.preco,0);
+  // ✅ FIX 1: NÃO registra no Sheets aqui. Apenas adiciona ao carrinho local.
   carrinho.push({id:Date.now(),produto:produtoAtual,qtd:qtdAtual,adicionais:adds,precoUnit:produtoAtual.preco+extra});
-  atualizarBadge();fecharModal();
-  const btn=document.getElementById("cart-btn");btn.style.transform="scale(1.2)";setTimeout(()=>btn.style.transform="",200);
+  atualizarBadge();
+  fecharModal();
+  const btn=document.getElementById("cart-btn");
+  btn.style.transform="scale(1.2)";
+  setTimeout(()=>btn.style.transform="",200);
 }
 
-function atualizarBadge(){const t=carrinho.reduce((s,i)=>s+i.qtd,0);const b=document.getElementById("cart-badge");b.textContent=t;b.style.display=t?"flex":"none";}
+function atualizarBadge(){
+  const t=carrinho.reduce((s,i)=>s+i.qtd,0);
+  const b=document.getElementById("cart-badge");
+  b.textContent=t;
+  b.style.display=t?"flex":"none";
+}
+
 function abrirCarrinho(){renderizarCarrinho();document.getElementById("cart-modal").classList.add("open");}
 
 function renderizarCarrinho(){
   const lista=document.getElementById("cart-items-list");
   const img404=`data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'><rect fill='%23242424' width='60' height='60'/></svg>`;
-  if(!carrinho.length){lista.innerHTML=`<div style="text-align:center;padding:40px;color:var(--text2);">Carrinho vazio 🛒</div>`;document.getElementById("cart-total-val").textContent="R$ 0,00";return;}
+  if(!carrinho.length){
+    lista.innerHTML=`<div style="text-align:center;padding:40px;color:var(--text2);">Carrinho vazio 🛒</div>`;
+    document.getElementById("cart-total-val").textContent="R$ 0,00";
+    return;
+  }
   lista.innerHTML=carrinho.map(item=>`
     <div class="cart-item">
       <img src="${item.produto.foto||img404}" alt="" onerror="this.src='${img404}'">
@@ -312,17 +320,32 @@ function renderizarCarrinho(){
   document.getElementById("cart-total-val").textContent="R$ "+total.toFixed(2).replace(".",",");
 }
 
-function alterarQtd(id,delta){const idx=carrinho.findIndex(i=>i.id===id);if(idx===-1)return;carrinho[idx].qtd+=delta;if(carrinho[idx].qtd<=0)carrinho.splice(idx,1);atualizarBadge();renderizarCarrinho();}
+function alterarQtd(id,delta){
+  const idx=carrinho.findIndex(i=>i.id===id);
+  if(idx===-1)return;
+  carrinho[idx].qtd+=delta;
+  if(carrinho[idx].qtd<=0)carrinho.splice(idx,1);
+  atualizarBadge();
+  renderizarCarrinho();
+}
 
-function registrarPedidoBackground(nome,endereco,total){
+// ✅ FIX 1: só é chamado dentro de enviarWhatsApp, nunca ao adicionar itens
+function registrarPedidoBackground(nome, endereco, obs, total){
   const agora=new Date(new Date().toLocaleString("en-US",{timeZone:"America/Sao_Paulo"}));
   const dataStr=agora.getFullYear()+"-"+String(agora.getMonth()+1).padStart(2,"0")+"-"+String(agora.getDate()).padStart(2,"0");
   const horaStr=String(agora.getHours()).padStart(2,"0")+":"+String(agora.getMinutes()).padStart(2,"0");
   const adicionaisTodos=carrinho.filter(i=>i.adicionais.length).map(i=>i.adicionais.map(a=>a.nome).join(", ")).join(", ");
   const itensTxt=carrinho.map(i=>`${i.qtd}x ${i.produto.nome}`).join(", ");
   fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
-    acao:"pedido",id:Date.now().toString(),data:dataStr,hora:horaStr,
-    cliente:nome,endereco,itens:itensTxt,adicionais:adicionaisTodos||"",total,
+    acao:"pedido",
+    id:Date.now().toString(),
+    data:dataStr,
+    hora:horaStr,
+    cliente:nome,
+    endereco,
+    itens:obs ? `${itensTxt} [OBS: ${obs}]` : itensTxt,
+    adicionais:adicionaisTodos||"",
+    total,
   })}).catch(e=>console.warn("Erro ao registrar:",e));
 }
 
@@ -330,20 +353,29 @@ function enviarWhatsApp(){
   if(!carrinho.length)return alert("Adicione itens ao carrinho primeiro!");
   const nome=document.getElementById("cliente-nome").value.trim();
   const end=document.getElementById("entrega-input").value.trim();
+  // ✅ FIX 2: obs é opcional — não bloqueia o envio se vazio
+  const obs=document.getElementById("pedido-obs").value.trim();
+
   if(!nome){alert("Por favor, informe seu nome.");document.getElementById("cliente-nome").focus();return;}
   if(!end){alert("Por favor, informe o endereço de entrega.");document.getElementById("entrega-input").focus();return;}
-  if(!CFG.wpp){alert("Número do WhatsApp não configurado. Contate o administrador.");return;}
+  if(!CFG.wpp){alert("Número do WhatsApp não configurado.");return;}
+
   const total=carrinho.reduce((s,i)=>s+i.precoUnit*i.qtd,0);
+
   let msg=`🍔 *Novo Pedido — ${CFG.nome}*\n\n👤 *Cliente: ${nome}*\n\n📋 *Itens:*\n`;
   carrinho.forEach(item=>{
     msg+=`• ${item.qtd}x ${item.produto.nome} — R$ ${(item.precoUnit*item.qtd).toFixed(2).replace(".",",")}\n`;
     if(item.adicionais.length)msg+=`  _Adicionais: ${item.adicionais.map(a=>a.nome).join(", ")}_\n`;
   });
   msg+=`\n💰 *Subtotal: R$ ${total.toFixed(2).replace(".",",")}*\n⚠️ _Taxa de entrega será informada separadamente_\n\n📍 *Endereço: ${end}*`;
+  // ✅ FIX 2: obs aparece na mensagem só se preenchido
+  if(obs) msg+=`\n\n📝 *Observação: ${obs}*`;
+
   // Abre WhatsApp imediatamente
   window.location.href=`https://wa.me/${CFG.wpp}?text=${encodeURIComponent(msg)}`;
-  // Registra em background
-  registrarPedidoBackground(nome,end,total);
+
+  // ✅ FIX 1: registra no Sheets SOMENTE após o cliente clicar em finalizar
+  registrarPedidoBackground(nome, end, obs, total);
 }
 
 // Eventos
