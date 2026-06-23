@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entregador — Quality+ Burger</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--brand:#D0401A;--brand-dark:#A8300F;--bg:#0D0D0D;--bg2:#1A1A1A;--bg3:#242424;--text:#F5F0E8;--text2:#B0A898;--gold:#F2A92B;--green:#2ECC71;--red:#E74C3C;--radius:14px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:40px;}
+
+#topbar{background:var(--bg2);border-bottom:1.5px solid #2a2a2a;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+#topbar h1{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--brand);}
+#status-online{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--green);}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--green);animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+
+#conteudo{padding:16px;max-width:500px;margin:0 auto;}
+
+.secao-titulo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--text2);margin-bottom:12px;}
+
+/* PEDIDO CARD */
+.pedido-card{background:var(--bg2);border-radius:20px;border:1.5px solid #2a2a2a;padding:20px;margin-bottom:16px;}
+.pedido-num{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--brand);letter-spacing:2px;}
+.pedido-hora{font-size:12px;color:var(--text2);margin-bottom:10px;}
+.pedido-info-row{display:flex;gap:8px;align-items:flex-start;font-size:14px;margin-bottom:6px;}
+.pedido-info-row span:first-child{flex-shrink:0;}
+.pedido-itens{font-size:12px;color:var(--text2);background:var(--bg3);border-radius:8px;padding:8px 12px;margin:10px 0;}
+.pedido-valor{font-size:18px;font-weight:800;color:var(--gold);margin-bottom:14px;}
+
+/* STATUS BADGE */
+.status-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:50px;font-size:12px;font-weight:800;margin-bottom:14px;}
+.status-em-rota{background:#2a1a0a;color:var(--gold);border:1px solid var(--gold);}
+.status-chegou{background:#0a2a1a;color:var(--green);border:1px solid var(--green);}
+.status-entregue{background:#0a2a0a;color:var(--green);border:1px solid var(--green);}
+.status-nao-encontrado{background:#2a0a0a;color:var(--red);border:1px solid var(--red);}
+
+/* BOTÕES DE AÇÃO */
+.btn-acao{width:100%;padding:16px;border:none;border-radius:50px;font-family:'Nunito',sans-serif;font-size:16px;font-weight:800;cursor:pointer;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:10px;transition:opacity .2s;}
+.btn-acao:active{opacity:.8;}
+.btn-cheguei{background:#444;color:#fff;}
+.btn-entregue{background:var(--green);color:#fff;}
+.btn-nao-encontrado{background:var(--bg3);border:1.5px solid var(--red);color:var(--red);}
+.btn-desativado{opacity:.4;pointer-events:none;}
+
+/* VAZIO */
+.vazio{text-align:center;padding:60px 20px;color:var(--text2);}
+.vazio-icon{font-size:60px;margin-bottom:16px;}
+.vazio-txt{font-size:15px;line-height:1.6;}
+
+/* CRONÔMETRO */
+.cronometro{background:var(--bg3);border-radius:10px;padding:10px 14px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;}
+.cron-label{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:1px;}
+.cron-val{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--gold);}
+
+/* TOAST */
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--green);color:#fff;padding:12px 24px;border-radius:50px;font-size:14px;font-weight:700;z-index:999;transition:transform .3s;white-space:nowrap;}
+#toast.show{transform:translateX(-50%) translateY(0);}
+
+/* CONFIRMAR MODAL */
+#confirm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;align-items:center;justify-content:center;padding:20px;}
+#confirm-overlay.open{display:flex;}
+#confirm-box{background:var(--bg2);border-radius:20px;padding:28px;width:100%;max-width:360px;text-align:center;}
+#confirm-titulo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;margin-bottom:8px;}
+#confirm-msg{font-size:14px;color:var(--text2);margin-bottom:24px;line-height:1.6;}
+.confirm-btns{display:flex;gap:10px;}
+.btn-confirmar{flex:1;padding:14px;border:none;border-radius:50px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;}
+.btn-cancelar-c{flex:1;padding:14px;background:var(--bg3);border:1.5px solid #444;border-radius:50px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:700;cursor:pointer;color:var(--text2);}
+
+/* HISTÓRICO */
+.hist-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #2a2a2a;}
+.hist-num{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--text2);}
+.hist-info{flex:1;}
+.hist-nome{font-size:13px;font-weight:700;}
+.hist-tempo{font-size:11px;color:var(--text2);}
+.hist-status{font-size:12px;font-weight:800;}
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <h1>🛵 ENTREGADOR</h1>
+  <div id="status-online"><div class="dot"></div>Online</div>
+</div>
+
+<div id="conteudo">
+
+  <!-- SEM ENTREGAS -->
+  <div id="sem-entregas">
+    <div class="vazio">
+      <div class="vazio-icon">🛵</div>
+      <div class="vazio-txt">Nenhuma entrega<br>atribuída no momento.<br><br>Aguarde o gerente<br>enviar um pedido.</div>
+    </div>
+  </div>
+
+  <!-- ENTREGA ATIVA -->
+  <div id="entrega-ativa" style="display:none;">
+    <div class="secao-titulo">ENTREGA ATUAL</div>
+    <div class="pedido-card">
+      <div class="pedido-num" id="e-num">#01</div>
+      <div class="pedido-hora" id="e-hora">Saiu às 19:30</div>
+      <div id="e-status-badge" class="status-badge status-em-rota">🛵 Em rota</div>
+      <div class="pedido-info-row"><span>👤</span><span id="e-cliente"></span></div>
+      <div class="pedido-info-row"><span>📍</span><span id="e-endereco"></span></div>
+      <div class="pedido-itens" id="e-itens"></div>
+      <div class="pedido-valor" id="e-valor"></div>
+      <div class="cronometro">
+        <div><div class="cron-label">Tempo em rota</div><div class="cron-val" id="cron-rota">00:00</div></div>
+        <div style="text-align:right;"><div class="cron-label">Saiu às</div><div class="cron-val" id="cron-saida">—</div></div>
+      </div>
+      <button class="btn-acao btn-cheguei" id="btn-cheguei" onclick="confirmar('chegou')">📍 Cheguei ao Local</button>
+      <button class="btn-acao btn-entregue" id="btn-entregue" onclick="confirmar('entregue')">✅ Entrega Concluída</button>
+      <button class="btn-acao btn-nao-encontrado" onclick="confirmar('nao_encontrado')">❌ Cliente Não Encontrado</button>
+    </div>
+  </div>
+
+  <!-- HISTÓRICO DO DIA -->
+  <div id="historico-wrap" style="display:none;margin-top:10px;">
+    <div class="secao-titulo">HISTÓRICO DE HOJE</div>
+    <div id="historico-lista"></div>
+  </div>
+
+</div>
+
+<!-- MODAL CONFIRMAÇÃO -->
+<div id="confirm-overlay">
+  <div id="confirm-box">
+    <div id="confirm-titulo">Confirmar?</div>
+    <div id="confirm-msg"></div>
+    <div class="confirm-btns">
+      <button class="btn-cancelar-c" onclick="fecharConfirm()">Cancelar</button>
+      <button class="btn-confirmar" id="confirm-ok" onclick="executarAcao()">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const ZAPI_INSTANCE = "3F50E6C0858F92F84456466CD3C725EB";
+const ZAPI_TOKEN    = "9498D0558A1E651A2188803B";
+const ZAPI_BASE     = `https://api.z-api.io/instances/${ZAPI_INSTANCE}/token/${ZAPI_TOKEN}`;
+
+let entregaAtual = null;
+let acaoPendente = null;
+let cronInterval = null;
+
+// ===== ZAPI =====
+async function zapiTexto(telefone, mensagem) {
+  try {
+    const num = telefone.replace(/\D/g,"");
+    if(!num) return;
+    await fetch(`${ZAPI_BASE}/send-text`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({phone:num, message:mensagem})
+    });
+  } catch(e){ console.warn("Zapi:",e); }
+}
+
+// ===== TOAST =====
+function toast(msg, cor="var(--green)"){
+  const t=document.getElementById("toast");
+  t.textContent=msg; t.style.background=cor;
+  t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),3000);
+}
+
+// ===== CRONÔMETRO =====
+function iniciarCronometro(horaSaida) {
+  if(cronInterval) clearInterval(cronInterval);
+  cronInterval = setInterval(()=>{
+    const agora = new Date();
+    const [h,m] = horaSaida.split(":").map(Number);
+    const saida = new Date();
+    saida.setHours(h,m,0,0);
+    const diff = Math.max(0, Math.floor((agora-saida)/1000));
+    const mm = String(Math.floor(diff/60)).padStart(2,"0");
+    const ss = String(diff%60).padStart(2,"0");
+    document.getElementById("cron-rota").textContent = `${mm}:${ss}`;
+  }, 1000);
+}
+
+// ===== CARREGAR ENTREGA =====
+function carregarEntregaAtual() {
+  const entregas = JSON.parse(localStorage.getItem('bh_entregas')||'[]');
+  const hoje = new Date().toISOString().slice(0,10);
+  entregaAtual = entregas.find(e => e.status === "em_rota" || e.status === "chegou") || null;
+  const historico = entregas.filter(e =>
+    e.data === hoje && (e.status === "entregue" || e.status === "nao_encontrado")
+  );
+
+  if (entregaAtual) {
+    document.getElementById("sem-entregas").style.display = "none";
+    document.getElementById("entrega-ativa").style.display = "block";
+    document.getElementById("e-num").textContent = "#"+String(entregaAtual.num).padStart(2,"0");
+    document.getElementById("e-hora").textContent = "Saiu às "+entregaAtual.hora_saida;
+    document.getElementById("e-cliente").textContent = entregaAtual.cliente;
+    document.getElementById("e-endereco").textContent = entregaAtual.endereco;
+    document.getElementById("e-itens").textContent = entregaAtual.itens;
+    document.getElementById("e-valor").textContent = "R$ "+parseFloat(entregaAtual.total||0).toFixed(2).replace(".",",");
+    document.getElementById("cron-saida").textContent = entregaAtual.hora_saida;
+
+    const badge = document.getElementById("e-status-badge");
+    if (entregaAtual.status === "chegou") {
+      badge.className = "status-badge status-chegou";
+      badge.textContent = "📍 No local";
+      document.getElementById("btn-cheguei").classList.add("btn-desativado");
+    } else {
+      badge.className = "status-badge status-em-rota";
+      badge.textContent = "🛵 Em rota";
+      document.getElementById("btn-cheguei").classList.remove("btn-desativado");
+    }
+
+    iniciarCronometro(entregaAtual.hora_saida);
+  } else {
+    document.getElementById("sem-entregas").style.display = "block";
+    document.getElementById("entrega-ativa").style.display = "none";
+    if(cronInterval) clearInterval(cronInterval);
+  }
+
+  if (historico.length) {
+    document.getElementById("historico-wrap").style.display = "block";
+    document.getElementById("historico-lista").innerHTML = historico.reverse().map(e => {
+      const cor = e.status==="entregue"?"var(--green)":"var(--red)";
+      const emoji = e.status==="entregue"?"✅":"❌";
+      const tempo = (e.hora_saida && e.hora_entrega) ? (()=>{
+        const [hS,mS]=e.hora_saida.split(":").map(Number);
+        const [hE,mE]=e.hora_entrega.split(":").map(Number);
+        return `${(hE*60+mE)-(hS*60+mS)}min`;
+      })() : "—";
+      return `
+        <div class="hist-item">
+          <div class="hist-num">#${String(e.num).padStart(2,"0")}</div>
+          <div class="hist-info">
+            <div class="hist-nome">${e.cliente}</div>
+            <div class="hist-tempo">${e.hora_saida||"—"} → ${e.hora_entrega||"—"} · ${tempo}</div>
+          </div>
+          <div class="hist-status" style="color:${cor};">${emoji}</div>
+        </div>`;
+    }).join("");
+  } else {
+    document.getElementById("historico-wrap").style.display = "none";
+  }
+}
+
+// ===== CONFIRMAR AÇÃO =====
+const confirmarConfig = {
+  chegou: {
+    titulo: "Cheguei ao Local",
+    msg: "Confirma que você chegou ao endereço de entrega?\n\nO cliente será avisado automaticamente.",
+    cor: "#444",
+    label: "✅ Confirmar chegada"
+  },
+  entregue: {
+    titulo: "Entrega Concluída",
+    msg: "Confirma que o pedido foi entregue com sucesso?\n\nO cliente receberá uma mensagem de confirmação.",
+    cor: "var(--green)",
+    label: "✅ Confirmar entrega"
+  },
+  nao_encontrado: {
+    titulo: "Cliente Não Encontrado",
+    msg: "Confirma que não foi possível contato com o cliente?\n\nO cliente será avisado para retornar ao local.",
+    cor: "var(--red)",
+    label: "❌ Confirmar"
+  }
+};
+
+function confirmar(acao) {
+  acaoPendente = acao;
+  const cfg = confirmarConfig[acao];
+  document.getElementById("confirm-titulo").textContent = cfg.titulo;
+  document.getElementById("confirm-msg").textContent = cfg.msg;
+  document.getElementById("confirm-ok").style.background = cfg.cor;
+  document.getElementById("confirm-ok").style.color = "#fff";
+  document.getElementById("confirm-ok").textContent = cfg.label;
+  document.getElementById("confirm-overlay").classList.add("open");
+}
+
+function fecharConfirm() {
+  document.getElementById("confirm-overlay").classList.remove("open");
+  acaoPendente = null;
+}
+
+async function executarAcao() {
+  fecharConfirm();
+  if (!entregaAtual || !acaoPendente) return;
+
+  const entregas = JSON.parse(localStorage.getItem('bh_entregas')||'[]');
+  const idx = entregas.findIndex(e => e.id === entregaAtual.id);
+  if (idx === -1) return;
+
+  const agora = new Date(new Date().toLocaleString("en-US",{timeZone:"America/Sao_Paulo"}));
+  const horaAtual = String(agora.getHours()).padStart(2,"0")+":"+String(agora.getMinutes()).padStart(2,"0");
+
+  if (acaoPendente === "chegou") {
+    entregas[idx].status = "chegou";
+    entregas[idx].hora_chegada = horaAtual;
+    localStorage.setItem('bh_entregas', JSON.stringify(entregas));
+    if (entregas[idx].telefone) {
+      await zapiTexto(entregas[idx].telefone,
+        `📍 Olá *${entregas[idx].cliente}*!\n\nNosso entregador *chegou ao seu endereço*! 🛵\n\nPor favor, dirija-se ao local para receber seu pedido.\n\n🍔 *Quality+ Burger*`
+      );
+    }
+    toast("📍 Chegada registrada! Cliente avisado.");
+
+  } else if (acaoPendente === "entregue") {
+    entregas[idx].status = "entregue";
+    entregas[idx].hora_entrega = horaAtual;
+    localStorage.setItem('bh_entregas', JSON.stringify(entregas));
+    if (entregas[idx].telefone) {
+      await zapiTexto(entregas[idx].telefone,
+        `✅ *Pedido entregue com sucesso!*\n\nObrigado pela preferência, *${entregas[idx].cliente}*! 🙏\n\nEsperamos que aproveite muito! 🍔\n\n⭐ Que tal nos avaliar? Sua opinião é muito importante!\n\n📲 *Quality+ Burger*`
+      );
+    }
+    toast("✅ Entrega concluída!");
+
+  } else if (acaoPendente === "nao_encontrado") {
+    entregas[idx].status = "nao_encontrado";
+    entregas[idx].hora_entrega = horaAtual;
+    localStorage.setItem('bh_entregas', JSON.stringify(entregas));
+    if (entregas[idx].telefone) {
+      await zapiTexto(entregas[idx].telefone,
+        `⚠️ Olá *${entregas[idx].cliente}*!\n\nNosso entregador está no local, mas *não conseguiu contato*.\n\nPor favor, responda esta mensagem ou dirija-se ao endereço informado urgente.\n\n🍔 *Quality+ Burger*`
+      );
+    }
+    toast("❌ Registrado. Cliente avisado.", "var(--red)");
+  }
+
+  setTimeout(carregarEntregaAtual, 500);
+}
+
+// Atualiza a cada 15 segundos automaticamente
+setInterval(carregarEntregaAtual, 15000);
+carregarEntregaAtual();
+</script>
+</body>
+</html>
