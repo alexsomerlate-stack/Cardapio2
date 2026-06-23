@@ -7,98 +7,209 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --brand:#D0401A; --brand-dark:#A8300F;
-  --bg:#0D0D0D; --bg2:#1A1A1A; --bg3:#242424; --bg4:#2e2e2e;
-  --text:#F5F0E8; --text2:#B0A898;
-  --gold:#F2A92B; --green:#2ECC71; --red:#E74C3C; --radius:12px;
+  --brand: #D0401A; --brand-dark: #A8300F;
+  --bg: #0D0D0D; --bg2: #1A1A1A; --bg3: #242424; --bg4: #2e2e2e;
+  --text: #F5F0E8; --text2: #B0A898;
+  --gold: #F2A92B; --green: #2ECC71; --red: #E74C3C;
+  --radius: 12px;
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Nunito',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
 
-#login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
-.login-box{background:var(--bg2);border-radius:20px;padding:40px 32px;width:100%;max-width:360px;border:1.5px solid #2a2a2a;text-align:center;}
-.login-box h1{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:3px;color:var(--brand);margin-bottom:6px;}
-.login-box p{font-size:13px;color:var(--text2);margin-bottom:28px;}
-.login-box input{width:100%;padding:13px 16px;background:var(--bg3);border:1.5px solid #333;border-radius:var(--radius);color:var(--text);font-family:'Nunito',sans-serif;font-size:15px;margin-bottom:12px;}
-.login-box input:focus{outline:none;border-color:var(--brand);}
-.btn-primary{width:100%;padding:13px;background:var(--brand);border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;}
-.btn-primary:hover{background:var(--brand-dark);}
-#login-erro{color:var(--red);font-size:13px;margin-top:10px;display:none;}
+/* LOGIN */
+#login-screen {
+  min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px;
+}
+.login-box {
+  background:var(--bg2); border-radius:20px; padding:40px 32px; width:100%; max-width:360px;
+  border:1.5px solid #2a2a2a; text-align:center;
+}
+.login-box h1 { font-family:'Bebas Neue',sans-serif; font-size:32px; letter-spacing:3px; color:var(--brand); margin-bottom:6px; }
+.login-box p { font-size:13px; color:var(--text2); margin-bottom:28px; }
+.login-box input {
+  width:100%; padding:13px 16px; background:var(--bg3); border:1.5px solid #333;
+  border-radius:var(--radius); color:var(--text); font-family:'Nunito',sans-serif;
+  font-size:15px; margin-bottom:12px;
+}
+.login-box input:focus { outline:none; border-color:var(--brand); }
+.btn-primary {
+  width:100%; padding:13px; background:var(--brand); border:none; border-radius:50px;
+  color:#fff; font-family:'Nunito',sans-serif; font-size:15px; font-weight:800; cursor:pointer;
+  transition:background .2s;
+}
+.btn-primary:hover { background:var(--brand-dark); }
+#login-erro { color:var(--red); font-size:13px; margin-top:10px; display:none; }
 
-#painel{display:none;}
-#topbar{background:var(--bg2);border-bottom:1.5px solid #2a2a2a;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
-#topbar h1{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;color:var(--brand);}
-#btn-logout{background:var(--bg3);border:1px solid #333;color:var(--text2);padding:7px 16px;border-radius:50px;cursor:pointer;font-size:13px;font-family:'Nunito',sans-serif;}
+/* PAINEL */
+#painel { display:none; }
+#topbar {
+  background:var(--bg2); border-bottom:1.5px solid #2a2a2a;
+  padding:14px 20px; display:flex; align-items:center; justify-content:space-between;
+  position:sticky; top:0; z-index:50;
+}
+#topbar h1 { font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:2px; color:var(--brand); }
+#btn-logout {
+  background:var(--bg3); border:1px solid #333; color:var(--text2);
+  padding:7px 16px; border-radius:50px; cursor:pointer; font-size:13px; font-family:'Nunito',sans-serif;
+}
+#btn-logout:hover { border-color:var(--red); color:var(--red); }
 
-#tabs{display:flex;gap:6px;padding:16px 16px 0;overflow-x:auto;scrollbar-width:none;}
-#tabs::-webkit-scrollbar{display:none;}
-.tab-btn{flex-shrink:0;padding:9px 18px;border-radius:50px;border:1.5px solid #333;background:var(--bg2);color:var(--text2);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;}
-.tab-btn.ativo{background:var(--brand);border-color:var(--brand);color:#fff;}
+/* TABS */
+#tabs { display:flex; gap:6px; padding:16px 16px 0; overflow-x:auto; scrollbar-width:none; }
+#tabs::-webkit-scrollbar { display:none; }
+.tab-btn {
+  flex-shrink:0; padding:9px 18px; border-radius:50px; border:1.5px solid #333;
+  background:var(--bg2); color:var(--text2); font-family:'Nunito',sans-serif;
+  font-size:13px; font-weight:700; cursor:pointer; transition:all .2s;
+}
+.tab-btn:hover { border-color:var(--brand); color:var(--text); }
+.tab-btn.ativo { background:var(--brand); border-color:var(--brand); color:#fff; }
 
-#conteudo{padding:20px 16px 80px;max-width:800px;margin:0 auto;}
-.secao{display:none;}
-.secao.ativa{display:block;}
-.secao-titulo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;color:var(--brand);margin-bottom:16px;}
+/* CONTEÚDO */
+#conteudo { padding:20px 16px 80px; max-width:800px; margin:0 auto; }
+.secao { display:none; }
+.secao.ativa { display:block; }
+.secao-titulo {
+  font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:2px;
+  color:var(--brand); margin-bottom:16px;
+}
 
-.config-card{background:var(--bg2);border-radius:var(--radius);padding:20px;border:1.5px solid #2a2a2a;margin-bottom:14px;}
-.config-card label{display:block;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:6px;}
-.config-card input,.config-card textarea{width:100%;padding:11px 14px;background:var(--bg3);border:1.5px solid #333;border-radius:10px;color:var(--text);font-family:'Nunito',sans-serif;font-size:14px;}
-.config-card input:focus,.config-card textarea:focus{outline:none;border-color:var(--brand);}
-.config-card textarea{min-height:80px;resize:vertical;}
-.input-hint{font-size:11px;color:var(--text2);margin-top:5px;line-height:1.4;}
+/* CARDS DE CONFIGURAÇÃO */
+.config-card {
+  background:var(--bg2); border-radius:var(--radius); padding:20px;
+  border:1.5px solid #2a2a2a; margin-bottom:14px;
+}
+.config-card label {
+  display:block; font-size:12px; font-weight:800; text-transform:uppercase;
+  letter-spacing:1px; color:var(--text2); margin-bottom:6px;
+}
+.config-card input, .config-card textarea {
+  width:100%; padding:11px 14px; background:var(--bg3); border:1.5px solid #333;
+  border-radius:10px; color:var(--text); font-family:'Nunito',sans-serif; font-size:14px;
+}
+.config-card input:focus, .config-card textarea:focus { outline:none; border-color:var(--brand); }
+.config-card textarea { min-height:80px; resize:vertical; }
+.input-hint { font-size:11px; color:var(--text2); margin-top:5px; line-height:1.4; }
 
-.btn-salvar{display:inline-flex;align-items:center;gap:6px;padding:11px 24px;background:var(--green);border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;margin-top:6px;}
-.btn-salvar:disabled{opacity:.6;cursor:not-allowed;}
+.btn-salvar {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:11px 24px; background:var(--green); border:none; border-radius:50px;
+  color:#fff; font-family:'Nunito',sans-serif; font-size:14px; font-weight:800;
+  cursor:pointer; transition:background .2s; margin-top:6px;
+}
+.btn-salvar:hover { background:#27ae60; }
 
-#toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--green);color:#fff;padding:12px 24px;border-radius:50px;font-size:14px;font-weight:700;z-index:999;transition:transform .3s;white-space:nowrap;}
-#toast.show{transform:translateX(-50%) translateY(0);}
+/* TOAST */
+#toast {
+  position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(80px);
+  background:var(--green); color:#fff; padding:12px 24px; border-radius:50px;
+  font-size:14px; font-weight:700; z-index:999; transition:transform .3s;
+  white-space:nowrap;
+}
+#toast.show { transform:translateX(-50%) translateY(0); }
 
-.produto-item{background:var(--bg2);border-radius:var(--radius);border:1.5px solid #2a2a2a;margin-bottom:12px;overflow:hidden;}
-.produto-header{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;}
-.produto-header img{width:52px;height:52px;border-radius:8px;object-fit:cover;background:var(--bg3);flex-shrink:0;}
-.produto-header-info{flex:1;}
-.produto-header-nome{font-size:15px;font-weight:800;}
-.produto-header-cat{font-size:12px;color:var(--text2);}
-.produto-header-preco{font-size:15px;font-weight:700;color:var(--gold);}
-.produto-toggle{font-size:18px;color:var(--text2);transition:transform .2s;}
-.produto-toggle.aberto{transform:rotate(180deg);}
-.produto-form{padding:14px 16px 16px;display:none;border-top:1px solid #2a2a2a;}
-.produto-form.aberta{display:block;}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
-.form-row.full{grid-template-columns:1fr;}
-.form-group label{display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:5px;}
-.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 12px;background:var(--bg3);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--brand);}
-.form-group select option{background:var(--bg3);}
-.form-group textarea{min-height:70px;resize:vertical;}
-.produto-actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;}
-.btn-salvar-prod{padding:9px 20px;background:var(--green);border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;}
-.btn-del{padding:9px 20px;background:var(--bg4);border:1.5px solid var(--red);border-radius:50px;color:var(--red);font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;}
-.btn-del:hover{background:var(--red);color:#fff;}
+/* PRODUTOS */
+.produto-item {
+  background:var(--bg2); border-radius:var(--radius); border:1.5px solid #2a2a2a;
+  margin-bottom:12px; overflow:hidden;
+}
+.produto-header {
+  display:flex; align-items:center; gap:12px; padding:14px 16px; cursor:pointer;
+}
+.produto-header img {
+  width:52px; height:52px; border-radius:8px; object-fit:cover; background:var(--bg3); flex-shrink:0;
+}
+.produto-header-info { flex:1; }
+.produto-header-nome { font-size:15px; font-weight:800; }
+.produto-header-cat { font-size:12px; color:var(--text2); }
+.produto-header-preco { font-size:15px; font-weight:700; color:var(--gold); }
+.produto-toggle { font-size:18px; color:var(--text2); transition:transform .2s; }
+.produto-toggle.aberto { transform:rotate(180deg); }
 
-.switch-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
-.switch{position:relative;width:44px;height:24px;}
-.switch input{opacity:0;width:0;height:0;}
-.slider{position:absolute;inset:0;background:#333;border-radius:24px;cursor:pointer;transition:.2s;}
-.slider:before{content:'';position:absolute;width:18px;height:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.2s;}
-input:checked+.slider{background:var(--green);}
-input:checked+.slider:before{transform:translateX(20px);}
+.produto-form { padding:0 16px 16px; display:none; border-top:1px solid #2a2a2a; padding-top:14px; }
+.produto-form.aberta { display:block; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
+.form-row.full { grid-template-columns:1fr; }
+.form-group label {
+  display:block; font-size:11px; font-weight:800; text-transform:uppercase;
+  letter-spacing:1px; color:var(--text2); margin-bottom:5px;
+}
+.form-group input, .form-group select, .form-group textarea {
+  width:100%; padding:10px 12px; background:var(--bg3); border:1.5px solid #333;
+  border-radius:8px; color:var(--text); font-family:'Nunito',sans-serif; font-size:13px;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  outline:none; border-color:var(--brand);
+}
+.form-group select option { background:var(--bg3); }
+.form-group textarea { min-height:70px; resize:vertical; }
 
-.btn-novo{display:flex;align-items:center;gap:8px;width:100%;padding:14px;background:var(--bg3);border:2px dashed #333;border-radius:var(--radius);color:var(--text2);font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;cursor:pointer;justify-content:center;transition:all .2s;margin-bottom:16px;}
-.btn-novo:hover{border-color:var(--brand);color:var(--text);}
+.produto-actions { display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
+.btn-salvar-prod {
+  padding:9px 20px; background:var(--green); border:none; border-radius:50px;
+  color:#fff; font-family:'Nunito',sans-serif; font-size:13px; font-weight:800; cursor:pointer;
+}
+.btn-del {
+  padding:9px 20px; background:var(--bg4); border:1.5px solid var(--red); border-radius:50px;
+  color:var(--red); font-family:'Nunito',sans-serif; font-size:13px; font-weight:800; cursor:pointer;
+}
+.btn-del:hover { background:var(--red); color:#fff; }
 
-.adicional-item{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:10px 14px;background:var(--bg2);border-radius:10px;border:1.5px solid #2a2a2a;margin-bottom:8px;}
-.adicional-nome-input{background:var(--bg3);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;padding:8px 12px;}
-.adicional-preco-input{width:90px;background:var(--bg3);border:1.5px solid #333;border-radius:8px;color:var(--gold);font-family:'Nunito',sans-serif;font-size:13px;padding:8px 12px;}
-.adicional-nome-input:focus,.adicional-preco-input:focus{outline:none;border-color:var(--brand);}
-.btn-del-add{background:none;border:none;color:#555;font-size:18px;cursor:pointer;padding:4px;}
-.btn-del-add:hover{color:var(--red);}
+/* SWITCH ATIVO */
+.switch-row { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+.switch-label { font-size:13px; color:var(--text2); }
+.switch { position:relative; width:44px; height:24px; }
+.switch input { opacity:0; width:0; height:0; }
+.slider {
+  position:absolute; inset:0; background:#333; border-radius:24px; cursor:pointer; transition:.2s;
+}
+.slider:before {
+  content:''; position:absolute; width:18px; height:18px; left:3px; bottom:3px;
+  background:#fff; border-radius:50%; transition:.2s;
+}
+input:checked + .slider { background:var(--green); }
+input:checked + .slider:before { transform:translateX(20px); }
 
-#preview-logo{width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--brand);margin-top:10px;display:none;}
+/* NOVO PRODUTO */
+.btn-novo {
+  display:flex; align-items:center; gap:8px; width:100%;
+  padding:14px; background:var(--bg3); border:2px dashed #333;
+  border-radius:var(--radius); color:var(--text2); font-family:'Nunito',sans-serif;
+  font-size:14px; font-weight:700; cursor:pointer; justify-content:center;
+  transition:all .2s; margin-bottom:16px;
+}
+.btn-novo:hover { border-color:var(--brand); color:var(--text); }
+
+/* ADICIONAIS */
+.adicional-item {
+  display:grid; grid-template-columns:1fr auto auto; gap:10px; align-items:center;
+  padding:10px 14px; background:var(--bg2); border-radius:10px;
+  border:1.5px solid #2a2a2a; margin-bottom:8px;
+}
+.adicional-nome-input {
+  background:var(--bg3); border:1.5px solid #333; border-radius:8px;
+  color:var(--text); font-family:'Nunito',sans-serif; font-size:13px; padding:8px 12px;
+}
+.adicional-preco-input {
+  width:90px; background:var(--bg3); border:1.5px solid #333; border-radius:8px;
+  color:var(--gold); font-family:'Nunito',sans-serif; font-size:13px; padding:8px 12px;
+}
+.adicional-nome-input:focus, .adicional-preco-input:focus { outline:none; border-color:var(--brand); }
+.btn-del-add {
+  background:none; border:none; color:#555; font-size:18px; cursor:pointer; padding:4px;
+}
+.btn-del-add:hover { color:var(--red); }
+
+/* PREVIEW LOGO */
+#preview-logo {
+  width:80px; height:80px; border-radius:50%; object-fit:cover;
+  border:2px solid var(--brand); margin-top:10px; display:none;
+}
 </style>
 </head>
 <body>
 
+<!-- ===== LOGIN ===== -->
 <div id="login-screen">
   <div class="login-box">
     <h1>GERENTE</h1>
@@ -111,116 +222,120 @@ input:checked+.slider:before{transform:translateX(20px);}
   </div>
 </div>
 
+<!-- ===== PAINEL ===== -->
 <div id="painel">
   <div id="topbar">
     <h1>⚙️ Painel do Gerente</h1>
     <button id="btn-logout" onclick="fazerLogout()">Sair</button>
   </div>
+
   <div id="tabs">
-    <button class="tab-btn ativo" onclick="trocarTab('configuracoes',this)">🏪 Hamburgueria</button>
-    <button class="tab-btn" onclick="trocarTab('pedidos',this)">📋 Pedidos</button>
-    <button class="tab-btn" onclick="trocarTab('produtos',this)">🍔 Produtos</button>
-    <button class="tab-btn" onclick="trocarTab('adicionais',this)">➕ Adicionais</button>
-    <button class="tab-btn" onclick="trocarTab('categorias',this)">🗂️ Categorias</button>
+    <button class="tab-btn ativo" onclick="trocarTab('configuracoes', this)">🏪 Hamburgueria</button>
+    <button class="tab-btn" onclick="trocarTab('pedidos', this)">📋 Pedidos</button>
+    <button class="tab-btn" onclick="trocarTab('entregas', this)">🛵 Entregas</button>
+    <button class="tab-btn" onclick="trocarTab('produtos', this)">🍔 Produtos</button>
+    <button class="tab-btn" onclick="trocarTab('adicionais', this)">➕ Adicionais</button>
+    <button class="tab-btn" onclick="trocarTab('categorias', this)">🗂️ Categorias</button>
   </div>
 
   <div id="conteudo">
 
-    <!-- HAMBURGUERIA -->
+    <!-- ABA: CONFIGURAÇÕES -->
     <div id="sec-configuracoes" class="secao ativa">
       <div class="secao-titulo">Informações da Hamburgueria</div>
-      <div class="config-card"><label>Nome</label><input type="text" id="cfg-nome" placeholder="Ex: Quality Burger"></div>
-      <div class="config-card"><label>Slogan</label><input type="text" id="cfg-slogan" placeholder="Ex: O melhor da cidade!"></div>
 
-      <!-- LOGO -->
       <div class="config-card">
-        <label>Logo da Hamburgueria</label>
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:10px;">
-          <div id="logo-preview-wrap" style="width:80px;height:80px;border-radius:50%;border:2px solid var(--brand);overflow:hidden;background:var(--bg3);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;color:var(--text2);">LOGO</div>
-          <div style="flex:1;">
-            <label for="logo-file" style="display:inline-block;padding:10px 18px;background:var(--brand);border-radius:50px;cursor:pointer;font-size:13px;font-weight:800;color:#fff;text-transform:none;letter-spacing:0;">📷 Escolher foto</label>
-            <input type="file" id="logo-file" accept="image/*" style="display:none;" onchange="uploadImagem(this,'cfg-logo','logo-preview-wrap','logo')">
-            <p style="font-size:11px;color:var(--text2);margin-top:6px;">ou cole um link direto:</p>
-            <input type="url" id="cfg-logo" placeholder="https://..." oninput="previewLogoUrl(this.value)" style="width:100%;padding:8px 12px;background:var(--bg3);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;margin-top:4px;">
-          </div>
-        </div>
+        <label>Nome da Hamburgueria</label>
+        <input type="text" id="cfg-nome" placeholder="Ex: Burguer do Zé">
+      </div>
+      <div class="config-card">
+        <label>Slogan</label>
+        <input type="text" id="cfg-slogan" placeholder="Ex: O melhor da cidade!">
+      </div>
+      <div class="config-card">
+        <label>URL da Logo</label>
+        <input type="url" id="cfg-logo" placeholder="https://..." oninput="previewLogo(this.value)">
+        <p class="input-hint">Cole o link direto de uma imagem (JPG, PNG). Dica: suba no <a href="https://imgur.com" target="_blank" style="color:var(--brand)">Imgur</a> e copie o link.</p>
+        <img id="preview-logo" src="" alt="Preview">
+      </div>
+      <div class="config-card">
+        <label>URL do Vídeo</label>
+        <input type="url" id="cfg-video" placeholder="https://youtube.com/... ou link de vídeo MP4">
+        <p class="input-hint">Aceita link do YouTube ou MP4 direto.</p>
+      </div>
+      <div class="config-card">
+        <label>Número do WhatsApp</label>
+        <input type="text" id="cfg-wpp" placeholder="5531999999999 (só números, com DDI)">
+      </div>
+      <div class="config-card">
+        <label>Taxa de Entrega (texto informativo)</label>
+        <textarea id="cfg-taxa" placeholder="Ex: R$ 5,00 para bairros próximos. Demais áreas a combinar."></textarea>
       </div>
 
-      <!-- VÍDEO -->
-      <div class="config-card">
-        <label>Vídeo do cardápio</label>
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:10px;">
-          <div id="video-preview-wrap" style="width:80px;height:54px;border-radius:8px;border:2px solid var(--brand);overflow:hidden;background:var(--bg3);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;">▶️</div>
-          <div style="flex:1;">
-            <label for="video-file" style="display:inline-block;padding:10px 18px;background:var(--brand);border-radius:50px;cursor:pointer;font-size:13px;font-weight:800;color:#fff;">📹 Escolher vídeo</label>
-            <input type="file" id="video-file" accept="video/*" style="display:none;" onchange="uploadVideo(this)">
-            <p style="font-size:11px;color:var(--text2);margin-top:6px;">MP4 recomendado. Ou cole um link:</p>
-            <input type="url" id="cfg-video" placeholder="https://..." oninput="previewVideoUrl(this.value)" style="width:100%;padding:8px 12px;background:var(--bg3);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;margin-top:4px;">
-          </div>
-        </div>
-        <div id="video-upload-status" style="font-size:12px;color:var(--text2);display:none;"></div>
-      </div>
-
-      <div class="config-card"><label>WhatsApp (só números com DDI)</label><input type="text" id="cfg-wpp" placeholder="5531999999999"></div>
-      <div class="config-card"><label>Taxa de Entrega (texto)</label><textarea id="cfg-taxa" placeholder="Ex: R$ 5,00 para bairros próximos."></textarea></div>
-      <button class="btn-salvar" id="btn-salvar-cfg" onclick="salvarConfiguracoes()">💾 Salvar e sincronizar</button>
+      <button class="btn-salvar" onclick="salvarConfiguracoes()">💾 Salvar configurações</button>
 
       <div style="margin-top:24px;padding:16px;background:var(--bg3);border-radius:var(--radius);">
-        <p style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:8px;">🔐 Trocar acesso</p>
+        <p style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:8px;">🔐 Trocar senha de acesso</p>
         <input type="text" id="cfg-usuario" placeholder="Novo usuário" style="width:100%;padding:10px 12px;background:var(--bg2);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:8px;">
         <input type="password" id="cfg-senha" placeholder="Nova senha" style="width:100%;padding:10px 12px;background:var(--bg2);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:8px;">
-        <button class="btn-salvar" onclick="salvarSenha()" style="background:#555;">🔒 Atualizar</button>
+        <button class="btn-salvar" onclick="salvarSenha()" style="background:#555;">🔒 Atualizar acesso</button>
       </div>
     </div>
 
-    <!-- PEDIDOS -->
-    <div id="sec-pedidos" class="secao">
-      <div class="secao-titulo">Pedidos</div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;">
-        <div style="background:var(--bg2);border-radius:var(--radius);padding:16px;text-align:center;border:1.5px solid #2a2a2a;">
-          <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:6px;">Faturamento</div>
-          <div id="res-total-dia" style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--gold);">R$ 0,00</div>
-          <div id="res-qtd-dia" style="font-size:12px;color:var(--text2);">0 pagos</div>
-        </div>
-        <div style="background:var(--bg2);border-radius:var(--radius);padding:16px;text-align:center;border:1.5px solid #2a2a2a;">
-          <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:6px;">Pendentes</div>
-          <div id="res-pendentes" style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--brand);">0</div>
-        </div>
-        <div style="background:var(--bg2);border-radius:var(--radius);padding:16px;text-align:center;border:1.5px solid #2a2a2a;">
-          <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:6px;">Abandonados</div>
-          <div id="res-abandonados" style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:#555;">0</div>
-        </div>
-      </div>
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
-        <input type="date" id="filtro-data" style="padding:9px 14px;background:var(--bg2);border:1.5px solid #333;border-radius:10px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;">
-        <button onclick="renderizarPedidos()" style="padding:9px 18px;background:var(--brand);border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">Filtrar</button>
-        <button onclick="renderizarPedidos()" style="padding:9px 18px;background:var(--bg3);border:1.5px solid #444;border-radius:50px;color:var(--text2);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">🔄 Atualizar</button>
-      </div>
-      <div id="lista-pedidos"></div>
-    </div>
-
-    <!-- PRODUTOS -->
+    <!-- ABA: PRODUTOS -->
     <div id="sec-produtos" class="secao">
       <div class="secao-titulo">Produtos</div>
       <button class="btn-novo" onclick="novoProduto()">＋ Adicionar novo produto</button>
       <div id="lista-produtos"></div>
-      <button class="btn-salvar" id="btn-salvar-prods" onclick="salvarTodosProdutos()" style="margin-top:8px;">💾 Salvar todos os produtos</button>
     </div>
 
-    <!-- ADICIONAIS -->
+    <!-- ABA: ADICIONAIS -->
     <div id="sec-adicionais" class="secao">
       <div class="secao-titulo">Adicionais</div>
-      <p style="font-size:13px;color:var(--text2);margin-bottom:16px;">Adicionais disponíveis para qualquer produto.</p>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:16px;">Estes adicionais aparecem para o cliente escolher ao clicar em qualquer produto.</p>
       <div id="lista-adicionais-edit"></div>
-      <button class="btn-novo" onclick="novoAdicional()">＋ Adicionar adicional</button>
+      <button class="btn-novo" onclick="novoAdicional()">＋ Adicionar novo adicional</button>
       <br>
-      <button class="btn-salvar" id="btn-salvar-adds" onclick="salvarAdicionais()">💾 Salvar adicionais</button>
+      <button class="btn-salvar" onclick="salvarAdicionais()">💾 Salvar adicionais</button>
     </div>
 
-    <!-- CATEGORIAS -->
+    <!-- ABA: ENTREGAS -->
+    <div id="sec-entregas" class="secao">
+      <div class="secao-titulo">Entregas</div>
+
+      <!-- Resumo -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;">
+        <div style="background:var(--bg2);border-radius:var(--radius);padding:14px;text-align:center;border:1.5px solid #2a2a2a;">
+          <div id="ent-em-rota" style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--brand);">0</div>
+          <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:1px;">Em rota</div>
+        </div>
+        <div style="background:var(--bg2);border-radius:var(--radius);padding:14px;text-align:center;border:1.5px solid #2a2a2a;">
+          <div id="ent-concluidas" style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--green);">0</div>
+          <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:1px;">Concluídas hoje</div>
+        </div>
+        <div style="background:var(--bg2);border-radius:var(--radius);padding:14px;text-align:center;border:1.5px solid #2a2a2a;">
+          <div id="ent-tempo-medio" style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--gold);">—</div>
+          <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:1px;">Tempo médio</div>
+        </div>
+      </div>
+
+      <!-- Pedidos aguardando entrega -->
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;color:var(--text2);margin-bottom:12px;">PEDIDOS PRONTOS PARA ENTREGA</div>
+      <div id="lista-para-entrega"><div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhum pedido aguardando entrega.</div></div>
+
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;color:var(--text2);margin:20px 0 12px;">ENTREGAS EM ANDAMENTO</div>
+      <div id="lista-em-rota"><div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhuma entrega em andamento.</div></div>
+
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;color:var(--text2);margin:20px 0 12px;">ENTREGAS CONCLUÍDAS HOJE</div>
+      <div id="lista-concluidas"><div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhuma entrega concluída ainda.</div></div>
+
+      <button onclick="carregarEntregas()" style="width:100%;margin-top:16px;padding:12px;background:var(--bg3);border:1.5px solid #444;border-radius:50px;color:var(--text2);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">🔄 Atualizar entregas</button>
+    </div>
+
+    <!-- ABA: CATEGORIAS -->
     <div id="sec-categorias" class="secao">
       <div class="secao-titulo">Categorias</div>
-      <p style="font-size:13px;color:var(--text2);margin-bottom:16px;">Categorias sem produtos não aparecem no cardápio.</p>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:16px;">Defina as categorias do cardápio. Categorias sem produtos não aparecem para o cliente.</p>
       <div id="lista-categorias-edit"></div>
       <button class="btn-novo" onclick="novaCategoria()">＋ Adicionar categoria</button>
       <br>
@@ -230,568 +345,516 @@ input:checked+.slider:before{transform:translateX(20px);}
   </div>
 </div>
 
-<div id="toast">✅ Salvo!</div>
+<div id="toast">✅ Salvo com sucesso!</div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwa3VKQEkUI9jsx5VzLYZqg8ddiYDAxindVBFUxsPlDPqiMn5Db0MgPto3MmzR-jQzHxQ/exec";
+// ===== DADOS PADRÃO =====
+const DEFAULTS = {
+  credenciais: { usuario: "admin", senha: "1234" },
+  config: {
+    nome: "BURGER HOUSE",
+    slogan: "Feito com fogo. Servido com amor.",
+    logo: "",
+    video: "",
+    wpp: "5531999999999",
+    taxa: "A taxa de entrega varia conforme o bairro e será informada pelo atendente."
+  },
+  categorias: ["Sobremesa","Bebidas","Baratíssimos","Especiais","Combo Individual","Combo Casal/Família"],
+  adicionais: [
+    { nome: "Bacon", preco: 3.00 },
+    { nome: "Molho especial", preco: 2.00 },
+    { nome: "Carne extra", preco: 8.00 },
+    { nome: "Queijo cheddar", preco: 3.50 },
+    { nome: "Cebola caramelizada", preco: 2.50 },
+    { nome: "Ovo frito", preco: 2.00 },
+  ],
+  produtos: [
+    { id:1, nome:"Classic Burger", categoria:"Especiais", preco:29.90, descricao:"Pão brioche, blend 180g, queijo prato, alface, tomate e molho da casa.", foto:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80", ativo:true },
+    { id:2, nome:"Coca-Cola 350ml", categoria:"Bebidas", preco:6.00, descricao:"Gelada, na latinha.", foto:"https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&q=80", ativo:true },
+  ]
+};
 
-// ===== STORAGE LOCAL (credenciais e categorias) =====
-function salvarLocal(k,v){localStorage.setItem('bh_'+k,JSON.stringify(v));}
-function carregarLocal(k,def){try{const d=localStorage.getItem('bh_'+k);return d?JSON.parse(d):def;}catch{return def;}}
-
-// ===== JSONP =====
-function chamarGet(params){
-  return new Promise((resolve,reject)=>{
-    const cb='cb_'+Date.now();
-    const t=setTimeout(()=>{delete window[cb];reject(new Error("Timeout"));},12000);
-    window[cb]=(data)=>{clearTimeout(t);delete window[cb];resolve(data);};
-    const qs=Object.entries({...params,callback:cb}).map(([k,v])=>`${k}=${encodeURIComponent(v)}`).join('&');
-    const s=document.createElement('script');
-    s.src=`${SCRIPT_URL}?${qs}`;
-    s.onerror=()=>{clearTimeout(t);delete window[cb];reject(new Error("Erro de conexão"));};
-    document.head.appendChild(s);
-    setTimeout(()=>s.remove(),15000);
-  });
+// ===== STORAGE =====
+function carregar(chave) {
+  try { return JSON.parse(localStorage.getItem('bh_' + chave)); } catch { return null; }
 }
-
-function chamarPost(body){
-  return fetch(SCRIPT_URL,{method:'POST',body:JSON.stringify(body)}).then(r=>r.json());
+function salvar(chave, valor) {
+  localStorage.setItem('bh_' + chave, JSON.stringify(valor));
+}
+function getDados(chave) {
+  return carregar(chave) ?? DEFAULTS[chave];
 }
 
 // ===== LOGIN =====
-document.getElementById("login-usuario").addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("login-senha").focus();});
-document.getElementById("login-senha").addEventListener("keydown",e=>{if(e.key==="Enter")fazerLogin();});
+document.getElementById("login-usuario").addEventListener("keydown", e => { if(e.key==="Enter") document.getElementById("login-senha").focus(); });
+document.getElementById("login-senha").addEventListener("keydown", e => { if(e.key==="Enter") fazerLogin(); });
 
-function fazerLogin(){
-  const u=document.getElementById("login-usuario").value.trim();
-  const s=document.getElementById("login-senha").value;
-  const creds=carregarLocal("credenciais",{usuario:"admin",senha:"1234"});
-  if(u===creds.usuario&&s===creds.senha){
-    document.getElementById("login-screen").style.display="none";
-    document.getElementById("painel").style.display="block";
+function fazerLogin() {
+  const u = document.getElementById("login-usuario").value.trim();
+  const s = document.getElementById("login-senha").value;
+  const creds = getDados("credenciais");
+  if (u === creds.usuario && s === creds.senha) {
+    document.getElementById("login-screen").style.display = "none";
+    document.getElementById("painel").style.display = "block";
     carregarTudo();
   } else {
-    document.getElementById("login-erro").style.display="block";
+    document.getElementById("login-erro").style.display = "block";
   }
 }
-function fazerLogout(){
-  document.getElementById("login-screen").style.display="flex";
-  document.getElementById("painel").style.display="none";
-  document.getElementById("login-usuario").value="";
-  document.getElementById("login-senha").value="";
+
+function fazerLogout() {
+  document.getElementById("login-screen").style.display = "flex";
+  document.getElementById("painel").style.display = "none";
+  document.getElementById("login-usuario").value = "";
+  document.getElementById("login-senha").value = "";
 }
 
-function trocarTab(id,btn){
-  document.querySelectorAll(".secao").forEach(s=>s.classList.remove("ativa"));
-  document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("ativo"));
-  document.getElementById("sec-"+id).classList.add("ativa");
+// ===== TABS =====
+function trocarTab(id, btn) {
+  document.querySelectorAll(".secao").forEach(s => s.classList.remove("ativa"));
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("ativo"));
+  document.getElementById("sec-" + id).classList.add("ativa");
   btn.classList.add("ativo");
+  if (id === "entregas") carregarEntregas();
 }
 
-function mostrarToast(msg="✅ Salvo!",cor="var(--green)"){
-  const t=document.getElementById("toast");
-  t.textContent=msg; t.style.background=cor;
+// ===== TOAST =====
+function mostrarToast(msg="✅ Salvo com sucesso!") {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
   t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"),2800);
+  setTimeout(() => t.classList.remove("show"), 2500);
 }
 
 // ===== CARREGAR TUDO =====
-async function carregarTudo(){
-  // Carregar config do Sheets
-  try {
-    const res = await chamarGet({acao:"config"});
-    if(res.ok && res.config){
-      const c = res.config;
-      document.getElementById("cfg-nome").value = c.nome||"";
-      document.getElementById("cfg-slogan").value = c.slogan||"";
-      document.getElementById("cfg-logo").value = c.logo||"";
-      document.getElementById("cfg-video").value = c.video||"";
-      document.getElementById("cfg-wpp").value = c.wpp||"";
-      document.getElementById("cfg-taxa").value = c.taxa||"";
-      if(c.logo) previewLogoUrl(c.logo);
-    }
-  } catch(e){ console.warn("Erro ao carregar config:", e); }
+function carregarTudo() {
+  const cfg = getDados("config");
+  document.getElementById("cfg-nome").value = cfg.nome || "";
+  document.getElementById("cfg-slogan").value = cfg.slogan || "";
+  document.getElementById("cfg-logo").value = cfg.logo || "";
+  document.getElementById("cfg-video").value = cfg.video || "";
+  document.getElementById("cfg-wpp").value = cfg.wpp || "";
+  document.getElementById("cfg-taxa").value = cfg.taxa || "";
+  if (cfg.logo) previewLogo(cfg.logo);
+  const creds = getDados("credenciais");
+  document.getElementById("cfg-usuario").value = creds.usuario || "";
 
-  const creds=carregarLocal("credenciais",{usuario:"admin",senha:"1234"});
-  document.getElementById("cfg-usuario").value=creds.usuario||"";
-
-  await carregarProdutosDoSheets();
-  await carregarAdicionaisDoSheets();
+  renderizarProdutos();
+  renderizarAdicionais();
   renderizarCategorias();
-  renderizarPedidos();
 }
 
 // ===== CONFIGURAÇÕES =====
-async function salvarConfiguracoes(){
-  const btn=document.getElementById("btn-salvar-cfg");
-  btn.disabled=true; btn.textContent="Salvando...";
-  const cfg={
-    nome:document.getElementById("cfg-nome").value.trim(),
-    slogan:document.getElementById("cfg-slogan").value.trim(),
-    logo:document.getElementById("cfg-logo").value.trim(),
-    video:document.getElementById("cfg-video").value.trim(),
-    wpp:document.getElementById("cfg-wpp").value.trim(),
-    taxa:document.getElementById("cfg-taxa").value.trim(),
+function salvarConfiguracoes() {
+  const cfg = {
+    nome: document.getElementById("cfg-nome").value.trim(),
+    slogan: document.getElementById("cfg-slogan").value.trim(),
+    logo: document.getElementById("cfg-logo").value.trim(),
+    video: document.getElementById("cfg-video").value.trim(),
+    wpp: document.getElementById("cfg-wpp").value.trim(),
+    taxa: document.getElementById("cfg-taxa").value.trim(),
   };
-  try {
-    await chamarPost({acao:"config", config:cfg});
-    mostrarToast("✅ Configurações salvas!");
-  } catch(e){
-    mostrarToast("❌ Erro ao salvar","var(--red)");
-  }
-  btn.disabled=false; btn.textContent="💾 Salvar e sincronizar";
+  salvar("config", cfg);
+  mostrarToast("✅ Configurações salvas!");
 }
 
-function salvarSenha(){
-  const u=document.getElementById("cfg-usuario").value.trim();
-  const s=document.getElementById("cfg-senha").value;
-  if(!u||!s) return mostrarToast("⚠️ Preencha usuário e senha","#888");
-  salvarLocal("credenciais",{usuario:u,senha:s});
+function salvarSenha() {
+  const u = document.getElementById("cfg-usuario").value.trim();
+  const s = document.getElementById("cfg-senha").value;
+  if (!u || !s) return mostrarToast("⚠️ Preencha usuário e senha");
+  salvar("credenciais", { usuario: u, senha: s });
   mostrarToast("🔒 Acesso atualizado!");
 }
 
-// ===== UPLOAD DE IMAGEM (Cloudinary) =====
-const CLOUDINARY_CLOUD = "djdl6hnvy";
-const CLOUDINARY_PRESET = "WhatsApp_Video_2026-04-23_at_00.37.34_1_wsu2lr";
-
-async function uploadImagem(input, campoId, prevId, tipo) {
-  const file = input.files[0];
-  if (!file) return;
-  const prev = document.getElementById(prevId);
-  const campo = document.getElementById(campoId);
-
-  // Preview local imediato
-  const reader = new FileReader();
-  reader.onload = e => {
-    if (prev) {
-      if (tipo === 'logo') {
-        prev.innerHTML = `<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
-      } else {
-        prev.src = e.target.result;
-        prev.style.display = "block";
-      }
-    }
-  };
-  reader.readAsDataURL(file);
-
-  mostrarToast("⏳ Enviando imagem...", "#555");
-  const form = new FormData();
-  form.append("file", file);
-  form.append("upload_preset", CLOUDINARY_PRESET);
-  try {
-    const resp = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`, {method:"POST", body:form});
-    const data = await resp.json();
-    if (data.secure_url) {
-      campo.value = data.secure_url;
-      mostrarToast("✅ Imagem enviada!");
-    } else {
-      mostrarToast("❌ Erro no upload. Cole o link manualmente.", "var(--red)");
-    }
-  } catch(e) {
-    mostrarToast("❌ Erro de conexão.", "var(--red)");
-  }
+function previewLogo(url) {
+  const img = document.getElementById("preview-logo");
+  if (url) { img.src = url; img.style.display = "block"; }
+  else img.style.display = "none";
 }
-
-async function uploadVideo(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const campo = document.getElementById("cfg-video");
-  const status = document.getElementById("video-upload-status");
-  const wrap = document.getElementById("video-preview-wrap");
-
-  // Preview local imediato
-  const localUrl = URL.createObjectURL(file);
-  wrap.innerHTML = `<video src="${localUrl}" style="width:100%;height:100%;object-fit:cover;" muted></video>`;
-
-  status.style.display = "block";
-  status.textContent = "⏳ Enviando vídeo... pode demorar alguns segundos.";
-  status.style.color = "var(--text2)";
-
-  const form = new FormData();
-  form.append("file", file);
-  form.append("upload_preset", CLOUDINARY_PRESET);
-  form.append("resource_type", "video");
-
-  try {
-    const resp = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/video/upload`, {method:"POST", body:form});
-    const data = await resp.json();
-    if (data.secure_url) {
-      campo.value = data.secure_url;
-      status.textContent = "✅ Vídeo enviado com sucesso!";
-      status.style.color = "var(--green)";
-      mostrarToast("✅ Vídeo enviado!");
-    } else {
-      status.textContent = "❌ Erro no upload. Tente novamente.";
-      status.style.color = "var(--red)";
-    }
-  } catch(e) {
-    status.textContent = "❌ Erro de conexão.";
-    status.style.color = "var(--red)";
-  }
-}
-
-function previewVideoUrl(url) {
-  const wrap = document.getElementById("video-preview-wrap");
-  if (url) wrap.innerHTML = `<video src="${url}" style="width:100%;height:100%;object-fit:cover;" muted></video>`;
-  else wrap.innerHTML = "▶️";
-}
-
-function previewLogoUrl(url) {
-  const wrap = document.getElementById("logo-preview-wrap");
-  if (url) wrap.innerHTML = `<img src="${url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
-  else wrap.innerHTML = "LOGO";
-}
-
-function previewLogo(url) { previewLogoUrl(url); }
 
 // ===== PRODUTOS =====
-let produtos=[];
+let produtos = [];
+let produtoAberto = null;
 
-async function carregarProdutosDoSheets(){
-  try {
-    const res = await chamarGet({acao:"produtos"});
-    if(res.ok){
-      produtos = (res.produtos||[]).map(p=>({
-        id: p.id||Date.now().toString(),
-        nome: p.nome||"",
-        categoria: p.categoria||"",
-        preco: parseFloat(p.preco)||0,
-        descricao: p.descricao||"",
-        foto: p.foto||"",
-        ativo: String(p.ativo).toLowerCase()!=="nao",
-      }));
-      renderizarProdutos();
-    }
-  } catch(e){ console.warn("Erro ao carregar produtos:",e); }
-}
-
-function renderizarProdutos(){
-  const lista=document.getElementById("lista-produtos");
-  lista.innerHTML=produtos.map(p=>`
+function renderizarProdutos() {
+  produtos = getDados("produtos");
+  const lista = document.getElementById("lista-produtos");
+  lista.innerHTML = produtos.map((p, i) => `
     <div class="produto-item" id="prod-item-${p.id}">
-      <div class="produto-header" onclick="toggleProduto('${p.id}')">
-        <img src="${p.foto||''}" alt="" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 60 60%22><rect fill=%22%23242424%22 width=%2260%22 height=%2260%22/><text y=%2250%25%22 x=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23555%22 font-size=%2224%22>🍔</text></svg>'">
+      <div class="produto-header" onclick="toggleProduto(${p.id})">
+        <img src="${p.foto || ''}" alt="" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 60 60%22><rect fill=%22%23242424%22 width=%2260%22 height=%2260%22/><text y=%2250%25%22 x=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23555%22 font-size=%2224%22>🍔</text></svg>'">
         <div class="produto-header-info">
-          <div class="produto-header-nome">${p.nome||"Novo Produto"}</div>
-          <div class="produto-header-cat">${p.categoria} • ${p.ativo?'<span style="color:var(--green)">Ativo</span>':'<span style="color:var(--red)">Oculto</span>'}</div>
+          <div class="produto-header-nome">${p.nome}</div>
+          <div class="produto-header-cat">${p.categoria} • ${p.ativo ? '<span style="color:var(--green)">Ativo</span>' : '<span style="color:var(--red)">Oculto</span>'}</div>
         </div>
         <div class="produto-header-preco">R$ ${p.preco.toFixed(2).replace(".",",")}</div>
         <span class="produto-toggle" id="toggle-${p.id}">▾</span>
       </div>
       <div class="produto-form" id="form-${p.id}">
         <div class="switch-row">
-          <label class="switch"><input type="checkbox" id="p-ativo-${p.id}" ${p.ativo?'checked':''}><span class="slider"></span></label>
-          <span style="font-size:13px;color:var(--text2);">Produto visível no cardápio</span>
+          <label class="switch"><input type="checkbox" id="p-ativo-${p.id}" ${p.ativo ? 'checked' : ''}><span class="slider"></span></label>
+          <span class="switch-label">Produto visível no cardápio</span>
         </div>
         <div class="form-row">
-          <div class="form-group"><label>Nome</label><input type="text" id="p-nome-${p.id}" value="${p.nome}"></div>
-          <div class="form-group"><label>Categoria</label><select id="p-cat-${p.id}">${getCategoriaOptions(p.categoria)}</select></div>
-        </div>
-        <div class="form-row">
-          <div class="form-group"><label>Preço (R$)</label><input type="number" id="p-preco-${p.id}" value="${p.preco}" step="0.01" min="0"></div>
           <div class="form-group">
-            <label>Foto do Produto</label>
-            <div style="display:flex;gap:8px;align-items:center;">
-              <img id="p-foto-prev-${p.id}" src="${p.foto||''}" style="width:44px;height:44px;border-radius:8px;object-fit:cover;background:var(--bg3);flex-shrink:0;${p.foto?'':'display:none;'}">
-              <label for="p-foto-file-${p.id}" style="padding:8px 12px;background:var(--brand);border-radius:50px;cursor:pointer;font-size:12px;font-weight:800;color:#fff;white-space:nowrap;">📷 Foto</label>
-              <input type="file" id="p-foto-file-${p.id}" accept="image/*" style="display:none;" onchange="uploadImagem(this,'p-foto-${p.id}','p-foto-prev-${p.id}','produto')">
-            </div>
-            <input type="url" id="p-foto-${p.id}" value="${p.foto||''}" placeholder="ou cole link..." style="width:100%;margin-top:6px;padding:8px 12px;background:var(--bg3);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:12px;">
+            <label>Nome</label>
+            <input type="text" id="p-nome-${p.id}" value="${p.nome}">
+          </div>
+          <div class="form-group">
+            <label>Categoria</label>
+            <select id="p-cat-${p.id}">${getCategoriaOptions(p.categoria)}</select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Preço (R$)</label>
+            <input type="number" id="p-preco-${p.id}" value="${p.preco}" step="0.01" min="0">
+          </div>
+          <div class="form-group">
+            <label>URL da Foto</label>
+            <input type="url" id="p-foto-${p.id}" value="${p.foto || ''}" placeholder="https://...">
           </div>
         </div>
         <div class="form-row full">
-          <div class="form-group"><label>Descrição</label><textarea id="p-desc-${p.id}">${p.descricao}</textarea></div>
+          <div class="form-group">
+            <label>Descrição</label>
+            <textarea id="p-desc-${p.id}">${p.descricao}</textarea>
+          </div>
         </div>
         <div class="produto-actions">
-          <button class="btn-salvar-prod" onclick="salvarProdutoLocal('${p.id}')">✔ Atualizar</button>
-          <button class="btn-del" onclick="deletarProduto('${p.id}')">🗑 Remover</button>
+          <button class="btn-salvar-prod" onclick="salvarProduto(${p.id})">💾 Salvar</button>
+          <button class="btn-del" onclick="deletarProduto(${p.id})">🗑 Remover</button>
         </div>
       </div>
     </div>
   `).join("");
 }
 
-function getCategoriaOptions(sel){
-  const cats=carregarLocal("categorias",["Sobremesa","Bebidas","Baratíssimos","Especiais","Combo Individual","Combo Casal/Família"]);
-  return cats.map(c=>`<option value="${c}" ${c===sel?'selected':''}>${c}</option>`).join("");
+function getCategoriaOptions(selecionada) {
+  const cats = getDados("categorias");
+  return cats.map(c => `<option value="${c}" ${c === selecionada ? 'selected' : ''}>${c}</option>`).join("");
 }
 
-function toggleProduto(id){
-  const form=document.getElementById("form-"+id);
-  const tog=document.getElementById("toggle-"+id);
-  const aberta=form.classList.contains("aberta");
-  document.querySelectorAll(".produto-form").forEach(f=>f.classList.remove("aberta"));
-  document.querySelectorAll(".produto-toggle").forEach(t=>t.classList.remove("aberto"));
-  if(!aberta){form.classList.add("aberta");tog.classList.add("aberto");}
+function toggleProduto(id) {
+  const form = document.getElementById("form-" + id);
+  const tog = document.getElementById("toggle-" + id);
+  const aberta = form.classList.contains("aberta");
+  document.querySelectorAll(".produto-form").forEach(f => f.classList.remove("aberta"));
+  document.querySelectorAll(".produto-toggle").forEach(t => t.classList.remove("aberto"));
+  if (!aberta) { form.classList.add("aberta"); tog.classList.add("aberto"); }
 }
 
-function salvarProdutoLocal(id){
-  const idx=produtos.findIndex(p=>p.id===id);
-  if(idx===-1)return;
-  produtos[idx]={
+function salvarProduto(id) {
+  const idx = produtos.findIndex(p => p.id === id);
+  if (idx === -1) return;
+  produtos[idx] = {
     id,
-    nome:document.getElementById("p-nome-"+id).value.trim(),
-    categoria:document.getElementById("p-cat-"+id).value,
-    preco:parseFloat(document.getElementById("p-preco-"+id).value)||0,
-    foto:document.getElementById("p-foto-"+id).value.trim(),
-    descricao:document.getElementById("p-desc-"+id).value.trim(),
-    ativo:document.getElementById("p-ativo-"+id).checked,
+    nome: document.getElementById("p-nome-" + id).value.trim(),
+    categoria: document.getElementById("p-cat-" + id).value,
+    preco: parseFloat(document.getElementById("p-preco-" + id).value) || 0,
+    foto: document.getElementById("p-foto-" + id).value.trim(),
+    descricao: document.getElementById("p-desc-" + id).value.trim(),
+    ativo: document.getElementById("p-ativo-" + id).checked,
   };
+  salvar("produtos", produtos);
   renderizarProdutos();
-  mostrarToast("✔ Atualizado! Clique em 'Salvar todos' para enviar ao cardápio.");
+  mostrarToast("✅ Produto salvo!");
 }
 
-function deletarProduto(id){
-  if(!confirm("Remover este produto?"))return;
-  produtos=produtos.filter(p=>p.id!==id);
+function deletarProduto(id) {
+  if (!confirm("Remover este produto?")) return;
+  produtos = produtos.filter(p => p.id !== id);
+  salvar("produtos", produtos);
   renderizarProdutos();
+  mostrarToast("🗑 Produto removido.");
 }
 
-function novoProduto(){
-  const cats=carregarLocal("categorias",["Especiais"]);
-  const id=Date.now().toString();
-  produtos.push({id,nome:"Novo Produto",categoria:cats[0]||"Especiais",preco:0,descricao:"",foto:"",ativo:true});
+function novoProduto() {
+  const cats = getDados("categorias");
+  const id = Date.now();
+  produtos.push({ id, nome:"Novo Produto", categoria: cats[0] || "Especiais", preco: 0, descricao: "", foto: "", ativo: true });
+  salvar("produtos", produtos);
   renderizarProdutos();
-  setTimeout(()=>{toggleProduto(id);document.getElementById("prod-item-"+id).scrollIntoView({behavior:"smooth"});},100);
-}
-
-async function salvarTodosProdutos(){
-  const btn=document.getElementById("btn-salvar-prods");
-  btn.disabled=true; btn.textContent="Salvando...";
-  try {
-    await chamarPost({acao:"produtos", produtos});
-    mostrarToast("✅ Produtos salvos no cardápio!");
-  } catch(e){
-    mostrarToast("❌ Erro ao salvar","var(--red)");
-  }
-  btn.disabled=false; btn.textContent="💾 Salvar todos os produtos";
+  setTimeout(() => { toggleProduto(id); document.getElementById("prod-item-" + id).scrollIntoView({ behavior:"smooth" }); }, 100);
 }
 
 // ===== ADICIONAIS =====
-async function carregarAdicionaisDoSheets(){
-  try {
-    const res=await chamarGet({acao:"adicionais"});
-    if(res.ok) renderizarAdicionais(res.adicionais||[]);
-  } catch(e){ renderizarAdicionais([]); }
-}
-
-function renderizarAdicionais(lista){
-  if(!lista) lista=[];
-  document.getElementById("lista-adicionais-edit").innerHTML=lista.map((a,i)=>`
+function renderizarAdicionais() {
+  const adicionais = getDados("adicionais");
+  const lista = document.getElementById("lista-adicionais-edit");
+  lista.innerHTML = adicionais.map((a, i) => `
     <div class="adicional-item">
-      <input class="adicional-nome-input" type="text" value="${a.nome}" placeholder="Nome" data-idx="${i}" data-campo="nome">
-      <input class="adicional-preco-input" type="number" value="${parseFloat(a.preco)||0}" step="0.50" min="0" data-idx="${i}" data-campo="preco">
-      <button class="btn-del-add" onclick="this.parentElement.remove()">✕</button>
+      <input class="adicional-nome-input" type="text" value="${a.nome}" placeholder="Nome do adicional" data-idx="${i}" data-campo="nome">
+      <input class="adicional-preco-input" type="number" value="${a.preco}" step="0.50" min="0" placeholder="R$ 0,00" data-idx="${i}" data-campo="preco">
+      <button class="btn-del-add" onclick="removerAdicional(${i})">✕</button>
     </div>
   `).join("");
 }
 
-function novoAdicional(){
-  const div=document.createElement("div");
-  div.className="adicional-item";
-  div.innerHTML=`<input class="adicional-nome-input" type="text" placeholder="Nome do adicional"><input class="adicional-preco-input" type="number" value="0" step="0.50" min="0"><button class="btn-del-add" onclick="this.parentElement.remove()">✕</button>`;
-  document.getElementById("lista-adicionais-edit").appendChild(div);
+function novoAdicional() {
+  const adicionais = getDados("adicionais");
+  adicionais.push({ nome: "", preco: 0 });
+  salvar("adicionais", adicionais);
+  renderizarAdicionais();
 }
 
-async function salvarAdicionais(){
-  const btn=document.getElementById("btn-salvar-adds");
-  btn.disabled=true; btn.textContent="Salvando...";
-  const items=document.querySelectorAll(".adicional-item");
-  const adicionais=[];
-  items.forEach(item=>{
-    const nome=item.querySelector('[data-campo="nome"], .adicional-nome-input').value.trim();
-    const preco=parseFloat(item.querySelector('[data-campo="preco"], .adicional-preco-input').value)||0;
-    if(nome) adicionais.push({nome,preco});
+function removerAdicional(idx) {
+  const adicionais = getDados("adicionais");
+  adicionais.splice(idx, 1);
+  salvar("adicionais", adicionais);
+  renderizarAdicionais();
+}
+
+function salvarAdicionais() {
+  const items = document.querySelectorAll(".adicional-item");
+  const adicionais = [];
+  items.forEach(item => {
+    const nome = item.querySelector('[data-campo="nome"]').value.trim();
+    const preco = parseFloat(item.querySelector('[data-campo="preco"]').value) || 0;
+    if (nome) adicionais.push({ nome, preco });
   });
-  try {
-    await chamarPost({acao:"adicionais", adicionais});
-    mostrarToast("✅ Adicionais salvos!");
-  } catch(e){
-    mostrarToast("❌ Erro ao salvar","var(--red)");
-  }
-  btn.disabled=false; btn.textContent="💾 Salvar adicionais";
+  salvar("adicionais", adicionais);
+  mostrarToast("✅ Adicionais salvos!");
 }
 
-// ===== CATEGORIAS (local) =====
-function renderizarCategorias(){
-  const cats=carregarLocal("categorias",["Sobremesa","Bebidas","Baratíssimos","Especiais","Combo Individual","Combo Casal/Família"]);
-  document.getElementById("lista-categorias-edit").innerHTML=cats.map((c,i)=>`
+// ===== CATEGORIAS =====
+function renderizarCategorias() {
+  const categorias = getDados("categorias");
+  const lista = document.getElementById("lista-categorias-edit");
+  lista.innerHTML = categorias.map((c, i) => `
     <div class="adicional-item">
-      <input class="adicional-nome-input" type="text" value="${c}" placeholder="Nome da categoria" style="grid-column:1/3;">
-      <button class="btn-del-add" onclick="this.parentElement.remove()">✕</button>
+      <input class="adicional-nome-input" type="text" value="${c}" placeholder="Nome da categoria" data-idx="${i}" style="grid-column:1/3;">
+      <button class="btn-del-add" onclick="removerCategoria(${i})">✕</button>
     </div>
   `).join("");
 }
 
-function novaCategoria(){
-  const div=document.createElement("div");
-  div.className="adicional-item";
-  div.innerHTML=`<input class="adicional-nome-input" type="text" placeholder="Nome da categoria" style="grid-column:1/3;"><button class="btn-del-add" onclick="this.parentElement.remove()">✕</button>`;
-  document.getElementById("lista-categorias-edit").appendChild(div);
+function novaCategoria() {
+  const cats = getDados("categorias");
+  cats.push("");
+  salvar("categorias", cats);
+  renderizarCategorias();
 }
 
-function salvarCategorias(){
-  const items=document.querySelectorAll("#lista-categorias-edit .adicional-nome-input");
-  const cats=Array.from(items).map(i=>i.value.trim()).filter(Boolean);
-  salvarLocal("categorias",cats);
+function removerCategoria(idx) {
+  const cats = getDados("categorias");
+  cats.splice(idx, 1);
+  salvar("categorias", cats);
+  renderizarCategorias();
+}
+
+function salvarCategorias() {
+  const items = document.querySelectorAll("#lista-categorias-edit .adicional-nome-input");
+  const cats = Array.from(items).map(i => i.value.trim()).filter(Boolean);
+  salvar("categorias", cats);
   mostrarToast("✅ Categorias salvas!");
 }
 
-// ===== PEDIDOS =====
-function hojeStr(){
-  const agora=new Date(new Date().toLocaleString("en-US",{timeZone:"America/Sao_Paulo"}));
-  return agora.getFullYear()+"-"+String(agora.getMonth()+1).padStart(2,"0")+"-"+String(agora.getDate()).padStart(2,"0");
-}
+// ===== SISTEMA DE ENTREGAS =====
+const ZAPI_INSTANCE = "3F50E6C0858F92F84456466CD3C725EB";
+const ZAPI_TOKEN    = "9498D0558A1E651A2188803B";
+const ZAPI_BASE     = `https://api.z-api.io/instances/${ZAPI_INSTANCE}/token/${ZAPI_TOKEN}`;
 
-async function renderizarPedidos(){
-  const lista=document.getElementById("lista-pedidos");
-  const filtroEl=document.getElementById("filtro-data");
-  const data=filtroEl.value||hojeStr();
-  filtroEl.value=data;
-  lista.innerHTML=`<div style="text-align:center;padding:40px;color:var(--text2);">⏳ Carregando...</div>`;
+// Envia mensagem de texto via Zapi
+async function zapiTexto(telefone, mensagem) {
   try {
-    const json=await chamarGet({acao:"pedidos",data});
-    if(!json.ok) throw new Error(json.erro||"Erro");
-    const doDia=(json.pedidos||[]).filter(p=>p.data===data);
-    const pagos=doDia.filter(p=>p.status==="pago");
-    const pendentes=doDia.filter(p=>p.status==="pendente");
-    const abandonados=doDia.filter(p=>p.status==="abandonado");
-    const totalDia=pagos.reduce((s,p)=>s+parseFloat(p.total||0),0);
-    document.getElementById("res-total-dia").textContent="R$ "+totalDia.toFixed(2).replace(".",",");
-    document.getElementById("res-qtd-dia").textContent=pagos.length+" pago"+(pagos.length!==1?"s":"");
-    document.getElementById("res-pendentes").textContent=pendentes.length;
-    document.getElementById("res-abandonados").textContent=abandonados.length;
-    if(!doDia.length){lista.innerHTML=`<div style="text-align:center;padding:40px;color:var(--text2);">Nenhum pedido nesta data.</div>`;return;}
-    const ordem={pendente:0,pago:1,abandonado:2};
-    doDia.sort((a,b)=>ordem[a.status]-ordem[b.status]);
-    lista.innerHTML=doDia.map(p=>{
-      const cor=p.status==="pago"?"var(--green)":p.status==="abandonado"?"#555":"var(--gold)";
-      const emoji=p.status==="pago"?"✅":p.status==="abandonado"?"❌":"⏳";
-      return `<div style="background:var(--bg2);border-radius:var(--radius);border:1.5px solid #2a2a2a;margin-bottom:10px;overflow:hidden;">
-        <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;">
-          <div style="flex-shrink:0;text-align:center;">
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:${cor};">#${String(p.num).padStart(2,"0")}</div>
-            <div style="font-size:10px;color:var(--text2);">${p.hora}</div>
-          </div>
-          <div style="flex:1;">
-            <div style="font-size:13px;font-weight:800;margin-bottom:2px;">👤 ${p.cliente||"—"}</div>
-            <div style="font-size:12px;color:var(--text2);margin-bottom:2px;">🛒 ${p.itens||"—"}</div>
-            ${p.adicionais?`<div style="font-size:11px;color:var(--text2);">+ ${p.adicionais}</div>`:""}
-            <div style="font-size:12px;color:var(--text2);">📍 ${p.endereco||"—"}</div>
-          </div>
-          <div style="text-align:right;flex-shrink:0;">
-            <div style="font-size:15px;font-weight:800;color:var(--gold);">R$ ${parseFloat(p.total||0).toFixed(2).replace(".",",")}</div>
-            <div style="font-size:13px;margin-top:4px;">${emoji} <span style="color:${cor};font-weight:700;text-transform:capitalize;">${p.status}</span></div>
-          </div>
+    const num = telefone.replace(/\D/g, "");
+    await fetch(`${ZAPI_BASE}/send-text`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ phone: num, message: mensagem })
+    });
+  } catch(e) { console.warn("Zapi erro:", e); }
+}
+
+// Formata número de telefone do endereço/nome do cliente
+function extrairTelefone(pedido) {
+  // Tenta pegar telefone salvo no pedido, senão retorna vazio
+  return pedido.telefone || pedido.fone || "";
+}
+
+function hojeStrEnt() {
+  return new Date().toISOString().slice(0,10);
+}
+
+function carregarEntregas() {
+  const todas = JSON.parse(localStorage.getItem('bh_entregas') || '[]');
+  const hoje = hojeStrEnt();
+  const emRota = todas.filter(e => e.status === "em_rota");
+  const concluidas = todas.filter(e => e.status === "entregue" && e.data === hoje);
+  const semSucesso = todas.filter(e => e.status === "nao_encontrado" && e.data === hoje);
+
+  // Atualiza resumo
+  document.getElementById("ent-em-rota").textContent = emRota.length;
+  document.getElementById("ent-concluidas").textContent = concluidas.length;
+
+  // Tempo médio
+  const tempos = concluidas.filter(e => e.hora_saida && e.hora_entrega).map(e => {
+    const [hS,mS] = e.hora_saida.split(":").map(Number);
+    const [hE,mE] = e.hora_entrega.split(":").map(Number);
+    return (hE*60+mE) - (hS*60+mS);
+  }).filter(t => t > 0);
+  document.getElementById("ent-tempo-medio").textContent = tempos.length
+    ? Math.round(tempos.reduce((a,b)=>a+b,0)/tempos.length) + "min"
+    : "—";
+
+  // Lista pedidos prontos para entrega (pago, sem entrega ainda)
+  const pedidos = JSON.parse(localStorage.getItem('bh_pedidos') || '[]');
+  const entregasIds = todas.map(e => e.pedido_id);
+  const aguardando = pedidos.filter(p => p.status === "pago" && !entregasIds.includes(p.id));
+
+  const lpe = document.getElementById("lista-para-entrega");
+  lpe.innerHTML = aguardando.length ? aguardando.map(p => `
+    <div style="background:var(--bg2);border-radius:var(--radius);border:1.5px solid #2a2a2a;padding:14px;margin-bottom:10px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <div>
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--brand);">#${String(p.num).padStart(2,"0")}</span>
+          <span style="font-size:12px;color:var(--text2);margin-left:8px;">${p.hora}</span>
         </div>
-        ${p.status==="pendente"?`<div style="display:flex;gap:8px;padding:0 16px 14px;">
-          <button onclick="mudarStatus('${p.id}','pago')" style="flex:1;padding:8px;background:var(--green);border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">✅ Pago</button>
-          <button onclick="mudarStatus('${p.id}','abandonado')" style="flex:1;padding:8px;background:var(--bg3);border:1.5px solid #555;border-radius:50px;color:#888;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">❌ Abandonado</button>
-          <button onclick="imprimirPedido('${p.id}','${p.num}','${p.hora}','${p.data}','${(p.cliente||'').replace(/'/g,'`')}','${(p.itens||'').replace(/'/g,'`')}','${(p.adicionais||'').replace(/'/g,'`')}','${(p.endereco||'').replace(/'/g,'`')}','${p.total}','${p.status}')" style="padding:8px 12px;background:#444;border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">🖨️</button>
-        </div>`:`<div style="display:flex;justify-content:flex-end;padding:0 16px 14px;">
-          <button onclick="imprimirPedido('${p.id}','${p.num}','${p.hora}','${p.data}','${(p.cliente||'').replace(/'/g,'`')}','${(p.itens||'').replace(/'/g,'`')}','${(p.adicionais||'').replace(/'/g,'`')}','${(p.endereco||'').replace(/'/g,'`')}','${p.total}','${p.status}')" style="padding:8px 16px;background:#444;border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">🖨️ Imprimir</button>
-        </div>`}
-      </div>`;
-    }).join("");
-  } catch(err){
-    lista.innerHTML=`<div style="text-align:center;padding:40px;color:var(--red);">❌ Erro ao carregar.<br><small>${err.message}</small><br><br>
-      <button onclick="renderizarPedidos()" style="padding:10px 20px;background:var(--brand);border:none;border-radius:50px;color:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;">Tentar novamente</button></div>`;
+        <div style="font-size:14px;font-weight:800;color:var(--gold);">R$ ${parseFloat(p.total||0).toFixed(2).replace(".",",")}</div>
+      </div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:4px;">👤 ${p.cliente}</div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:10px;">📍 ${p.endereco}</div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:10px;">🛒 ${p.itens}</div>
+      <div style="display:flex;gap:8px;">
+        <input type="text" id="fone-${p.id}" placeholder="📱 Telefone do cliente (p/ avisos)" style="flex:1;padding:8px 12px;background:var(--bg3);border:1.5px solid #333;border-radius:50px;color:var(--text);font-family:'Nunito',sans-serif;font-size:12px;">
+        <button onclick="enviarParaEntrega('${p.id}','${p.num}','${(p.cliente||'').replace(/'/g,'`')}','${(p.endereco||'').replace(/'/g,'`')}','${(p.itens||'').replace(/'/g,'`')}','${p.total}')" style="padding:8px 16px;background:var(--brand);border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">🛵 Enviar p/ entrega</button>
+      </div>
+    </div>
+  `).join("") : `<div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhum pedido aguardando entrega.</div>`;
+
+  // Lista em rota
+  const ler = document.getElementById("lista-em-rota");
+  ler.innerHTML = emRota.length ? emRota.map(e => `
+    <div style="background:var(--bg2);border-radius:var(--radius);border:1.5px solid var(--brand);padding:14px;margin-bottom:10px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--brand);">#${String(e.num).padStart(2,"0")}</span>
+        <span style="font-size:11px;color:var(--text2);">Saiu: ${e.hora_saida}</span>
+      </div>
+      <div style="font-size:13px;font-weight:700;">👤 ${e.cliente}</div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:10px;">📍 ${e.endereco}</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button onclick="marcarChegou('${e.id}')" style="flex:1;padding:8px;background:#444;border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;cursor:pointer;">📍 Chegou ao local</button>
+        <button onclick="marcarEntregue('${e.id}')" style="flex:1;padding:8px;background:var(--green);border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;cursor:pointer;">✅ Entrega concluída</button>
+        <button onclick="marcarNaoEncontrado('${e.id}')" style="flex:1;padding:8px;background:var(--bg3);border:1.5px solid var(--red);border-radius:50px;color:var(--red);font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;cursor:pointer;">❌ Não encontrado</button>
+      </div>
+    </div>
+  `).join("") : `<div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhuma entrega em andamento.</div>`;
+
+  // Concluídas hoje
+  const lc2 = document.getElementById("lista-concluidas");
+  const todasHoje = [...concluidas, ...semSucesso].sort((a,b)=>b.hora_entrega?.localeCompare(a.hora_entrega||"")||0);
+  lc2.innerHTML = todasHoje.length ? todasHoje.map(e => {
+    const cor = e.status==="entregue" ? "var(--green)" : "var(--red)";
+    const emoji = e.status==="entregue" ? "✅" : "❌";
+    const tempo = (e.hora_saida && e.hora_entrega) ? (() => {
+      const [hS,mS] = e.hora_saida.split(":").map(Number);
+      const [hE,mE] = e.hora_entrega.split(":").map(Number);
+      return `${(hE*60+mE)-(hS*60+mS)}min`;
+    })() : "—";
+    return `
+    <div style="background:var(--bg2);border-radius:var(--radius);border:1.5px solid #2a2a2a;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;">
+      <div style="font-size:22px;">${emoji}</div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:700;">#${String(e.num).padStart(2,"0")} — ${e.cliente}</div>
+        <div style="font-size:11px;color:var(--text2);">Saiu: ${e.hora_saida||"—"} → Entregue: ${e.hora_entrega||"—"} (${tempo})</div>
+      </div>
+      <div style="font-size:12px;font-weight:700;color:${cor};">${e.status==="entregue"?"ENTREGUE":"NÃO ENCONTRADO"}</div>
+    </div>`;
+  }).join("") : `<div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhuma entrega concluída ainda.</div>`;
+}
+
+function agora() {
+  const a = new Date(new Date().toLocaleString("en-US",{timeZone:"America/Sao_Paulo"}));
+  return String(a.getHours()).padStart(2,"0")+":"+String(a.getMinutes()).padStart(2,"0");
+}
+
+async function enviarParaEntrega(pedidoId, num, cliente, endereco, itens, total) {
+  const fone = document.getElementById("fone-"+pedidoId)?.value.trim() || "";
+  const hora = agora();
+  const hoje = hojeStrEnt();
+
+  // Cria registro de entrega
+  const entregas = JSON.parse(localStorage.getItem('bh_entregas') || '[]');
+  const entrega = {
+    id: Date.now().toString(),
+    pedido_id: pedidoId,
+    num, cliente, endereco, itens, total,
+    telefone: fone,
+    status: "em_rota",
+    data: hoje,
+    hora_saida: hora,
+    hora_chegada: null,
+    hora_entrega: null,
+  };
+  entregas.push(entrega);
+  localStorage.setItem('bh_entregas', JSON.stringify(entregas));
+
+  // Avisa cliente via Zapi (se tiver telefone)
+  if (fone) {
+    await zapiTexto(fone,
+      `🛵 Olá *${cliente}*! Seu pedido saiu para entrega!\n\n🍔 *Quality+ Burger*\n📍 A caminho do seu endereço.\n⏱️ Previsão: 30-45 minutos.\n\nQualquer dúvida, responda esta mensagem! 😊`
+    );
   }
+
+  mostrarToast("🛵 Pedido enviado para entrega!");
+  carregarEntregas();
 }
 
-async function mudarStatus(id,status){
-  try{
-    await chamarGet({acao:"status",id,status});
-    mostrarToast(status==="pago"?"✅ Marcado como pago!":"❌ Marcado como abandonado.");
-    renderizarPedidos();
-  }catch(e){mostrarToast("❌ Erro ao atualizar","var(--red)");}
+async function marcarChegou(entregaId) {
+  const entregas = JSON.parse(localStorage.getItem('bh_entregas') || '[]');
+  const idx = entregas.findIndex(e => e.id === entregaId);
+  if (idx === -1) return;
+  entregas[idx].hora_chegada = agora();
+  localStorage.setItem('bh_entregas', JSON.stringify(entregas));
+
+  // Avisa cliente
+  if (entregas[idx].telefone) {
+    await zapiTexto(entregas[idx].telefone,
+      `📍 Olá *${entregas[idx].cliente}*!\n\nNosso entregador *chegou ao seu endereço*! 🛵\n\nPor favor, dirija-se ao local para receber seu pedido.\n\n🍔 *Quality+ Burger*`
+    );
+  }
+
+  mostrarToast("📍 Chegada registrada e cliente avisado!");
+  carregarEntregas();
 }
 
-function imprimirPedido(id,num,hora,data,cliente,itens,adicionais,endereco,total,status){
-  const nomeLoja = document.getElementById("cfg-nome").value || "Hamburgueria";
-  const dataFormatada = data.split("-").reverse().join("/");
-  const statusTexto = status==="pago" ? "✅ PAGO" : status==="abandonado" ? "❌ ABANDONADO" : "⏳ PENDENTE";
+async function marcarEntregue(entregaId) {
+  const entregas = JSON.parse(localStorage.getItem('bh_entregas') || '[]');
+  const idx = entregas.findIndex(e => e.id === entregaId);
+  if (idx === -1) return;
+  entregas[idx].status = "entregue";
+  entregas[idx].hora_entrega = agora();
+  localStorage.setItem('bh_entregas', JSON.stringify(entregas));
 
-  // Pergunta a taxa de entrega antes de imprimir
-  const taxaInput = prompt("💰 Informe a taxa de entrega (deixe em branco se retirada no local):", "R$ 0,00");
-  if (taxaInput === null) return; // cancelou
-  const taxa = taxaInput.trim();
-  const totalNum = parseFloat(total) || 0;
-  const taxaNum = parseFloat(taxa.replace("R$","").replace(",",".").trim()) || 0;
-  const totalFinal = totalNum + taxaNum;
-  const taxaTexto = taxa || "Retirada no local";
+  // Avisa cliente
+  if (entregas[idx].telefone) {
+    await zapiTexto(entregas[idx].telefone,
+      `✅ *Pedido entregue com sucesso!*\n\nObrigado pela preferência, *${entregas[idx].cliente}*! 🙏\n\nEsperamos que aproveite muito! 🍔\n\n⭐ Que tal nos avaliar no Google? Sua opinião é muito importante para nós!\n\n📲 *Quality+ Burger*`
+    );
+  }
 
-  const html = `<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Pedido #${String(num).padStart(2,"0")}</title>
-<style>
-  @page { margin: 10mm; size: 80mm auto; }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family: 'Courier New', monospace; font-size: 13px; color: #000; width: 100%; }
-  .center { text-align: center; }
-  .bold { font-weight: bold; }
-  .linha { border-top: 1px dashed #000; margin: 8px 0; }
-  .titulo { font-size: 18px; font-weight: bold; text-align: center; margin-bottom: 2px; }
-  .subtitulo { font-size: 11px; text-align: center; color: #333; margin-bottom: 8px; }
-  .pedido-num { font-size: 28px; font-weight: bold; text-align: center; margin: 6px 0; }
-  .label { color: #555; font-size: 11px; text-transform: uppercase; }
-  .valor { font-weight: bold; }
-  .total-box { background: #000; color: #fff; padding: 8px; border-radius: 4px; text-align: center; margin: 10px 0; }
-  .total-val { font-size: 20px; font-weight: bold; }
-  .status-box { text-align: center; font-size: 14px; font-weight: bold; margin: 6px 0; }
-  .rodape { text-align: center; font-size: 10px; color: #888; margin-top: 10px; }
-  .linha-val { display:flex; justify-content:space-between; margin: 3px 0; font-size:12px; }
-  @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
-</style>
-</head>
-<body>
-  <div class="titulo">${nomeLoja}</div>
-  <div class="subtitulo">Comprovante de Pedido</div>
-  <div class="linha"></div>
+  mostrarToast("✅ Entrega concluída!");
+  carregarEntregas();
+}
 
-  <div class="pedido-num">PEDIDO #${String(num).padStart(2,"0")}</div>
-  <div class="center" style="font-size:11px;color:#555;">${dataFormatada} às ${hora}</div>
+async function marcarNaoEncontrado(entregaId) {
+  const entregas = JSON.parse(localStorage.getItem('bh_entregas') || '[]');
+  const idx = entregas.findIndex(e => e.id === entregaId);
+  if (idx === -1) return;
+  entregas[idx].status = "nao_encontrado";
+  entregas[idx].hora_entrega = agora();
+  localStorage.setItem('bh_entregas', JSON.stringify(entregas));
 
-  <div class="linha"></div>
+  // Avisa cliente
+  if (entregas[idx].telefone) {
+    await zapiTexto(entregas[idx].telefone,
+      `⚠️ Olá *${entregas[idx].cliente}*!\n\nNosso entregador está no local de entrega, mas *não conseguiu contato*.\n\nPor favor, responda esta mensagem ou dirija-se ao endereço informado.\n\n📍 Seu entregador aguarda no local.\n\n🍔 *Quality+ Burger*`
+    );
+  }
 
-  <div class="label">Cliente</div>
-  <div class="valor" style="margin-bottom:6px;">${cliente}</div>
-
-  <div class="label">Itens</div>
-  <div class="valor" style="margin-bottom:4px;">${itens.replace(/,/g,'\n')}</div>
-
-  ${adicionais ? `<div class="label" style="margin-top:4px;">Adicionais</div>
-  <div style="font-size:12px;margin-bottom:4px;">+ ${adicionais}</div>` : ""}
-
-  <div class="linha"></div>
-
-  <div class="label">Endereço de entrega</div>
-  <div class="valor" style="margin-bottom:6px;">${endereco}</div>
-
-  <div class="linha"></div>
-
-  <div class="linha-val"><span>Subtotal dos itens:</span><span><b>R$ ${totalNum.toFixed(2).replace(".",",")}</b></span></div>
-  <div class="linha-val"><span>Taxa de entrega:</span><span><b>${taxaTexto}</b></span></div>
-
-  <div class="total-box">
-    <div style="font-size:11px;letter-spacing:1px;">TOTAL FINAL</div>
-    <div class="total-val">R$ ${totalFinal.toFixed(2).replace(".",",")}</div>
-  </div>
-
-  <div class="status-box">${statusTexto}</div>
-
-  <div class="linha"></div>
-  <div class="rodape">Obrigado pela preferência!<br>${nomeLoja}</div>
-</body>
-</html>`;
-
-  const janela = window.open("","_blank","width=400,height=600");
-  janela.document.write(html);
-  janela.document.close();
-  janela.focus();
-  setTimeout(() => { janela.print(); janela.close(); }, 500);
+  mostrarToast("❌ Registrado como não encontrado. Cliente avisado.");
+  carregarEntregas();
 }
 </script>
 </body>
