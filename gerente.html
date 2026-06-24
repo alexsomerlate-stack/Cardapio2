@@ -329,7 +329,6 @@ input:checked + .slider:before { transform:translateX(20px); }
     <div id="sec-entregas" class="secao">
       <div class="secao-titulo">Entregas</div>
 
-      <!-- Resumo -->
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;">
         <div style="background:var(--bg2);border-radius:var(--radius);padding:14px;text-align:center;border:1.5px solid #2a2a2a;">
           <div id="ent-em-rota" style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--brand);">0</div>
@@ -345,7 +344,6 @@ input:checked + .slider:before { transform:translateX(20px); }
         </div>
       </div>
 
-      <!-- Pedidos aguardando entrega -->
       <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;color:var(--text2);margin-bottom:12px;">PEDIDOS PRONTOS PARA ENTREGA</div>
       <div id="lista-para-entrega"><div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhum pedido aguardando entrega.</div></div>
 
@@ -475,7 +473,6 @@ function mostrarToast(msg="✅ Salvo com sucesso!") {
 
 // ===== CARREGAR TUDO =====
 async function carregarTudo() {
-  // Tenta carregar do Sheets
   try {
     const resConfig = await chamarGet({ acao: "config" });
     if (resConfig.ok && resConfig.config) {
@@ -489,7 +486,6 @@ async function carregarTudo() {
       if (c.logo) previewLogoUrl(c.logo);
     }
   } catch(e) {
-    // Fallback para localStorage
     const cfg = getDados("config");
     document.getElementById("cfg-nome").value = cfg.nome || "";
     document.getElementById("cfg-slogan").value = cfg.slogan || "";
@@ -536,12 +532,17 @@ function salvarSenha() {
   mostrarToast("🔒 Acesso atualizado!");
 }
 
+// ===== PREVIEW LOGO (CORRIGIDO) =====
 function previewLogo(url) { previewLogoUrl(url); }
 function previewLogoUrl(url) {
-  const wrap = document.getElementById("logo-preview-wrap");
-  if (!wrap) return;
-  if (url) wrap.innerHTML = `<img src="${url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
-  else wrap.innerHTML = "LOGO";
+  const img = document.getElementById("preview-logo");
+  if (!img) return;
+  if (url) {
+    img.src = url;
+    img.style.display = "block";
+  } else {
+    img.style.display = "none";
+  }
 }
 
 // ===== PRODUTOS via Sheets =====
@@ -585,22 +586,7 @@ async function salvarTodosProdutos() {
   if(btn){ btn.disabled=false; btn.textContent="💾 Salvar todos os produtos"; }
 }
 
-async function salvarAdicionaisSheets() {
-  const items = document.querySelectorAll(".adicional-item");
-  const adicionais = [];
-  items.forEach(item => {
-    const nome = item.querySelector('[data-campo="nome"], .adicional-nome-input')?.value.trim();
-    const preco = parseFloat(item.querySelector('[data-campo="preco"], .adicional-preco-input')?.value) || 0;
-    if (nome) adicionais.push({ nome, preco });
-  });
-  try {
-    await chamarPost({ acao: "adicionais", adicionais });
-    mostrarToast("✅ Adicionais salvos!");
-  } catch(e) { mostrarToast("❌ Erro ao salvar"); }
-}
-
 function renderizarProdutos() {
-  // produtos já carregados via Sheets em carregarProdutosDoSheets()
   const lista = document.getElementById("lista-produtos");
   lista.innerHTML = produtos.map((p, i) => `
     <div class="produto-item" id="prod-item-${p.id}">
@@ -894,16 +880,6 @@ const ZAPI_INSTANCE = "3F50E6C0858F92F84456466CD3C725EB";
 const ZAPI_TOKEN    = "9498D0558A1E651A2188803B";
 const ZAPI_BASE     = `https://api.z-api.io/instances/${ZAPI_INSTANCE}/token/${ZAPI_TOKEN}`;
 
-// Áudio de voz feminina gerado via VoiceRSS e hospedado no Cloudinary
-// Mensagem: "Olá! O entregador da Quality Burger chegou ao seu local de entrega e está aguardando.
-// Caso você esteja em um prédio, o entregador não irá subir até a sua residência.
-// Por favor, dirija-se ao local para receber o seu pedido. Obrigado!"
-const AUDIO_CHEGOU_TTS = encodeURIComponent(
-  "Olá! O entregador da Quality Burger chegou ao seu local de entrega e está aguardando. " +
-  "Caso você esteja em um prédio, o entregador não irá subir até a sua residência. " +
-  "Por favor, dirija-se ao local para receber o seu pedido. Obrigado!"
-);
-
 async function zapiTexto(telefone, mensagem) {
   try {
     const num = telefone.replace(/\D/g,"");
@@ -924,11 +900,6 @@ async function zapiAudio(telefone, audioUrl) {
       body:JSON.stringify({phone:num, audio:audioUrl})
     });
   } catch(e){ console.warn("Zapi audio:",e); }
-}
-
-// Gera URL de áudio TTS via VoiceRSS (gratuito, voz feminina pt-BR)
-function getTTSUrl(texto) {
-  return `https://api.voicerss.org/?key=api_key_free&hl=pt-br&src=${encodeURIComponent(texto)}&f=16khz_16bit_stereo&c=MP3`;
 }
 
 function hojeStrEnt() {
@@ -959,7 +930,6 @@ async function carregarEntregas() {
   document.getElementById("ent-tempo-medio").textContent = tempos.length
     ? Math.round(tempos.reduce((a,b)=>a+b,0)/tempos.length)+"min" : "—";
 
-  // ✅ Busca pedidos PAGOS do Google Sheets
   let pedidosPagos = [];
   try {
     const res = await chamarGet({acao:"pedidos", data:hoje});
@@ -969,7 +939,6 @@ async function carregarEntregas() {
   const entregasIds = todas.map(e=>e.pedido_id);
   const aguardando = pedidosPagos.filter(p=>!entregasIds.includes(p.id));
 
-  // Lista aguardando entrega
   const lpe = document.getElementById("lista-para-entrega");
   lpe.innerHTML = aguardando.length ? aguardando.map(p=>`
     <div style="background:var(--bg2);border-radius:var(--radius);border:1.5px solid #2a2a2a;padding:14px;margin-bottom:10px;">
@@ -990,7 +959,6 @@ async function carregarEntregas() {
     </div>
   `).join("") : `<div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhum pedido aguardando entrega.</div>`;
 
-  // Em rota
   const ler = document.getElementById("lista-em-rota");
   ler.innerHTML = emRota.length ? emRota.map(e=>`
     <div style="background:var(--bg2);border-radius:var(--radius);border:1.5px solid var(--brand);padding:14px;margin-bottom:10px;">
@@ -1008,7 +976,6 @@ async function carregarEntregas() {
     </div>
   `).join("") : `<div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhuma entrega em andamento.</div>`;
 
-  // Concluídas
   const lc2 = document.getElementById("lista-concluidas");
   const todasHoje = [...concluidas,...semSucesso].sort((a,b)=>(b.hora_entrega||"").localeCompare(a.hora_entrega||""));
   lc2.innerHTML = todasHoje.length ? todasHoje.map(e=>{
@@ -1056,13 +1023,10 @@ async function marcarChegou(entregaId) {
   entregas[idx].hora_chegada = agora();
   entregas[idx].status = "chegou";
   localStorage.setItem('bh_entregas', JSON.stringify(entregas));
-
   if(entregas[idx].telefone) {
-    // ✅ Envia TEXTO + ÁUDIO de voz feminina
     await zapiTexto(entregas[idx].telefone,
       `📍 Olá *${entregas[idx].cliente}*!\n\nNosso entregador *chegou ao seu endereço*! 🛵\n\n${entregas[idx].endereco}\n\n⚠️ *O entregador não sobe em prédios.* Por favor, desça para receber seu pedido.\n\n🍔 *Quality+ Burger*`
     );
-    // Áudio de voz feminina via VoiceRSS (TTS gratuito)
     const textoAudio = `Olá ${entregas[idx].cliente}! O entregador da Quality Burger chegou ao seu local de entrega e está aguardando. Caso você esteja em um prédio, o entregador não irá subir até a sua residência. Por favor, dirija-se ao local para receber o seu pedido. Obrigado!`;
     const audioUrl = `https://api.voicerss.org/?key=5b9b97b9b9b94c9b8a1d6e7f8g9h0i1j&hl=pt-br&src=${encodeURIComponent(textoAudio)}&f=16khz_16bit_stereo&c=MP3`;
     await zapiAudio(entregas[idx].telefone, audioUrl);
@@ -1099,93 +1063,8 @@ async function marcarNaoEncontrado(entregaId) {
       `⚠️ Olá *${entregas[idx].cliente}*!\n\nNosso entregador está no local mas *não conseguiu contato*.\n\nPor favor, responda esta mensagem ou dirija-se ao endereço informado *urgente*.\n\n📍 Seu entregador aguarda.\n\n🍔 *Quality+ Burger*`
     );
   }
-  mostrarToast("❌ Registrado. Cliente avisado.", "var(--red)");
+  mostrarToast("❌ Registrado. Cliente avisado.");
   carregarEntregas();
-}
-  const todas = JSON.parse(localStorage.getItem('bh_entregas') || '[]');
-  const hoje = hojeStrEnt();
-  const emRota = todas.filter(e => e.status === "em_rota");
-  const concluidas = todas.filter(e => e.status === "entregue" && e.data === hoje);
-  const semSucesso = todas.filter(e => e.status === "nao_encontrado" && e.data === hoje);
-
-  // Atualiza resumo
-  document.getElementById("ent-em-rota").textContent = emRota.length;
-  document.getElementById("ent-concluidas").textContent = concluidas.length;
-
-  // Tempo médio
-  const tempos = concluidas.filter(e => e.hora_saida && e.hora_entrega).map(e => {
-    const [hS,mS] = e.hora_saida.split(":").map(Number);
-    const [hE,mE] = e.hora_entrega.split(":").map(Number);
-    return (hE*60+mE) - (hS*60+mS);
-  }).filter(t => t > 0);
-  document.getElementById("ent-tempo-medio").textContent = tempos.length
-    ? Math.round(tempos.reduce((a,b)=>a+b,0)/tempos.length) + "min"
-    : "—";
-
-  // Lista pedidos prontos para entrega (pago, sem entrega ainda)
-  const pedidos = JSON.parse(localStorage.getItem('bh_pedidos') || '[]');
-  const entregasIds = todas.map(e => e.pedido_id);
-  const aguardando = pedidos.filter(p => p.status === "pago" && !entregasIds.includes(p.id));
-
-  const lpe = document.getElementById("lista-para-entrega");
-  lpe.innerHTML = aguardando.length ? aguardando.map(p => `
-    <div style="background:var(--bg2);border-radius:var(--radius);border:1.5px solid #2a2a2a;padding:14px;margin-bottom:10px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-        <div>
-          <span style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--brand);">#${String(p.num).padStart(2,"0")}</span>
-          <span style="font-size:12px;color:var(--text2);margin-left:8px;">${p.hora}</span>
-        </div>
-        <div style="font-size:14px;font-weight:800;color:var(--gold);">R$ ${parseFloat(p.total||0).toFixed(2).replace(".",",")}</div>
-      </div>
-      <div style="font-size:13px;font-weight:700;margin-bottom:4px;">👤 ${p.cliente}</div>
-      <div style="font-size:12px;color:var(--text2);margin-bottom:10px;">📍 ${p.endereco}</div>
-      <div style="font-size:12px;color:var(--text2);margin-bottom:10px;">🛒 ${p.itens}</div>
-      <div style="display:flex;gap:8px;">
-        <input type="text" id="fone-${p.id}" placeholder="📱 Telefone do cliente (p/ avisos)" style="flex:1;padding:8px 12px;background:var(--bg3);border:1.5px solid #333;border-radius:50px;color:var(--text);font-family:'Nunito',sans-serif;font-size:12px;">
-        <button onclick="enviarParaEntrega('${p.id}','${p.num}','${(p.cliente||'').replace(/'/g,'`')}','${(p.endereco||'').replace(/'/g,'`')}','${(p.itens||'').replace(/'/g,'`')}','${p.total}')" style="padding:8px 16px;background:var(--brand);border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">🛵 Enviar p/ entrega</button>
-      </div>
-    </div>
-  `).join("") : `<div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhum pedido aguardando entrega.</div>`;
-
-  // Lista em rota
-  const ler = document.getElementById("lista-em-rota");
-  ler.innerHTML = emRota.length ? emRota.map(e => `
-    <div style="background:var(--bg2);border-radius:var(--radius);border:1.5px solid var(--brand);padding:14px;margin-bottom:10px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-        <span style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--brand);">#${String(e.num).padStart(2,"0")}</span>
-        <span style="font-size:11px;color:var(--text2);">Saiu: ${e.hora_saida}</span>
-      </div>
-      <div style="font-size:13px;font-weight:700;">👤 ${e.cliente}</div>
-      <div style="font-size:12px;color:var(--text2);margin-bottom:10px;">📍 ${e.endereco}</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <button onclick="marcarChegou('${e.id}')" style="flex:1;padding:8px;background:#444;border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;cursor:pointer;">📍 Chegou ao local</button>
-        <button onclick="marcarEntregue('${e.id}')" style="flex:1;padding:8px;background:var(--green);border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;cursor:pointer;">✅ Entrega concluída</button>
-        <button onclick="marcarNaoEncontrado('${e.id}')" style="flex:1;padding:8px;background:var(--bg3);border:1.5px solid var(--red);border-radius:50px;color:var(--red);font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;cursor:pointer;">❌ Não encontrado</button>
-      </div>
-    </div>
-  `).join("") : `<div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhuma entrega em andamento.</div>`;
-
-  // Concluídas hoje
-  const lc2 = document.getElementById("lista-concluidas");
-  const todasHoje = [...concluidas, ...semSucesso].sort((a,b)=>b.hora_entrega?.localeCompare(a.hora_entrega||"")||0);
-  lc2.innerHTML = todasHoje.length ? todasHoje.map(e => {
-    const cor = e.status==="entregue" ? "var(--green)" : "var(--red)";
-    const emoji = e.status==="entregue" ? "✅" : "❌";
-    const tempo = (e.hora_saida && e.hora_entrega) ? (() => {
-      const [hS,mS] = e.hora_saida.split(":").map(Number);
-      const [hE,mE] = e.hora_entrega.split(":").map(Number);
-      return `${(hE*60+mE)-(hS*60+mS)}min`;
-    })() : "—";
-    return `
-    <div style="background:var(--bg2);border-radius:var(--radius);border:1.5px solid #2a2a2a;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;">
-      <div style="font-size:22px;">${emoji}</div>
-      <div style="flex:1;">
-        <div style="font-size:13px;font-weight:700;">#${String(e.num).padStart(2,"0")} — ${e.cliente}</div>
-        <div style="font-size:11px;color:var(--text2);">Saiu: ${e.hora_saida||"—"} → Entregue: ${e.hora_entrega||"—"} (${tempo})</div>
-      </div>
-      <div style="font-size:12px;font-weight:700;color:${cor};">${e.status==="entregue"?"ENTREGUE":"NÃO ENCONTRADO"}</div>
-    </div>`;
-  }).join("") : `<div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhuma entrega concluída ainda.</div>`;
 }
 </script>
 </body>
