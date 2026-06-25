@@ -15,201 +15,86 @@
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 body { font-family:'Nunito',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
-
-/* LOGIN */
-#login-screen {
-  min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px;
-}
-.login-box {
-  background:var(--bg2); border-radius:20px; padding:40px 32px; width:100%; max-width:360px;
-  border:1.5px solid #2a2a2a; text-align:center;
-}
+#login-screen { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
+.login-box { background:var(--bg2); border-radius:20px; padding:40px 32px; width:100%; max-width:360px; border:1.5px solid #2a2a2a; text-align:center; }
 .login-box h1 { font-family:'Bebas Neue',sans-serif; font-size:32px; letter-spacing:3px; color:var(--brand); margin-bottom:6px; }
 .login-box p { font-size:13px; color:var(--text2); margin-bottom:28px; }
-.login-box input {
-  width:100%; padding:13px 16px; background:var(--bg3); border:1.5px solid #333;
-  border-radius:var(--radius); color:var(--text); font-family:'Nunito',sans-serif;
-  font-size:15px; margin-bottom:12px;
-}
+.login-box input { width:100%; padding:13px 16px; background:var(--bg3); border:1.5px solid #333; border-radius:var(--radius); color:var(--text); font-family:'Nunito',sans-serif; font-size:15px; margin-bottom:12px; }
 .login-box input:focus { outline:none; border-color:var(--brand); }
-.btn-primary {
-  width:100%; padding:13px; background:var(--brand); border:none; border-radius:50px;
-  color:#fff; font-family:'Nunito',sans-serif; font-size:15px; font-weight:800; cursor:pointer;
-  transition:background .2s;
-}
+.btn-primary { width:100%; padding:13px; background:var(--brand); border:none; border-radius:50px; color:#fff; font-family:'Nunito',sans-serif; font-size:15px; font-weight:800; cursor:pointer; transition:background .2s; }
 .btn-primary:hover { background:var(--brand-dark); }
 #login-erro { color:var(--red); font-size:13px; margin-top:10px; display:none; }
-
-/* PAINEL */
 #painel { display:none; }
-#topbar {
-  background:var(--bg2); border-bottom:1.5px solid #2a2a2a;
-  padding:14px 20px; display:flex; align-items:center; justify-content:space-between;
-  position:sticky; top:0; z-index:50;
-}
+#topbar { background:var(--bg2); border-bottom:1.5px solid #2a2a2a; padding:14px 20px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:50; }
 #topbar h1 { font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:2px; color:var(--brand); }
-#btn-logout {
-  background:var(--bg3); border:1px solid #333; color:var(--text2);
-  padding:7px 16px; border-radius:50px; cursor:pointer; font-size:13px; font-family:'Nunito',sans-serif;
-}
+#btn-logout { background:var(--bg3); border:1px solid #333; color:var(--text2); padding:7px 16px; border-radius:50px; cursor:pointer; font-size:13px; font-family:'Nunito',sans-serif; }
 #btn-logout:hover { border-color:var(--red); color:var(--red); }
-
-/* TABS */
 #tabs { display:flex; gap:6px; padding:16px 16px 0; overflow-x:auto; scrollbar-width:none; }
 #tabs::-webkit-scrollbar { display:none; }
-.tab-btn {
-  flex-shrink:0; padding:9px 18px; border-radius:50px; border:1.5px solid #333;
-  background:var(--bg2); color:var(--text2); font-family:'Nunito',sans-serif;
-  font-size:13px; font-weight:700; cursor:pointer; transition:all .2s;
-}
+.tab-btn { flex-shrink:0; padding:9px 18px; border-radius:50px; border:1.5px solid #333; background:var(--bg2); color:var(--text2); font-family:'Nunito',sans-serif; font-size:13px; font-weight:700; cursor:pointer; transition:all .2s; }
 .tab-btn:hover { border-color:var(--brand); color:var(--text); }
 .tab-btn.ativo { background:var(--brand); border-color:var(--brand); color:#fff; }
-
-/* CONTEÚDO */
 #conteudo { padding:20px 16px 80px; max-width:800px; margin:0 auto; }
 .secao { display:none; }
 .secao.ativa { display:block; }
-.secao-titulo {
-  font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:2px;
-  color:var(--brand); margin-bottom:16px;
-}
-
-/* CARDS DE CONFIGURAÇÃO */
-.config-card {
-  background:var(--bg2); border-radius:var(--radius); padding:20px;
-  border:1.5px solid #2a2a2a; margin-bottom:14px;
-}
-.config-card label {
-  display:block; font-size:12px; font-weight:800; text-transform:uppercase;
-  letter-spacing:1px; color:var(--text2); margin-bottom:6px;
-}
-.config-card input, .config-card textarea {
-  width:100%; padding:11px 14px; background:var(--bg3); border:1.5px solid #333;
-  border-radius:10px; color:var(--text); font-family:'Nunito',sans-serif; font-size:14px;
-}
+.secao-titulo { font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:2px; color:var(--brand); margin-bottom:16px; }
+.config-card { background:var(--bg2); border-radius:var(--radius); padding:20px; border:1.5px solid #2a2a2a; margin-bottom:14px; }
+.config-card label { display:block; font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:var(--text2); margin-bottom:6px; }
+.config-card input, .config-card textarea { width:100%; padding:11px 14px; background:var(--bg3); border:1.5px solid #333; border-radius:10px; color:var(--text); font-family:'Nunito',sans-serif; font-size:14px; }
 .config-card input:focus, .config-card textarea:focus { outline:none; border-color:var(--brand); }
 .config-card textarea { min-height:80px; resize:vertical; }
 .input-hint { font-size:11px; color:var(--text2); margin-top:5px; line-height:1.4; }
-
-.btn-salvar {
-  display:inline-flex; align-items:center; gap:6px;
-  padding:11px 24px; background:var(--green); border:none; border-radius:50px;
-  color:#fff; font-family:'Nunito',sans-serif; font-size:14px; font-weight:800;
-  cursor:pointer; transition:background .2s; margin-top:6px;
-}
+.btn-salvar { display:inline-flex; align-items:center; gap:6px; padding:11px 24px; background:var(--green); border:none; border-radius:50px; color:#fff; font-family:'Nunito',sans-serif; font-size:14px; font-weight:800; cursor:pointer; transition:background .2s; margin-top:6px; }
 .btn-salvar:hover { background:#27ae60; }
-
-/* TOAST */
-#toast {
-  position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(80px);
-  background:var(--green); color:#fff; padding:12px 24px; border-radius:50px;
-  font-size:14px; font-weight:700; z-index:999; transition:transform .3s;
-  white-space:nowrap;
-}
+#toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--green); color:#fff; padding:12px 24px; border-radius:50px; font-size:14px; font-weight:700; z-index:999; transition:transform .3s; white-space:nowrap; }
 #toast.show { transform:translateX(-50%) translateY(0); }
-
-/* PRODUTOS */
-.produto-item {
-  background:var(--bg2); border-radius:var(--radius); border:1.5px solid #2a2a2a;
-  margin-bottom:12px; overflow:hidden;
-}
-.produto-header {
-  display:flex; align-items:center; gap:12px; padding:14px 16px; cursor:pointer;
-}
-.produto-header img {
-  width:52px; height:52px; border-radius:8px; object-fit:cover; background:var(--bg3); flex-shrink:0;
-}
+.produto-item { background:var(--bg2); border-radius:var(--radius); border:1.5px solid #2a2a2a; margin-bottom:12px; overflow:hidden; }
+.produto-header { display:flex; align-items:center; gap:12px; padding:14px 16px; cursor:pointer; }
+.produto-header img { width:52px; height:52px; border-radius:8px; object-fit:cover; background:var(--bg3); flex-shrink:0; }
 .produto-header-info { flex:1; }
 .produto-header-nome { font-size:15px; font-weight:800; }
 .produto-header-cat { font-size:12px; color:var(--text2); }
 .produto-header-preco { font-size:15px; font-weight:700; color:var(--gold); }
 .produto-toggle { font-size:18px; color:var(--text2); transition:transform .2s; }
 .produto-toggle.aberto { transform:rotate(180deg); }
-
 .produto-form { padding:0 16px 16px; display:none; border-top:1px solid #2a2a2a; padding-top:14px; }
 .produto-form.aberta { display:block; }
 .form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
 .form-row.full { grid-template-columns:1fr; }
-.form-group label {
-  display:block; font-size:11px; font-weight:800; text-transform:uppercase;
-  letter-spacing:1px; color:var(--text2); margin-bottom:5px;
-}
-.form-group input, .form-group select, .form-group textarea {
-  width:100%; padding:10px 12px; background:var(--bg3); border:1.5px solid #333;
-  border-radius:8px; color:var(--text); font-family:'Nunito',sans-serif; font-size:13px;
-}
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-  outline:none; border-color:var(--brand);
-}
+.form-group label { display:block; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:var(--text2); margin-bottom:5px; }
+.form-group input, .form-group select, .form-group textarea { width:100%; padding:10px 12px; background:var(--bg3); border:1.5px solid #333; border-radius:8px; color:var(--text); font-family:'Nunito',sans-serif; font-size:13px; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline:none; border-color:var(--brand); }
 .form-group select option { background:var(--bg3); }
 .form-group textarea { min-height:70px; resize:vertical; }
-
 .produto-actions { display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
-.btn-salvar-prod {
-  padding:9px 20px; background:var(--green); border:none; border-radius:50px;
-  color:#fff; font-family:'Nunito',sans-serif; font-size:13px; font-weight:800; cursor:pointer;
-}
-.btn-del {
-  padding:9px 20px; background:var(--bg4); border:1.5px solid var(--red); border-radius:50px;
-  color:var(--red); font-family:'Nunito',sans-serif; font-size:13px; font-weight:800; cursor:pointer;
-}
+.btn-salvar-prod { padding:9px 20px; background:var(--green); border:none; border-radius:50px; color:#fff; font-family:'Nunito',sans-serif; font-size:13px; font-weight:800; cursor:pointer; }
+.btn-del { padding:9px 20px; background:var(--bg4); border:1.5px solid var(--red); border-radius:50px; color:var(--red); font-family:'Nunito',sans-serif; font-size:13px; font-weight:800; cursor:pointer; }
 .btn-del:hover { background:var(--red); color:#fff; }
-
-/* SWITCH ATIVO */
 .switch-row { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
 .switch-label { font-size:13px; color:var(--text2); }
 .switch { position:relative; width:44px; height:24px; }
 .switch input { opacity:0; width:0; height:0; }
-.slider {
-  position:absolute; inset:0; background:#333; border-radius:24px; cursor:pointer; transition:.2s;
-}
-.slider:before {
-  content:''; position:absolute; width:18px; height:18px; left:3px; bottom:3px;
-  background:#fff; border-radius:50%; transition:.2s;
-}
+.slider { position:absolute; inset:0; background:#333; border-radius:24px; cursor:pointer; transition:.2s; }
+.slider:before { content:''; position:absolute; width:18px; height:18px; left:3px; bottom:3px; background:#fff; border-radius:50%; transition:.2s; }
 input:checked + .slider { background:var(--green); }
 input:checked + .slider:before { transform:translateX(20px); }
-
-/* NOVO PRODUTO */
-.btn-novo {
-  display:flex; align-items:center; gap:8px; width:100%;
-  padding:14px; background:var(--bg3); border:2px dashed #333;
-  border-radius:var(--radius); color:var(--text2); font-family:'Nunito',sans-serif;
-  font-size:14px; font-weight:700; cursor:pointer; justify-content:center;
-  transition:all .2s; margin-bottom:16px;
-}
+.btn-novo { display:flex; align-items:center; gap:8px; width:100%; padding:14px; background:var(--bg3); border:2px dashed #333; border-radius:var(--radius); color:var(--text2); font-family:'Nunito',sans-serif; font-size:14px; font-weight:700; cursor:pointer; justify-content:center; transition:all .2s; margin-bottom:16px; }
 .btn-novo:hover { border-color:var(--brand); color:var(--text); }
-
-/* ADICIONAIS */
-.adicional-item {
-  display:grid; grid-template-columns:1fr auto auto; gap:10px; align-items:center;
-  padding:10px 14px; background:var(--bg2); border-radius:10px;
-  border:1.5px solid #2a2a2a; margin-bottom:8px;
-}
-.adicional-nome-input {
-  background:var(--bg3); border:1.5px solid #333; border-radius:8px;
-  color:var(--text); font-family:'Nunito',sans-serif; font-size:13px; padding:8px 12px;
-}
-.adicional-preco-input {
-  width:90px; background:var(--bg3); border:1.5px solid #333; border-radius:8px;
-  color:var(--gold); font-family:'Nunito',sans-serif; font-size:13px; padding:8px 12px;
-}
+.adicional-item { display:grid; grid-template-columns:1fr auto auto; gap:10px; align-items:center; padding:10px 14px; background:var(--bg2); border-radius:10px; border:1.5px solid #2a2a2a; margin-bottom:8px; }
+.adicional-nome-input { background:var(--bg3); border:1.5px solid #333; border-radius:8px; color:var(--text); font-family:'Nunito',sans-serif; font-size:13px; padding:8px 12px; }
+.adicional-preco-input { width:90px; background:var(--bg3); border:1.5px solid #333; border-radius:8px; color:var(--gold); font-family:'Nunito',sans-serif; font-size:13px; padding:8px 12px; }
 .adicional-nome-input:focus, .adicional-preco-input:focus { outline:none; border-color:var(--brand); }
-.btn-del-add {
-  background:none; border:none; color:#555; font-size:18px; cursor:pointer; padding:4px;
-}
+.btn-del-add { background:none; border:none; color:#555; font-size:18px; cursor:pointer; padding:4px; }
 .btn-del-add:hover { color:var(--red); }
-
-/* PREVIEW LOGO */
-#preview-logo {
-  width:80px; height:80px; border-radius:50%; object-fit:cover;
-  border:2px solid var(--brand); margin-top:10px; display:none;
-}
+#preview-logo { width:80px; height:80px; border-radius:50%; object-fit:cover; border:2px solid var(--brand); margin-top:10px; display:none; }
+.zapi-status { padding:10px 14px; border-radius:10px; font-size:12px; font-weight:700; margin-top:10px; display:none; }
+.zapi-status.ok { background:#1a3a1a; color:var(--green); border:1px solid var(--green); display:block; }
+.zapi-status.erro { background:#3a1a1a; color:var(--red); border:1px solid var(--red); display:block; }
 </style>
 </head>
 <body>
 
-<!-- ===== LOGIN ===== -->
+<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
     <h1>GERENTE</h1>
@@ -222,7 +107,7 @@ input:checked + .slider:before { transform:translateX(20px); }
   </div>
 </div>
 
-<!-- ===== PAINEL ===== -->
+<!-- PAINEL -->
 <div id="painel">
   <div id="topbar">
     <h1>⚙️ Painel do Gerente</h1>
@@ -274,7 +159,36 @@ input:checked + .slider:before { transform:translateX(20px); }
 
       <button class="btn-salvar" onclick="salvarConfiguracoes()">💾 Salvar configurações</button>
 
-      <div style="margin-top:24px;padding:16px;background:var(--bg3);border-radius:var(--radius);">
+      <!-- SEÇÃO Z-API -->
+      <div style="margin-top:24px;padding:20px;background:var(--bg3);border-radius:var(--radius);border:1.5px solid #2a2a2a;">
+        <p style="font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:4px;">📱 Integração Z-API (WhatsApp)</p>
+        <p style="font-size:11px;color:#666;margin-bottom:14px;">Configure os dados da sua instância Z-API para envio automático de mensagens ao cliente.</p>
+
+        <label style="display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:5px;">Instance ID</label>
+        <input type="text" id="cfg-zapi-instance" placeholder="Ex: 3F50E6C0858F92F84456466CD3C725EB"
+          style="width:100%;padding:10px 12px;background:var(--bg2);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:10px;">
+
+        <label style="display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:5px;">Token da Instância</label>
+        <input type="text" id="cfg-zapi-token" placeholder="Ex: 9498D0558A1E651A2188803B"
+          style="width:100%;padding:10px 12px;background:var(--bg2);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:10px;">
+
+        <label style="display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:5px;">Client-Token (Token de Segurança da Conta)</label>
+        <input type="text" id="cfg-zapi-client-token" placeholder="Encontre em: painel Z-API → Segurança → Token da Conta"
+          style="width:100%;padding:10px 12px;background:var(--bg2);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:10px;">
+
+        <label style="display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:5px;">URL do Áudio de Chegada (MP3 hospedado)</label>
+        <input type="url" id="cfg-zapi-audio" placeholder="https://seu-servidor.com/audio-chegou.mp3"
+          style="width:100%;padding:10px 12px;background:var(--bg2);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:6px;">
+        <p style="font-size:11px;color:#666;margin-bottom:12px;">Grave um áudio MP3 dizendo que o entregador chegou e suba no seu servidor ou no <a href="https://filebin.net" target="_blank" style="color:var(--brand)">filebin.net</a>. Cole o link direto aqui. Isso garante que o áudio funcione 100% das vezes.</p>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn-salvar" onclick="salvarZapi()">💾 Salvar Z-API</button>
+          <button onclick="testarZapi()" style="padding:11px 20px;background:var(--bg4);border:1.5px solid #555;border-radius:50px;color:var(--text2);font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">🔌 Testar conexão</button>
+        </div>
+        <div id="zapi-status-msg" class="zapi-status"></div>
+      </div>
+
+      <div style="margin-top:16px;padding:16px;background:var(--bg3);border-radius:var(--radius);">
         <p style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:8px;">🔐 Trocar senha de acesso</p>
         <input type="text" id="cfg-usuario" placeholder="Novo usuário" style="width:100%;padding:10px 12px;background:var(--bg2);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:8px;">
         <input type="password" id="cfg-senha" placeholder="Nova senha" style="width:100%;padding:10px 12px;background:var(--bg2);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:8px;">
@@ -328,7 +242,6 @@ input:checked + .slider:before { transform:translateX(20px); }
     <!-- ABA: ENTREGAS -->
     <div id="sec-entregas" class="secao">
       <div class="secao-titulo">Entregas</div>
-
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;">
         <div style="background:var(--bg2);border-radius:var(--radius);padding:14px;text-align:center;border:1.5px solid #2a2a2a;">
           <div id="ent-em-rota" style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--brand);">0</div>
@@ -343,16 +256,12 @@ input:checked + .slider:before { transform:translateX(20px); }
           <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:1px;">Tempo médio</div>
         </div>
       </div>
-
       <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;color:var(--text2);margin-bottom:12px;">PEDIDOS PRONTOS PARA ENTREGA</div>
       <div id="lista-para-entrega"><div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhum pedido aguardando entrega.</div></div>
-
       <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;color:var(--text2);margin:20px 0 12px;">ENTREGAS EM ANDAMENTO</div>
       <div id="lista-em-rota"><div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhuma entrega em andamento.</div></div>
-
       <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;color:var(--text2);margin:20px 0 12px;">ENTREGAS CONCLUÍDAS HOJE</div>
       <div id="lista-concluidas"><div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhuma entrega concluída ainda.</div></div>
-
       <button onclick="carregarEntregas()" style="width:100%;margin-top:16px;padding:12px;background:var(--bg3);border:1.5px solid #444;border-radius:50px;color:var(--text2);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">🔄 Atualizar entregas</button>
     </div>
 
@@ -374,130 +283,190 @@ input:checked + .slider:before { transform:translateX(20px); }
 <script>
 // ===== DADOS PADRÃO =====
 const DEFAULTS = {
-  credenciais: { usuario: "admin", senha: "1234" },
+  credenciais: { usuario:"admin", senha:"1234" },
   config: {
-    nome: "BURGER HOUSE",
-    slogan: "Feito com fogo. Servido com amor.",
-    logo: "",
-    video: "",
-    wpp: "5531999999999",
-    taxa: "A taxa de entrega varia conforme o bairro e será informada pelo atendente."
+    nome:"BURGER HOUSE", slogan:"Feito com fogo. Servido com amor.",
+    logo:"", video:"", wpp:"5531999999999",
+    taxa:"A taxa de entrega varia conforme o bairro e será informada pelo atendente."
+  },
+  // ✅ Client-Token já preenchido, instance e token vindos do painel anterior
+  zapi: {
+    instance: "3F50E6C0858F92F84456466CD3C725EB",
+    token:    "9498D0558A1E651A2188803B",
+    clientToken: "F2106342f8a6f45199a73774b04018613S",
+    audioUrl: ""
   },
   categorias: ["Sobremesa","Bebidas","Baratíssimos","Especiais","Combo Individual","Combo Casal/Família"],
   adicionais: [
-    { nome: "Bacon", preco: 3.00 },
-    { nome: "Molho especial", preco: 2.00 },
-    { nome: "Carne extra", preco: 8.00 },
-    { nome: "Queijo cheddar", preco: 3.50 },
-    { nome: "Cebola caramelizada", preco: 2.50 },
-    { nome: "Ovo frito", preco: 2.00 },
+    {nome:"Bacon",preco:3.00},{nome:"Molho especial",preco:2.00},
+    {nome:"Carne extra",preco:8.00},{nome:"Queijo cheddar",preco:3.50},
+    {nome:"Cebola caramelizada",preco:2.50},{nome:"Ovo frito",preco:2.00},
   ],
   produtos: [
-    { id:1, nome:"Classic Burger", categoria:"Especiais", preco:29.90, descricao:"Pão brioche, blend 180g, queijo prato, alface, tomate e molho da casa.", foto:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80", ativo:true },
-    { id:2, nome:"Coca-Cola 350ml", categoria:"Bebidas", preco:6.00, descricao:"Gelada, na latinha.", foto:"https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&q=80", ativo:true },
+    {id:1,nome:"Classic Burger",categoria:"Especiais",preco:29.90,descricao:"Pão brioche, blend 180g, queijo prato, alface, tomate e molho da casa.",foto:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80",ativo:true},
+    {id:2,nome:"Coca-Cola 350ml",categoria:"Bebidas",preco:6.00,descricao:"Gelada, na latinha.",foto:"https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&q=80",ativo:true},
   ]
 };
 
 // ===== STORAGE =====
-function carregar(chave) {
-  try { return JSON.parse(localStorage.getItem('bh_' + chave)); } catch { return null; }
-}
-function salvar(chave, valor) {
-  localStorage.setItem('bh_' + chave, JSON.stringify(valor));
-}
-function getDados(chave) {
-  return carregar(chave) ?? DEFAULTS[chave];
-}
+function carregar(c){ try{return JSON.parse(localStorage.getItem('bh_'+c));}catch{return null;} }
+function salvar(c,v){ localStorage.setItem('bh_'+c,JSON.stringify(v)); }
+function getDados(c){ return carregar(c)??DEFAULTS[c]; }
 
 // ===== GOOGLE SHEETS =====
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwa3VKQEkUI9jsx5VzLYZqg8ddiYDAxindVBFUxsPlDPqiMn5Db0MgPto3MmzR-jQzHxQ/exec";
+const SCRIPT_URL="https://script.google.com/macros/s/AKfycbwa3VKQEkUI9jsx5VzLYZqg8ddiYDAxindVBFUxsPlDPqiMn5Db0MgPto3MmzR-jQzHxQ/exec";
 
-function chamarGet(params) {
-  return new Promise((resolve, reject) => {
-    const cb = 'cb_' + Date.now() + '_' + Math.random().toString(36).slice(2);
-    const t = setTimeout(() => { delete window[cb]; reject(new Error("Timeout")); }, 12000);
-    window[cb] = (data) => { clearTimeout(t); delete window[cb]; resolve(data); };
-    const qs = Object.entries({ ...params, callback: cb }).map(([k,v]) => `${k}=${encodeURIComponent(v)}`).join('&');
-    const s = document.createElement('script');
-    s.src = `${SCRIPT_URL}?${qs}`;
-    s.onerror = () => { clearTimeout(t); delete window[cb]; reject(new Error("Erro de conexão")); };
+function chamarGet(params){
+  return new Promise((resolve,reject)=>{
+    const cb='cb_'+Date.now()+'_'+Math.random().toString(36).slice(2);
+    const t=setTimeout(()=>{delete window[cb];reject(new Error("Timeout"));},12000);
+    window[cb]=(data)=>{clearTimeout(t);delete window[cb];resolve(data);};
+    const qs=Object.entries({...params,callback:cb}).map(([k,v])=>`${k}=${encodeURIComponent(v)}`).join('&');
+    const s=document.createElement('script');
+    s.src=`${SCRIPT_URL}?${qs}`;
+    s.onerror=()=>{clearTimeout(t);delete window[cb];reject(new Error("Erro de conexão"));};
     document.head.appendChild(s);
-    setTimeout(() => s.remove(), 15000);
+    setTimeout(()=>s.remove(),15000);
   });
 }
+function chamarPost(body){ return fetch(SCRIPT_URL,{method:'POST',body:JSON.stringify(body)}).then(r=>r.json()); }
 
-function chamarPost(body) {
-  return fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(body) }).then(r => r.json());
+// ===== Z-API =====
+function getZapi(){ return getDados("zapi"); }
+function getBase(){ const z=getZapi(); return `https://api.z-api.io/instances/${z.instance}/token/${z.token}`; }
+
+async function zapiTexto(fone, msg){
+  const z=getZapi();
+  if(!z.instance||!z.token||!z.clientToken){ console.warn("Z-API: configuração incompleta"); return; }
+  const num=fone.replace(/\D/g,""); if(!num) return;
+  try{
+    const r=await fetch(`${getBase()}/send-text`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json","Client-Token":z.clientToken},
+      body:JSON.stringify({phone:num,message:msg})
+    });
+    const j=await r.json();
+    if(!r.ok) console.warn("Z-API texto erro:",j);
+    else console.log("✅ Z-API texto enviado:",j.messageId||j.zaapId);
+  }catch(e){ console.warn("Z-API texto falha:",e.message); }
+}
+
+async function zapiAudio(fone, audioUrl){
+  const z=getZapi();
+  if(!z.instance||!z.token||!z.clientToken){ console.warn("Z-API: configuração incompleta"); return; }
+  if(!audioUrl){ console.warn("Z-API: URL de áudio não configurada"); return; }
+  const num=fone.replace(/\D/g,""); if(!num) return;
+  try{
+    const r=await fetch(`${getBase()}/send-audio`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json","Client-Token":z.clientToken},
+      body:JSON.stringify({phone:num,audio:audioUrl,waveform:true})
+    });
+    const j=await r.json();
+    if(!r.ok) console.warn("Z-API áudio erro:",j);
+    else console.log("✅ Z-API áudio enviado:",j.messageId||j.zaapId);
+  }catch(e){ console.warn("Z-API áudio falha:",e.message); }
+}
+
+async function testarZapi(){
+  const z=getZapi();
+  const el=document.getElementById("zapi-status-msg");
+  if(!z.instance||!z.token||!z.clientToken){
+    el.className="zapi-status erro";
+    el.textContent="❌ Preencha Instance ID, Token e Client-Token.";
+    return;
+  }
+  el.className="zapi-status ok"; el.textContent="⏳ Testando...";
+  try{
+    const r=await fetch(`https://api.z-api.io/instances/${z.instance}/token/${z.token}/status`,{
+      headers:{"Client-Token":z.clientToken}
+    });
+    const j=await r.json();
+    if(r.ok&&(j.connected||j.status)){
+      el.className="zapi-status ok";
+      el.textContent="✅ Z-API conectada! Status: "+(j.status||"online");
+    } else {
+      el.className="zapi-status erro";
+      el.textContent="❌ Erro: "+(j.message||JSON.stringify(j));
+    }
+  }catch(e){
+    el.className="zapi-status erro";
+    el.textContent="❌ Falha: "+e.message;
+  }
 }
 
 // ===== LOGIN =====
-document.getElementById("login-usuario").addEventListener("keydown", e => { if(e.key==="Enter") document.getElementById("login-senha").focus(); });
-document.getElementById("login-senha").addEventListener("keydown", e => { if(e.key==="Enter") fazerLogin(); });
+document.getElementById("login-usuario").addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("login-senha").focus();});
+document.getElementById("login-senha").addEventListener("keydown",e=>{if(e.key==="Enter")fazerLogin();});
 
-function fazerLogin() {
-  const u = document.getElementById("login-usuario").value.trim();
-  const s = document.getElementById("login-senha").value;
-  const creds = getDados("credenciais");
-  if (u === creds.usuario && s === creds.senha) {
-    document.getElementById("login-screen").style.display = "none";
-    document.getElementById("painel").style.display = "block";
+function fazerLogin(){
+  const u=document.getElementById("login-usuario").value.trim();
+  const s=document.getElementById("login-senha").value;
+  const creds=getDados("credenciais");
+  if(u===creds.usuario&&s===creds.senha){
+    document.getElementById("login-screen").style.display="none";
+    document.getElementById("painel").style.display="block";
     carregarTudo();
   } else {
-    document.getElementById("login-erro").style.display = "block";
+    document.getElementById("login-erro").style.display="block";
   }
 }
-
-function fazerLogout() {
-  document.getElementById("login-screen").style.display = "flex";
-  document.getElementById("painel").style.display = "none";
-  document.getElementById("login-usuario").value = "";
-  document.getElementById("login-senha").value = "";
+function fazerLogout(){
+  document.getElementById("login-screen").style.display="flex";
+  document.getElementById("painel").style.display="none";
+  document.getElementById("login-usuario").value="";
+  document.getElementById("login-senha").value="";
 }
 
 // ===== TABS =====
-function trocarTab(id, btn) {
-  document.querySelectorAll(".secao").forEach(s => s.classList.remove("ativa"));
-  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("ativo"));
-  document.getElementById("sec-" + id).classList.add("ativa");
+function trocarTab(id,btn){
+  document.querySelectorAll(".secao").forEach(s=>s.classList.remove("ativa"));
+  document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("ativo"));
+  document.getElementById("sec-"+id).classList.add("ativa");
   btn.classList.add("ativo");
-  if (id === "entregas") carregarEntregas();
+  if(id==="entregas") carregarEntregas();
 }
 
 // ===== TOAST =====
-function mostrarToast(msg="✅ Salvo com sucesso!") {
-  const t = document.getElementById("toast");
-  t.textContent = msg;
-  t.classList.add("show");
-  setTimeout(() => t.classList.remove("show"), 2500);
+function mostrarToast(msg="✅ Salvo com sucesso!"){
+  const t=document.getElementById("toast");
+  t.textContent=msg; t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),2500);
 }
 
 // ===== CARREGAR TUDO =====
-async function carregarTudo() {
-  try {
-    const resConfig = await chamarGet({ acao: "config" });
-    if (resConfig.ok && resConfig.config) {
-      const c = resConfig.config;
-      document.getElementById("cfg-nome").value = c.nome || "";
-      document.getElementById("cfg-slogan").value = c.slogan || "";
-      document.getElementById("cfg-logo").value = c.logo || "";
-      document.getElementById("cfg-video").value = c.video || "";
-      document.getElementById("cfg-wpp").value = c.wpp || "";
-      document.getElementById("cfg-taxa").value = c.taxa || "";
-      if (c.logo) previewLogoUrl(c.logo);
+async function carregarTudo(){
+  try{
+    const rc=await chamarGet({acao:"config"});
+    if(rc.ok&&rc.config){
+      const c=rc.config;
+      document.getElementById("cfg-nome").value=c.nome||"";
+      document.getElementById("cfg-slogan").value=c.slogan||"";
+      document.getElementById("cfg-logo").value=c.logo||"";
+      document.getElementById("cfg-video").value=c.video||"";
+      document.getElementById("cfg-wpp").value=c.wpp||"";
+      document.getElementById("cfg-taxa").value=c.taxa||"";
+      if(c.logo) previewLogoUrl(c.logo);
     }
-  } catch(e) {
-    const cfg = getDados("config");
-    document.getElementById("cfg-nome").value = cfg.nome || "";
-    document.getElementById("cfg-slogan").value = cfg.slogan || "";
-    document.getElementById("cfg-logo").value = cfg.logo || "";
-    document.getElementById("cfg-video").value = cfg.video || "";
-    document.getElementById("cfg-wpp").value = cfg.wpp || "";
-    document.getElementById("cfg-taxa").value = cfg.taxa || "";
-    if (cfg.logo) previewLogoUrl(cfg.logo);
+  }catch(e){
+    const cfg=getDados("config");
+    document.getElementById("cfg-nome").value=cfg.nome||"";
+    document.getElementById("cfg-slogan").value=cfg.slogan||"";
+    document.getElementById("cfg-logo").value=cfg.logo||"";
+    document.getElementById("cfg-video").value=cfg.video||"";
+    document.getElementById("cfg-wpp").value=cfg.wpp||"";
+    document.getElementById("cfg-taxa").value=cfg.taxa||"";
+    if(cfg.logo) previewLogoUrl(cfg.logo);
   }
 
-  const creds = getDados("credenciais");
-  document.getElementById("cfg-usuario").value = creds.usuario || "";
+  const z=getDados("zapi");
+  document.getElementById("cfg-zapi-instance").value=z.instance||"";
+  document.getElementById("cfg-zapi-token").value=z.token||"";
+  document.getElementById("cfg-zapi-client-token").value=z.clientToken||"";
+  document.getElementById("cfg-zapi-audio").value=z.audioUrl||"";
+
+  const creds=getDados("credenciais");
+  document.getElementById("cfg-usuario").value=creds.usuario||"";
 
   await carregarProdutosDoSheets();
   await carregarAdicionaisDoSheets();
@@ -506,129 +475,93 @@ async function carregarTudo() {
 }
 
 // ===== CONFIGURAÇÕES =====
-async function salvarConfiguracoes() {
-  const cfg = {
-    nome: document.getElementById("cfg-nome").value.trim(),
-    slogan: document.getElementById("cfg-slogan").value.trim(),
-    logo: document.getElementById("cfg-logo").value.trim(),
-    video: document.getElementById("cfg-video").value.trim(),
-    wpp: document.getElementById("cfg-wpp").value.trim(),
-    taxa: document.getElementById("cfg-taxa").value.trim(),
+async function salvarConfiguracoes(){
+  const cfg={
+    nome:document.getElementById("cfg-nome").value.trim(),
+    slogan:document.getElementById("cfg-slogan").value.trim(),
+    logo:document.getElementById("cfg-logo").value.trim(),
+    video:document.getElementById("cfg-video").value.trim(),
+    wpp:document.getElementById("cfg-wpp").value.trim(),
+    taxa:document.getElementById("cfg-taxa").value.trim(),
   };
-  try {
-    await chamarPost({ acao: "config", config: cfg });
-    mostrarToast("✅ Configurações salvas no cardápio!");
-  } catch(e) {
-    salvar("config", cfg);
-    mostrarToast("✅ Configurações salvas!");
-  }
+  try{ await chamarPost({acao:"config",config:cfg}); mostrarToast("✅ Configurações salvas no cardápio!"); }
+  catch(e){ salvar("config",cfg); mostrarToast("✅ Configurações salvas!"); }
 }
 
-function salvarSenha() {
-  const u = document.getElementById("cfg-usuario").value.trim();
-  const s = document.getElementById("cfg-senha").value;
-  if (!u || !s) return mostrarToast("⚠️ Preencha usuário e senha");
-  salvar("credenciais", { usuario: u, senha: s });
+function salvarZapi(){
+  const z={
+    instance:document.getElementById("cfg-zapi-instance").value.trim(),
+    token:document.getElementById("cfg-zapi-token").value.trim(),
+    clientToken:document.getElementById("cfg-zapi-client-token").value.trim(),
+    audioUrl:document.getElementById("cfg-zapi-audio").value.trim(),
+  };
+  salvar("zapi",z);
+  mostrarToast("✅ Z-API salva!");
+}
+
+function salvarSenha(){
+  const u=document.getElementById("cfg-usuario").value.trim();
+  const s=document.getElementById("cfg-senha").value;
+  if(!u||!s) return mostrarToast("⚠️ Preencha usuário e senha");
+  salvar("credenciais",{usuario:u,senha:s});
   mostrarToast("🔒 Acesso atualizado!");
 }
 
-// ===== PREVIEW LOGO (CORRIGIDO) =====
-function previewLogo(url) { previewLogoUrl(url); }
-function previewLogoUrl(url) {
-  const img = document.getElementById("preview-logo");
-  if (!img) return;
-  if (url) {
-    img.src = url;
-    img.style.display = "block";
-  } else {
-    img.style.display = "none";
-  }
+function previewLogo(url){ previewLogoUrl(url); }
+function previewLogoUrl(url){
+  const img=document.getElementById("preview-logo"); if(!img) return;
+  if(url){img.src=url;img.style.display="block";}else img.style.display="none";
 }
 
-// ===== PRODUTOS via Sheets =====
-let produtos = [];
+// ===== PRODUTOS =====
+let produtos=[];
 
-async function carregarProdutosDoSheets() {
-  try {
-    const res = await chamarGet({ acao: "produtos" });
-    if (res.ok) {
-      produtos = (res.produtos || []).map(p => ({
-        id: p.id || Date.now().toString(),
-        nome: p.nome || "",
-        categoria: p.categoria || "",
-        preco: parseFloat(p.preco) || 0,
-        descricao: p.descricao || "",
-        foto: p.foto || "",
-        ativo: String(p.ativo).toLowerCase() !== "nao",
+async function carregarProdutosDoSheets(){
+  try{
+    const res=await chamarGet({acao:"produtos"});
+    if(res.ok){
+      produtos=(res.produtos||[]).map(p=>({
+        id:p.id||Date.now().toString(),nome:p.nome||"",categoria:p.categoria||"",
+        preco:parseFloat(p.preco)||0,descricao:p.descricao||"",foto:p.foto||"",
+        ativo:String(p.ativo).toLowerCase()!=="nao",
       }));
       renderizarProdutos();
     }
-  } catch(e) {
-    produtos = getDados("produtos");
-    renderizarProdutos();
-  }
+  }catch(e){produtos=getDados("produtos");renderizarProdutos();}
 }
 
-async function carregarAdicionaisDoSheets() {
-  try {
-    const res = await chamarGet({ acao: "adicionais" });
-    if (res.ok) renderizarAdicionais(res.adicionais || []);
-  } catch(e) { renderizarAdicionais([]); }
+async function carregarAdicionaisDoSheets(){
+  try{const res=await chamarGet({acao:"adicionais"});if(res.ok)renderizarAdicionais(res.adicionais||[]);}
+  catch(e){renderizarAdicionais([]);}
 }
 
-async function salvarTodosProdutos() {
-  const btn = document.getElementById("btn-salvar-prods");
-  if(btn){ btn.disabled=true; btn.textContent="Salvando..."; }
-  try {
-    await chamarPost({ acao: "produtos", produtos });
-    mostrarToast("✅ Produtos salvos no cardápio!");
-  } catch(e) { mostrarToast("❌ Erro ao salvar","var(--red)"); }
-  if(btn){ btn.disabled=false; btn.textContent="💾 Salvar todos os produtos"; }
-}
-
-function renderizarProdutos() {
-  const lista = document.getElementById("lista-produtos");
-  lista.innerHTML = produtos.map((p, i) => `
+function renderizarProdutos(){
+  document.getElementById("lista-produtos").innerHTML=produtos.map(p=>`
     <div class="produto-item" id="prod-item-${p.id}">
       <div class="produto-header" onclick="toggleProduto(${p.id})">
-        <img src="${p.foto || ''}" alt="" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 60 60%22><rect fill=%22%23242424%22 width=%2260%22 height=%2260%22/><text y=%2250%25%22 x=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23555%22 font-size=%2224%22>🍔</text></svg>'">
+        <img src="${p.foto||''}" alt="" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 60 60%22><rect fill=%22%23242424%22 width=%2260%22 height=%2260%22/><text y=%2250%25%22 x=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23555%22 font-size=%2224%22>🍔</text></svg>'">
         <div class="produto-header-info">
           <div class="produto-header-nome">${p.nome}</div>
-          <div class="produto-header-cat">${p.categoria} • ${p.ativo ? '<span style="color:var(--green)">Ativo</span>' : '<span style="color:var(--red)">Oculto</span>'}</div>
+          <div class="produto-header-cat">${p.categoria} • ${p.ativo?'<span style="color:var(--green)">Ativo</span>':'<span style="color:var(--red)">Oculto</span>'}</div>
         </div>
         <div class="produto-header-preco">R$ ${p.preco.toFixed(2).replace(".",",")}</div>
         <span class="produto-toggle" id="toggle-${p.id}">▾</span>
       </div>
       <div class="produto-form" id="form-${p.id}">
         <div class="switch-row">
-          <label class="switch"><input type="checkbox" id="p-ativo-${p.id}" ${p.ativo ? 'checked' : ''}><span class="slider"></span></label>
+          <label class="switch"><input type="checkbox" id="p-ativo-${p.id}" ${p.ativo?'checked':''}><span class="slider"></span></label>
           <span class="switch-label">Produto visível no cardápio</span>
         </div>
         <div class="form-row">
-          <div class="form-group">
-            <label>Nome</label>
-            <input type="text" id="p-nome-${p.id}" value="${p.nome}">
-          </div>
-          <div class="form-group">
-            <label>Categoria</label>
-            <select id="p-cat-${p.id}">${getCategoriaOptions(p.categoria)}</select>
-          </div>
+          <div class="form-group"><label>Nome</label><input type="text" id="p-nome-${p.id}" value="${p.nome}"></div>
+          <div class="form-group"><label>Categoria</label><select id="p-cat-${p.id}">${getCategoriaOptions(p.categoria)}</select></div>
         </div>
         <div class="form-row">
-          <div class="form-group">
-            <label>Preço (R$)</label>
-            <input type="number" id="p-preco-${p.id}" value="${p.preco}" step="0.01" min="0">
-          </div>
-          <div class="form-group">
-            <label>URL da Foto</label>
-            <input type="url" id="p-foto-${p.id}" value="${p.foto || ''}" placeholder="https://...">
-          </div>
+          <div class="form-group"><label>Preço (R$)</label><input type="number" id="p-preco-${p.id}" value="${p.preco}" step="0.01" min="0"></div>
+          <div class="form-group"><label>URL da Foto</label><input type="url" id="p-foto-${p.id}" value="${p.foto||''}" placeholder="https://..."></div>
         </div>
         <div class="form-row full">
-          <div class="form-group">
-            <label>Descrição</label>
-            <textarea id="p-desc-${p.id}">${p.descricao}</textarea>
-          </div>
+          <div class="form-group"><label>Descrição</label><textarea id="p-desc-${p.id}">${p.descricao}</textarea></div>
         </div>
         <div class="produto-actions">
           <button class="btn-salvar-prod" onclick="salvarProduto(${p.id})">💾 Salvar</button>
@@ -639,59 +572,43 @@ function renderizarProdutos() {
   `).join("");
 }
 
-function getCategoriaOptions(selecionada) {
-  const cats = getDados("categorias");
-  return cats.map(c => `<option value="${c}" ${c === selecionada ? 'selected' : ''}>${c}</option>`).join("");
+function getCategoriaOptions(sel){
+  return getDados("categorias").map(c=>`<option value="${c}" ${c===sel?'selected':''}>${c}</option>`).join("");
 }
-
-function toggleProduto(id) {
-  const form = document.getElementById("form-" + id);
-  const tog = document.getElementById("toggle-" + id);
-  const aberta = form.classList.contains("aberta");
-  document.querySelectorAll(".produto-form").forEach(f => f.classList.remove("aberta"));
-  document.querySelectorAll(".produto-toggle").forEach(t => t.classList.remove("aberto"));
-  if (!aberta) { form.classList.add("aberta"); tog.classList.add("aberto"); }
+function toggleProduto(id){
+  const f=document.getElementById("form-"+id),t=document.getElementById("toggle-"+id),a=f.classList.contains("aberta");
+  document.querySelectorAll(".produto-form").forEach(x=>x.classList.remove("aberta"));
+  document.querySelectorAll(".produto-toggle").forEach(x=>x.classList.remove("aberto"));
+  if(!a){f.classList.add("aberta");t.classList.add("aberto");}
 }
-
-function salvarProduto(id) {
-  const idx = produtos.findIndex(p => p.id === id);
-  if (idx === -1) return;
-  produtos[idx] = {
-    id,
-    nome: document.getElementById("p-nome-" + id).value.trim(),
-    categoria: document.getElementById("p-cat-" + id).value,
-    preco: parseFloat(document.getElementById("p-preco-" + id).value) || 0,
-    foto: document.getElementById("p-foto-" + id).value.trim(),
-    descricao: document.getElementById("p-desc-" + id).value.trim(),
-    ativo: document.getElementById("p-ativo-" + id).checked,
+function salvarProduto(id){
+  const idx=produtos.findIndex(p=>p.id===id); if(idx===-1) return;
+  produtos[idx]={id,
+    nome:document.getElementById("p-nome-"+id).value.trim(),
+    categoria:document.getElementById("p-cat-"+id).value,
+    preco:parseFloat(document.getElementById("p-preco-"+id).value)||0,
+    foto:document.getElementById("p-foto-"+id).value.trim(),
+    descricao:document.getElementById("p-desc-"+id).value.trim(),
+    ativo:document.getElementById("p-ativo-"+id).checked,
   };
-  salvar("produtos", produtos);
-  renderizarProdutos();
-  mostrarToast("✅ Produto salvo!");
+  salvar("produtos",produtos); renderizarProdutos(); mostrarToast("✅ Produto salvo!");
 }
-
-function deletarProduto(id) {
-  if (!confirm("Remover este produto?")) return;
-  produtos = produtos.filter(p => p.id !== id);
-  salvar("produtos", produtos);
-  renderizarProdutos();
-  mostrarToast("🗑 Produto removido.");
+function deletarProduto(id){
+  if(!confirm("Remover este produto?")) return;
+  produtos=produtos.filter(p=>p.id!==id);
+  salvar("produtos",produtos); renderizarProdutos(); mostrarToast("🗑 Produto removido.");
 }
-
-function novoProduto() {
-  const cats = getDados("categorias");
-  const id = Date.now();
-  produtos.push({ id, nome:"Novo Produto", categoria: cats[0] || "Especiais", preco: 0, descricao: "", foto: "", ativo: true });
-  salvar("produtos", produtos);
-  renderizarProdutos();
-  setTimeout(() => { toggleProduto(id); document.getElementById("prod-item-" + id).scrollIntoView({ behavior:"smooth" }); }, 100);
+function novoProduto(){
+  const cats=getDados("categorias"),id=Date.now();
+  produtos.push({id,nome:"Novo Produto",categoria:cats[0]||"Especiais",preco:0,descricao:"",foto:"",ativo:true});
+  salvar("produtos",produtos); renderizarProdutos();
+  setTimeout(()=>{toggleProduto(id);document.getElementById("prod-item-"+id).scrollIntoView({behavior:"smooth"});},100);
 }
 
 // ===== ADICIONAIS =====
-function renderizarAdicionais(lista) {
-  const adicionais = lista || getDados("adicionais");
-  const listaEl = document.getElementById("lista-adicionais-edit");
-  listaEl.innerHTML = adicionais.map((a, i) => `
+function renderizarAdicionais(lista){
+  const adicionais=lista||getDados("adicionais");
+  document.getElementById("lista-adicionais-edit").innerHTML=adicionais.map((a,i)=>`
     <div class="adicional-item">
       <input class="adicional-nome-input" type="text" value="${a.nome}" placeholder="Nome do adicional" data-idx="${i}" data-campo="nome">
       <input class="adicional-preco-input" type="number" value="${a.preco}" step="0.50" min="0" placeholder="R$ 0,00" data-idx="${i}" data-campo="preco">
@@ -699,106 +616,69 @@ function renderizarAdicionais(lista) {
     </div>
   `).join("");
 }
-
-function novoAdicional() {
-  const div = document.createElement("div");
-  div.className = "adicional-item";
-  div.innerHTML = `<input class="adicional-nome-input" type="text" placeholder="Nome do adicional" data-campo="nome"><input class="adicional-preco-input" type="number" value="0" step="0.50" min="0" data-campo="preco"><button class="btn-del-add" onclick="this.parentElement.remove()">✕</button>`;
-  document.getElementById("lista-adicionais-edit").appendChild(div);
+function novoAdicional(){
+  const d=document.createElement("div"); d.className="adicional-item";
+  d.innerHTML=`<input class="adicional-nome-input" type="text" placeholder="Nome do adicional" data-campo="nome"><input class="adicional-preco-input" type="number" value="0" step="0.50" min="0" data-campo="preco"><button class="btn-del-add" onclick="this.parentElement.remove()">✕</button>`;
+  document.getElementById("lista-adicionais-edit").appendChild(d);
 }
-
-function removerAdicional(idx) {
-  const items = document.querySelectorAll(".adicional-item");
-  if(items[idx]) items[idx].remove();
-}
-
-async function salvarAdicionais() {
-  const items = document.querySelectorAll(".adicional-item");
-  const adicionais = [];
-  items.forEach(item => {
-    const nome = item.querySelector('[data-campo="nome"]')?.value.trim();
-    const preco = parseFloat(item.querySelector('[data-campo="preco"]')?.value) || 0;
-    if (nome) adicionais.push({ nome, preco });
+function removerAdicional(idx){const items=document.querySelectorAll(".adicional-item");if(items[idx])items[idx].remove();}
+async function salvarAdicionais(){
+  const adicionais=[];
+  document.querySelectorAll(".adicional-item").forEach(item=>{
+    const nome=item.querySelector('[data-campo="nome"]')?.value.trim();
+    const preco=parseFloat(item.querySelector('[data-campo="preco"]')?.value)||0;
+    if(nome) adicionais.push({nome,preco});
   });
-  try {
-    await chamarPost({ acao: "adicionais", adicionais });
-    mostrarToast("✅ Adicionais salvos!");
-  } catch(e) {
-    salvar("adicionais", adicionais);
-    mostrarToast("✅ Adicionais salvos!");
-  }
+  try{await chamarPost({acao:"adicionais",adicionais});mostrarToast("✅ Adicionais salvos!");}
+  catch(e){salvar("adicionais",adicionais);mostrarToast("✅ Adicionais salvos!");}
 }
 
 // ===== CATEGORIAS =====
-function renderizarCategorias() {
-  const categorias = getDados("categorias");
-  const lista = document.getElementById("lista-categorias-edit");
-  lista.innerHTML = categorias.map((c, i) => `
+function renderizarCategorias(){
+  document.getElementById("lista-categorias-edit").innerHTML=getDados("categorias").map((c,i)=>`
     <div class="adicional-item">
       <input class="adicional-nome-input" type="text" value="${c}" placeholder="Nome da categoria" data-idx="${i}" style="grid-column:1/3;">
       <button class="btn-del-add" onclick="removerCategoria(${i})">✕</button>
     </div>
   `).join("");
 }
-
-function novaCategoria() {
-  const cats = getDados("categorias");
-  cats.push("");
-  salvar("categorias", cats);
-  renderizarCategorias();
+function novaCategoria(){const cats=getDados("categorias");cats.push("");salvar("categorias",cats);renderizarCategorias();}
+function removerCategoria(idx){const cats=getDados("categorias");cats.splice(idx,1);salvar("categorias",cats);renderizarCategorias();}
+function salvarCategorias(){
+  const cats=Array.from(document.querySelectorAll("#lista-categorias-edit .adicional-nome-input")).map(i=>i.value.trim()).filter(Boolean);
+  salvar("categorias",cats); mostrarToast("✅ Categorias salvas!");
 }
 
-function removerCategoria(idx) {
-  const cats = getDados("categorias");
-  cats.splice(idx, 1);
-  salvar("categorias", cats);
-  renderizarCategorias();
+// ===== PEDIDOS =====
+function hojeStr(){
+  const a=new Date(new Date().toLocaleString("en-US",{timeZone:"America/Sao_Paulo"}));
+  return a.getFullYear()+"-"+String(a.getMonth()+1).padStart(2,"0")+"-"+String(a.getDate()).padStart(2,"0");
 }
-
-function salvarCategorias() {
-  const items = document.querySelectorAll("#lista-categorias-edit .adicional-nome-input");
-  const cats = Array.from(items).map(i => i.value.trim()).filter(Boolean);
-  salvar("categorias", cats);
-  mostrarToast("✅ Categorias salvas!");
-}
-
-// ===== PEDIDOS via Sheets =====
-function hojeStr() {
-  const agora = new Date(new Date().toLocaleString("en-US",{timeZone:"America/Sao_Paulo"}));
-  return agora.getFullYear()+"-"+String(agora.getMonth()+1).padStart(2,"0")+"-"+String(agora.getDate()).padStart(2,"0");
-}
-
-async function renderizarPedidos() {
-  const lista = document.getElementById("lista-pedidos");
-  const filtroEl = document.getElementById("filtro-data");
-  const data = filtroEl ? (filtroEl.value || hojeStr()) : hojeStr();
-  if(filtroEl) filtroEl.value = data;
-  if(lista) lista.innerHTML = `<div style="text-align:center;padding:40px;color:var(--text2);">⏳ Carregando pedidos...</div>`;
-
-  try {
-    const json = await chamarGet({ acao: "pedidos", data });
-    if (!json.ok) throw new Error(json.erro || "Erro");
-    const doDia = (json.pedidos || []).filter(p => p.data === data);
-    const pagos = doDia.filter(p => p.status === "pago");
-    const pendentes = doDia.filter(p => p.status === "pendente");
-    const abandonados = doDia.filter(p => p.status === "abandonado");
-
-    const totalDia = pagos.reduce((s,p) => s + parseFloat(p.total||0), 0);
-    if(document.getElementById("res-total-dia")) document.getElementById("res-total-dia").textContent = "R$ "+totalDia.toFixed(2).replace(".",",");
-    if(document.getElementById("res-qtd-dia")) document.getElementById("res-qtd-dia").textContent = pagos.length+" pago"+(pagos.length!==1?"s":"");
-    if(document.getElementById("res-pendentes")) document.getElementById("res-pendentes").textContent = pendentes.length;
-    if(document.getElementById("res-abandonados")) document.getElementById("res-abandonados").textContent = abandonados.length;
-
-    if (!doDia.length) { if(lista) lista.innerHTML = `<div style="text-align:center;padding:40px;color:var(--text2);">Nenhum pedido nesta data.</div>`; return; }
-
-    const ordem = { pendente:0, pago:1, abandonado:2 };
-    doDia.sort((a,b) => ordem[a.status]-ordem[b.status]);
-
-    if(lista) lista.innerHTML = doDia.map(p => {
-      const cor = p.status==="pago"?"var(--green)":p.status==="abandonado"?"#555":"var(--gold)";
-      const emoji = p.status==="pago"?"✅":p.status==="abandonado"?"❌":"⏳";
-      return `
-      <div style="background:var(--bg2);border-radius:var(--radius);border:1.5px solid #2a2a2a;margin-bottom:10px;overflow:hidden;">
+async function renderizarPedidos(){
+  const lista=document.getElementById("lista-pedidos");
+  const filtroEl=document.getElementById("filtro-data");
+  const data=filtroEl?(filtroEl.value||hojeStr()):hojeStr();
+  if(filtroEl) filtroEl.value=data;
+  if(lista) lista.innerHTML=`<div style="text-align:center;padding:40px;color:var(--text2);">⏳ Carregando pedidos...</div>`;
+  try{
+    const json=await chamarGet({acao:"pedidos",data});
+    if(!json.ok) throw new Error(json.erro||"Erro");
+    const doDia=(json.pedidos||[]).filter(p=>p.data===data);
+    const pagos=doDia.filter(p=>p.status==="pago");
+    const pendentes=doDia.filter(p=>p.status==="pendente");
+    const abandonados=doDia.filter(p=>p.status==="abandonado");
+    const totalDia=pagos.reduce((s,p)=>s+parseFloat(p.total||0),0);
+    if(document.getElementById("res-total-dia")) document.getElementById("res-total-dia").textContent="R$ "+totalDia.toFixed(2).replace(".",",");
+    if(document.getElementById("res-qtd-dia")) document.getElementById("res-qtd-dia").textContent=pagos.length+" pago"+(pagos.length!==1?"s":"");
+    if(document.getElementById("res-pendentes")) document.getElementById("res-pendentes").textContent=pendentes.length;
+    if(document.getElementById("res-abandonados")) document.getElementById("res-abandonados").textContent=abandonados.length;
+    if(!doDia.length){if(lista)lista.innerHTML=`<div style="text-align:center;padding:40px;color:var(--text2);">Nenhum pedido nesta data.</div>`;return;}
+    const ordem={pendente:0,pago:1,abandonado:2};
+    doDia.sort((a,b)=>ordem[a.status]-ordem[b.status]);
+    if(lista) lista.innerHTML=doDia.map(p=>{
+      const cor=p.status==="pago"?"var(--green)":p.status==="abandonado"?"#555":"var(--gold)";
+      const emoji=p.status==="pago"?"✅":p.status==="abandonado"?"❌":"⏳";
+      return `<div style="background:var(--bg2);border-radius:var(--radius);border:1.5px solid #2a2a2a;margin-bottom:10px;overflow:hidden;">
         <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;">
           <div style="flex-shrink:0;text-align:center;">
             <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:${cor};">#${String(p.num).padStart(2,"0")}</div>
@@ -815,8 +695,7 @@ async function renderizarPedidos() {
             <div style="font-size:13px;margin-top:4px;">${emoji} <span style="color:${cor};font-weight:700;text-transform:capitalize;">${p.status}</span></div>
           </div>
         </div>
-        ${p.status==="pendente"?`
-        <div style="display:flex;gap:8px;padding:0 16px 14px;">
+        ${p.status==="pendente"?`<div style="display:flex;gap:8px;padding:0 16px 14px;">
           <button onclick="mudarStatus('${p.id}','pago')" style="flex:1;padding:8px;background:var(--green);border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">✅ Pago</button>
           <button onclick="mudarStatus('${p.id}','abandonado')" style="flex:1;padding:8px;background:var(--bg3);border:1.5px solid #555;border-radius:50px;color:#888;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">❌ Abandonado</button>
           <button onclick="imprimirPedido('${p.id}','${p.num}','${p.hora}','${p.data}','${(p.cliente||'').replace(/'/g,'`')}','${(p.itens||'').replace(/'/g,'`')}','${(p.adicionais||'').replace(/'/g,'`')}','${(p.endereco||'').replace(/'/g,'`')}','${p.total}','${p.status}')" style="padding:8px 12px;background:#444;border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">🖨️</button>
@@ -825,30 +704,24 @@ async function renderizarPedidos() {
         </div>`}
       </div>`;
     }).join("");
-  } catch(err) {
-    if(lista) lista.innerHTML = `<div style="text-align:center;padding:40px;color:var(--red);">❌ Erro ao carregar.<br><small>${err.message}</small><br><br>
-      <button onclick="renderizarPedidos()" style="padding:10px 20px;background:var(--brand);border:none;border-radius:50px;color:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;">Tentar novamente</button></div>`;
+  }catch(err){
+    if(lista) lista.innerHTML=`<div style="text-align:center;padding:40px;color:var(--red);">❌ Erro ao carregar.<br><small>${err.message}</small><br><br><button onclick="renderizarPedidos()" style="padding:10px 20px;background:var(--brand);border:none;border-radius:50px;color:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;">Tentar novamente</button></div>`;
   }
 }
-
-async function mudarStatus(id, status) {
-  try {
-    await chamarGet({ acao:"status", id, status });
-    mostrarToast(status==="pago"?"✅ Marcado como pago!":"❌ Marcado como abandonado.");
-    renderizarPedidos();
-  } catch(e) { mostrarToast("❌ Erro ao atualizar"); }
+async function mudarStatus(id,status){
+  try{await chamarGet({acao:"status",id,status});mostrarToast(status==="pago"?"✅ Marcado como pago!":"❌ Marcado como abandonado.");renderizarPedidos();}
+  catch(e){mostrarToast("❌ Erro ao atualizar");}
 }
-
 function imprimirPedido(id,num,hora,data,cliente,itens,adicionais,endereco,total,status){
-  const nomeLoja = document.getElementById("cfg-nome")?.value || "Quality+ Burger";
-  const dataFormatada = data.split("-").reverse().join("/");
-  const statusTexto = status==="pago"?"✅ PAGO":status==="abandonado"?"❌ ABANDONADO":"⏳ PENDENTE";
-  const taxaInput = prompt("💰 Informe a taxa de entrega (deixe em branco se retirada no local):", "R$ 0,00");
-  if (taxaInput === null) return;
-  const taxa = taxaInput.trim();
-  const totalNum = parseFloat(total)||0;
-  const taxaNum = parseFloat(taxa.replace("R$","").replace(",",".").trim())||0;
-  const totalFinal = totalNum+taxaNum;
+  const nomeLoja=document.getElementById("cfg-nome")?.value||"Quality+ Burger";
+  const dataF=data.split("-").reverse().join("/");
+  const stTxt=status==="pago"?"✅ PAGO":status==="abandonado"?"❌ ABANDONADO":"⏳ PENDENTE";
+  const taxaInput=prompt("💰 Taxa de entrega (em branco = retirada no local):","R$ 0,00");
+  if(taxaInput===null) return;
+  const taxa=taxaInput.trim();
+  const totalNum=parseFloat(total)||0;
+  const taxaNum=parseFloat(taxa.replace("R$","").replace(",",".").trim())||0;
+  const totalFinal=totalNum+taxaNum;
   const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Pedido #${String(num).padStart(2,"0")}</title>
   <style>@page{margin:10mm;size:80mm auto;}*{margin:0;padding:0;box-sizing:border-box;}body{font-family:'Courier New',monospace;font-size:13px;color:#000;}
   .center{text-align:center;}.linha{border-top:1px dashed #000;margin:8px 0;}.titulo{font-size:18px;font-weight:bold;text-align:center;margin-bottom:2px;}
@@ -858,7 +731,7 @@ function imprimirPedido(id,num,hora,data,cliente,itens,adicionais,endereco,total
   @media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}</style></head><body>
   <div class="titulo">${nomeLoja}</div><div class="center" style="font-size:11px;margin-bottom:8px;">Comprovante de Pedido</div>
   <div class="linha"></div><div class="pedido-num">PEDIDO #${String(num).padStart(2,"0")}</div>
-  <div class="center" style="font-size:11px;color:#555;">${dataFormatada} às ${hora}</div><div class="linha"></div>
+  <div class="center" style="font-size:11px;color:#555;">${dataF} às ${hora}</div><div class="linha"></div>
   <div class="label">Cliente</div><div class="valor" style="margin-bottom:6px;">${cliente}</div>
   <div class="label">Itens</div><div class="valor" style="margin-bottom:4px;">${itens}</div>
   ${adicionais?`<div class="label" style="margin-top:4px;">Adicionais</div><div style="font-size:12px;margin-bottom:4px;">+ ${adicionais}</div>`:""}
@@ -867,80 +740,53 @@ function imprimirPedido(id,num,hora,data,cliente,itens,adicionais,endereco,total
   <div class="linha-val"><span>Subtotal:</span><span><b>R$ ${totalNum.toFixed(2).replace(".",",")}</b></span></div>
   <div class="linha-val"><span>Taxa de entrega:</span><span><b>${taxa||"Retirada no local"}</b></span></div>
   <div class="total-box"><div style="font-size:11px;">TOTAL FINAL</div><div class="total-val">R$ ${totalFinal.toFixed(2).replace(".",",")}</div></div>
-  <div style="text-align:center;font-size:14px;font-weight:bold;margin:6px 0;">${statusTexto}</div>
+  <div style="text-align:center;font-size:14px;font-weight:bold;margin:6px 0;">${stTxt}</div>
   <div class="linha"></div><div style="text-align:center;font-size:10px;color:#888;">Obrigado pela preferência!<br>${nomeLoja}</div>
   </body></html>`;
-  const janela=window.open("","_blank","width=400,height=600");
-  janela.document.write(html);janela.document.close();janela.focus();
-  setTimeout(()=>{janela.print();janela.close();},500);
+  const jan=window.open("","_blank","width=400,height=600");
+  jan.document.write(html);jan.document.close();jan.focus();
+  setTimeout(()=>{jan.print();jan.close();},500);
 }
 
-// ===== SISTEMA DE ENTREGAS =====
-const ZAPI_INSTANCE = "3F50E6C0858F92F84456466CD3C725EB";
-const ZAPI_TOKEN    = "9498D0558A1E651A2188803B";
-const ZAPI_BASE     = `https://api.z-api.io/instances/${ZAPI_INSTANCE}/token/${ZAPI_TOKEN}`;
-
-async function zapiTexto(telefone, mensagem) {
-  try {
-    const num = telefone.replace(/\D/g,"");
-    if(!num) return;
-    await fetch(`${ZAPI_BASE}/send-text`,{
-      method:"POST", headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({phone:num, message:mensagem})
-    });
-  } catch(e){ console.warn("Zapi texto:",e); }
-}
-
-async function zapiAudio(telefone, audioUrl) {
-  try {
-    const num = telefone.replace(/\D/g,"");
-    if(!num) return;
-    await fetch(`${ZAPI_BASE}/send-audio`,{
-      method:"POST", headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({phone:num, audio:audioUrl})
-    });
-  } catch(e){ console.warn("Zapi audio:",e); }
-}
-
-function hojeStrEnt() {
-  const a = new Date(new Date().toLocaleString("en-US",{timeZone:"America/Sao_Paulo"}));
+// ===== ENTREGAS =====
+function hojeStrEnt(){
+  const a=new Date(new Date().toLocaleString("en-US",{timeZone:"America/Sao_Paulo"}));
   return a.getFullYear()+"-"+String(a.getMonth()+1).padStart(2,"0")+"-"+String(a.getDate()).padStart(2,"0");
 }
-
-function agora() {
-  const a = new Date(new Date().toLocaleString("en-US",{timeZone:"America/Sao_Paulo"}));
+function agora(){
+  const a=new Date(new Date().toLocaleString("en-US",{timeZone:"America/Sao_Paulo"}));
   return String(a.getHours()).padStart(2,"0")+":"+String(a.getMinutes()).padStart(2,"0");
 }
 
-async function carregarEntregas() {
-  const todas = JSON.parse(localStorage.getItem('bh_entregas')||'[]');
-  const hoje = hojeStrEnt();
-  const emRota = todas.filter(e => e.status==="em_rota"||e.status==="chegou");
-  const concluidas = todas.filter(e => e.status==="entregue" && e.data===hoje);
-  const semSucesso = todas.filter(e => e.status==="nao_encontrado" && e.data===hoje);
+async function carregarEntregas(){
+  const todas=JSON.parse(localStorage.getItem('bh_entregas')||'[]');
+  const hoje=hojeStrEnt();
+  const emRota=todas.filter(e=>e.status==="em_rota"||e.status==="chegou");
+  const concluidas=todas.filter(e=>e.status==="entregue"&&e.data===hoje);
+  const semSucesso=todas.filter(e=>e.status==="nao_encontrado"&&e.data===hoje);
 
-  document.getElementById("ent-em-rota").textContent = emRota.length;
-  document.getElementById("ent-concluidas").textContent = concluidas.length;
+  document.getElementById("ent-em-rota").textContent=emRota.length;
+  document.getElementById("ent-concluidas").textContent=concluidas.length;
 
-  const tempos = concluidas.filter(e=>e.hora_saida&&e.hora_entrega).map(e=>{
+  const tempos=concluidas.filter(e=>e.hora_saida&&e.hora_entrega).map(e=>{
     const [hS,mS]=e.hora_saida.split(":").map(Number);
     const [hE,mE]=e.hora_entrega.split(":").map(Number);
     return (hE*60+mE)-(hS*60+mS);
   }).filter(t=>t>0);
-  document.getElementById("ent-tempo-medio").textContent = tempos.length
-    ? Math.round(tempos.reduce((a,b)=>a+b,0)/tempos.length)+"min" : "—";
+  document.getElementById("ent-tempo-medio").textContent=tempos.length
+    ?Math.round(tempos.reduce((a,b)=>a+b,0)/tempos.length)+"min":"—";
 
-  let pedidosPagos = [];
-  try {
-    const res = await chamarGet({acao:"pedidos", data:hoje});
-    if(res.ok) pedidosPagos = (res.pedidos||[]).filter(p=>p.status==="pago"&&p.data===hoje);
-  } catch(e) { pedidosPagos = []; }
+  let pedidosPagos=[];
+  try{
+    const res=await chamarGet({acao:"pedidos",data:hoje});
+    if(res.ok) pedidosPagos=(res.pedidos||[]).filter(p=>p.status==="pago"&&p.data===hoje);
+  }catch(e){pedidosPagos=[];}
 
-  const entregasIds = todas.map(e=>e.pedido_id);
-  const aguardando = pedidosPagos.filter(p=>!entregasIds.includes(p.id));
+  const entregasIds=todas.map(e=>e.pedido_id);
+  const aguardando=pedidosPagos.filter(p=>!entregasIds.includes(p.id));
 
-  const lpe = document.getElementById("lista-para-entrega");
-  lpe.innerHTML = aguardando.length ? aguardando.map(p=>`
+  const lpe=document.getElementById("lista-para-entrega");
+  lpe.innerHTML=aguardando.length?aguardando.map(p=>`
     <div style="background:var(--bg2);border-radius:var(--radius);border:1.5px solid #2a2a2a;padding:14px;margin-bottom:10px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
         <div>
@@ -957,10 +803,10 @@ async function carregarEntregas() {
         <button onclick="enviarParaEntrega('${p.id}','${p.num}','${(p.cliente||'').replace(/'/g,'`')}','${(p.endereco||'').replace(/'/g,'`')}','${(p.itens||'').replace(/'/g,'`')}','${p.total}')" style="padding:8px 16px;background:var(--brand);border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">🛵 Enviar p/ entrega</button>
       </div>
     </div>
-  `).join("") : `<div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhum pedido aguardando entrega.</div>`;
+  `).join(""):`<div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhum pedido aguardando entrega.</div>`;
 
-  const ler = document.getElementById("lista-em-rota");
-  ler.innerHTML = emRota.length ? emRota.map(e=>`
+  const ler=document.getElementById("lista-em-rota");
+  ler.innerHTML=emRota.length?emRota.map(e=>`
     <div style="background:var(--bg2);border-radius:var(--radius);border:1.5px solid var(--brand);padding:14px;margin-bottom:10px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
         <span style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--brand);">#${String(e.num).padStart(2,"0")}</span>
@@ -974,11 +820,11 @@ async function carregarEntregas() {
         <button onclick="marcarNaoEncontrado('${e.id}')" style="flex:1;padding:8px;background:var(--bg3);border:1.5px solid var(--red);border-radius:50px;color:var(--red);font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;cursor:pointer;">❌ Não encontrado</button>
       </div>
     </div>
-  `).join("") : `<div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhuma entrega em andamento.</div>`;
+  `).join(""):`<div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhuma entrega em andamento.</div>`;
 
-  const lc2 = document.getElementById("lista-concluidas");
-  const todasHoje = [...concluidas,...semSucesso].sort((a,b)=>(b.hora_entrega||"").localeCompare(a.hora_entrega||""));
-  lc2.innerHTML = todasHoje.length ? todasHoje.map(e=>{
+  const lc2=document.getElementById("lista-concluidas");
+  const todasHoje=[...concluidas,...semSucesso].sort((a,b)=>(b.hora_entrega||"").localeCompare(a.hora_entrega||""));
+  lc2.innerHTML=todasHoje.length?todasHoje.map(e=>{
     const cor=e.status==="entregue"?"var(--green)":"var(--red)";
     const emoji=e.status==="entregue"?"✅":"❌";
     const tempo=(e.hora_saida&&e.hora_entrega)?(()=>{
@@ -992,75 +838,68 @@ async function carregarEntregas() {
       <div style="font-size:11px;color:var(--text2);">${e.hora_saida||"—"} → ${e.hora_entrega||"—"} (${tempo})</div></div>
       <div style="font-size:12px;font-weight:700;color:${cor};">${e.status==="entregue"?"ENTREGUE":"NÃO ENCONTRADO"}</div>
     </div>`;
-  }).join("") : `<div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhuma entrega concluída ainda.</div>`;
+  }).join(""):`<div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhuma entrega concluída ainda.</div>`;
 }
 
-async function enviarParaEntrega(pedidoId, num, cliente, endereco, itens, total) {
-  const fone = document.getElementById("fone-"+pedidoId)?.value.trim()||"";
-  const hora = agora();
-  const hoje = hojeStrEnt();
-  const entregas = JSON.parse(localStorage.getItem('bh_entregas')||'[]');
-  entregas.push({
-    id:Date.now().toString(), pedido_id:pedidoId,
-    num, cliente, endereco, itens, total, telefone:fone,
-    status:"em_rota", data:hoje, hora_saida:hora,
-    hora_chegada:null, hora_entrega:null,
-  });
-  localStorage.setItem('bh_entregas', JSON.stringify(entregas));
-  if(fone) {
-    await zapiTexto(fone,
-      `🛵 Olá *${cliente}*! Seu pedido saiu para entrega!\n\n🍔 *Quality+ Burger*\n📍 A caminho do seu endereço.\n⏱️ Previsão: 30-45 minutos.\n\nQualquer dúvida, responda esta mensagem! 😊`
-    );
+async function enviarParaEntrega(pedidoId,num,cliente,endereco,itens,total){
+  const fone=document.getElementById("fone-"+pedidoId)?.value.trim()||"";
+  const hora=agora(),hoje=hojeStrEnt();
+  const entregas=JSON.parse(localStorage.getItem('bh_entregas')||'[]');
+  entregas.push({id:Date.now().toString(),pedido_id:pedidoId,num,cliente,endereco,itens,total,telefone:fone,status:"em_rota",data:hoje,hora_saida:hora,hora_chegada:null,hora_entrega:null});
+  localStorage.setItem('bh_entregas',JSON.stringify(entregas));
+  if(fone){
+    await zapiTexto(fone,`🛵 Olá *${cliente}*! Seu pedido saiu para entrega!\n\n🍔 *Quality+ Burger*\n📍 A caminho do seu endereço.\n⏱️ Previsão: 30-45 minutos.\n\nQualquer dúvida, responda esta mensagem! 😊`);
   }
   mostrarToast("🛵 Pedido enviado para entrega!");
   carregarEntregas();
 }
 
-async function marcarChegou(entregaId) {
-  const entregas = JSON.parse(localStorage.getItem('bh_entregas')||'[]');
-  const idx = entregas.findIndex(e=>e.id===entregaId);
-  if(idx===-1) return;
-  entregas[idx].hora_chegada = agora();
-  entregas[idx].status = "chegou";
-  localStorage.setItem('bh_entregas', JSON.stringify(entregas));
-  if(entregas[idx].telefone) {
+async function marcarChegou(entregaId){
+  const entregas=JSON.parse(localStorage.getItem('bh_entregas')||'[]');
+  const idx=entregas.findIndex(e=>e.id===entregaId); if(idx===-1) return;
+  entregas[idx].hora_chegada=agora();
+  entregas[idx].status="chegou";
+  localStorage.setItem('bh_entregas',JSON.stringify(entregas));
+
+  if(entregas[idx].telefone){
+    // ✅ Envia texto
     await zapiTexto(entregas[idx].telefone,
-      `📍 Olá *${entregas[idx].cliente}*!\n\nNosso entregador *chegou ao seu endereço*! 🛵\n\n${entregas[idx].endereco}\n\n⚠️ *O entregador não sobe em prédios.* Por favor, desça para receber seu pedido.\n\n🍔 *Quality+ Burger*`
+      `📍 Olá *${entregas[idx].cliente}*!\n\nNosso entregador *chegou ao seu endereço*! 🛵\n\n📍 ${entregas[idx].endereco}\n\n⚠️ *O entregador não sobe em prédios.* Por favor, desça para receber seu pedido.\n\n🍔 *Quality+ Burger*`
     );
-    const textoAudio = `Olá ${entregas[idx].cliente}! O entregador da Quality Burger chegou ao seu local de entrega e está aguardando. Caso você esteja em um prédio, o entregador não irá subir até a sua residência. Por favor, dirija-se ao local para receber o seu pedido. Obrigado!`;
-    const audioUrl = `https://api.voicerss.org/?key=5b9b97b9b9b94c9b8a1d6e7f8g9h0i1j&hl=pt-br&src=${encodeURIComponent(textoAudio)}&f=16khz_16bit_stereo&c=MP3`;
-    await zapiAudio(entregas[idx].telefone, audioUrl);
+    // ✅ Envia áudio — usa URL configurada no painel (mp3 hospedado pelo usuário)
+    const z=getZapi();
+    if(z.audioUrl){
+      await zapiAudio(entregas[idx].telefone, z.audioUrl);
+    }
   }
-  mostrarToast("📍 Chegada registrada! Texto + áudio enviados ao cliente.");
+  mostrarToast("📍 Chegada registrada! Mensagens enviadas ao cliente.");
   carregarEntregas();
 }
 
-async function marcarEntregue(entregaId) {
-  const entregas = JSON.parse(localStorage.getItem('bh_entregas')||'[]');
-  const idx = entregas.findIndex(e=>e.id===entregaId);
-  if(idx===-1) return;
-  entregas[idx].status = "entregue";
-  entregas[idx].hora_entrega = agora();
-  localStorage.setItem('bh_entregas', JSON.stringify(entregas));
-  if(entregas[idx].telefone) {
+async function marcarEntregue(entregaId){
+  const entregas=JSON.parse(localStorage.getItem('bh_entregas')||'[]');
+  const idx=entregas.findIndex(e=>e.id===entregaId); if(idx===-1) return;
+  entregas[idx].status="entregue";
+  entregas[idx].hora_entrega=agora();
+  localStorage.setItem('bh_entregas',JSON.stringify(entregas));
+  if(entregas[idx].telefone){
     await zapiTexto(entregas[idx].telefone,
-      `✅ *Pedido entregue com sucesso!*\n\nObrigado pela preferência, *${entregas[idx].cliente}*! 🙏\nEsperamos que aproveite muito! 🍔\n\n⭐ Avalie nosso atendimento, sua opinião é muito importante!\n\n📲 *Quality+ Burger*`
+      `✅ *Pedido entregue com sucesso!*\n\nObrigado pela preferência, *${entregas[idx].cliente}*! 🙏\nEsperamos que aproveite muito! 🍔\n\n⭐ Avalie nosso atendimento!\n\n📲 *Quality+ Burger*`
     );
   }
   mostrarToast("✅ Entrega concluída!");
   carregarEntregas();
 }
 
-async function marcarNaoEncontrado(entregaId) {
-  const entregas = JSON.parse(localStorage.getItem('bh_entregas')||'[]');
-  const idx = entregas.findIndex(e=>e.id===entregaId);
-  if(idx===-1) return;
-  entregas[idx].status = "nao_encontrado";
-  entregas[idx].hora_entrega = agora();
-  localStorage.setItem('bh_entregas', JSON.stringify(entregas));
-  if(entregas[idx].telefone) {
+async function marcarNaoEncontrado(entregaId){
+  const entregas=JSON.parse(localStorage.getItem('bh_entregas')||'[]');
+  const idx=entregas.findIndex(e=>e.id===entregaId); if(idx===-1) return;
+  entregas[idx].status="nao_encontrado";
+  entregas[idx].hora_entrega=agora();
+  localStorage.setItem('bh_entregas',JSON.stringify(entregas));
+  if(entregas[idx].telefone){
     await zapiTexto(entregas[idx].telefone,
-      `⚠️ Olá *${entregas[idx].cliente}*!\n\nNosso entregador está no local mas *não conseguiu contato*.\n\nPor favor, responda esta mensagem ou dirija-se ao endereço informado *urgente*.\n\n📍 Seu entregador aguarda.\n\n🍔 *Quality+ Burger*`
+      `⚠️ Olá *${entregas[idx].cliente}*!\n\nNosso entregador está no local mas *não conseguiu contato*.\n\nPor favor, responda esta mensagem *urgente*.\n\n📍 Seu entregador aguarda.\n\n🍔 *Quality+ Burger*`
     );
   }
   mostrarToast("❌ Registrado. Cliente avisado.");
