@@ -7,89 +7,97 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --brand: #D0401A; --brand-dark: #A8300F;
-  --bg: #0D0D0D; --bg2: #1A1A1A; --bg3: #242424; --bg4: #2e2e2e;
-  --text: #F5F0E8; --text2: #B0A898;
-  --gold: #F2A92B; --green: #2ECC71; --red: #E74C3C;
-  --radius: 12px;
+  --brand:#D0401A;--brand-dark:#A8300F;
+  --bg:#0D0D0D;--bg2:#1A1A1A;--bg3:#242424;--bg4:#2e2e2e;
+  --text:#F5F0E8;--text2:#B0A898;
+  --gold:#F2A92B;--green:#2ECC71;--red:#E74C3C;--blue:#3498DB;
+  --radius:12px;
 }
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:'Nunito',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
-#login-screen { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
-.login-box { background:var(--bg2); border-radius:20px; padding:40px 32px; width:100%; max-width:360px; border:1.5px solid #2a2a2a; text-align:center; }
-.login-box h1 { font-family:'Bebas Neue',sans-serif; font-size:32px; letter-spacing:3px; color:var(--brand); margin-bottom:6px; }
-.login-box p { font-size:13px; color:var(--text2); margin-bottom:28px; }
-.login-box input { width:100%; padding:13px 16px; background:var(--bg3); border:1.5px solid #333; border-radius:var(--radius); color:var(--text); font-family:'Nunito',sans-serif; font-size:15px; margin-bottom:12px; }
-.login-box input:focus { outline:none; border-color:var(--brand); }
-.btn-primary { width:100%; padding:13px; background:var(--brand); border:none; border-radius:50px; color:#fff; font-family:'Nunito',sans-serif; font-size:15px; font-weight:800; cursor:pointer; transition:background .2s; }
-.btn-primary:hover { background:var(--brand-dark); }
-#login-erro { color:var(--red); font-size:13px; margin-top:10px; display:none; }
-#painel { display:none; }
-#topbar { background:var(--bg2); border-bottom:1.5px solid #2a2a2a; padding:14px 20px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:50; }
-#topbar h1 { font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:2px; color:var(--brand); }
-#btn-logout { background:var(--bg3); border:1px solid #333; color:var(--text2); padding:7px 16px; border-radius:50px; cursor:pointer; font-size:13px; font-family:'Nunito',sans-serif; }
-#btn-logout:hover { border-color:var(--red); color:var(--red); }
-#tabs { display:flex; gap:6px; padding:16px 16px 0; overflow-x:auto; scrollbar-width:none; }
-#tabs::-webkit-scrollbar { display:none; }
-.tab-btn { flex-shrink:0; padding:9px 18px; border-radius:50px; border:1.5px solid #333; background:var(--bg2); color:var(--text2); font-family:'Nunito',sans-serif; font-size:13px; font-weight:700; cursor:pointer; transition:all .2s; }
-.tab-btn:hover { border-color:var(--brand); color:var(--text); }
-.tab-btn.ativo { background:var(--brand); border-color:var(--brand); color:#fff; }
-#conteudo { padding:20px 16px 80px; max-width:800px; margin:0 auto; }
-.secao { display:none; }
-.secao.ativa { display:block; }
-.secao-titulo { font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:2px; color:var(--brand); margin-bottom:16px; }
-.config-card { background:var(--bg2); border-radius:var(--radius); padding:20px; border:1.5px solid #2a2a2a; margin-bottom:14px; }
-.config-card label { display:block; font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:var(--text2); margin-bottom:6px; }
-.config-card input, .config-card textarea { width:100%; padding:11px 14px; background:var(--bg3); border:1.5px solid #333; border-radius:10px; color:var(--text); font-family:'Nunito',sans-serif; font-size:14px; }
-.config-card input:focus, .config-card textarea:focus { outline:none; border-color:var(--brand); }
-.config-card textarea { min-height:80px; resize:vertical; }
-.input-hint { font-size:11px; color:var(--text2); margin-top:5px; line-height:1.4; }
-.btn-salvar { display:inline-flex; align-items:center; gap:6px; padding:11px 24px; background:var(--green); border:none; border-radius:50px; color:#fff; font-family:'Nunito',sans-serif; font-size:14px; font-weight:800; cursor:pointer; transition:background .2s; margin-top:6px; }
-.btn-salvar:hover { background:#27ae60; }
-#toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--green); color:#fff; padding:12px 24px; border-radius:50px; font-size:14px; font-weight:700; z-index:999; transition:transform .3s; white-space:nowrap; }
-#toast.show { transform:translateX(-50%) translateY(0); }
-.produto-item { background:var(--bg2); border-radius:var(--radius); border:1.5px solid #2a2a2a; margin-bottom:12px; overflow:hidden; }
-.produto-header { display:flex; align-items:center; gap:12px; padding:14px 16px; cursor:pointer; }
-.produto-header img { width:52px; height:52px; border-radius:8px; object-fit:cover; background:var(--bg3); flex-shrink:0; }
-.produto-header-info { flex:1; }
-.produto-header-nome { font-size:15px; font-weight:800; }
-.produto-header-cat { font-size:12px; color:var(--text2); }
-.produto-header-preco { font-size:15px; font-weight:700; color:var(--gold); }
-.produto-toggle { font-size:18px; color:var(--text2); transition:transform .2s; }
-.produto-toggle.aberto { transform:rotate(180deg); }
-.produto-form { padding:0 16px 16px; display:none; border-top:1px solid #2a2a2a; padding-top:14px; }
-.produto-form.aberta { display:block; }
-.form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
-.form-row.full { grid-template-columns:1fr; }
-.form-group label { display:block; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:var(--text2); margin-bottom:5px; }
-.form-group input, .form-group select, .form-group textarea { width:100%; padding:10px 12px; background:var(--bg3); border:1.5px solid #333; border-radius:8px; color:var(--text); font-family:'Nunito',sans-serif; font-size:13px; }
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline:none; border-color:var(--brand); }
-.form-group select option { background:var(--bg3); }
-.form-group textarea { min-height:70px; resize:vertical; }
-.produto-actions { display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
-.btn-salvar-prod { padding:9px 20px; background:var(--green); border:none; border-radius:50px; color:#fff; font-family:'Nunito',sans-serif; font-size:13px; font-weight:800; cursor:pointer; }
-.btn-del { padding:9px 20px; background:var(--bg4); border:1.5px solid var(--red); border-radius:50px; color:var(--red); font-family:'Nunito',sans-serif; font-size:13px; font-weight:800; cursor:pointer; }
-.btn-del:hover { background:var(--red); color:#fff; }
-.switch-row { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
-.switch-label { font-size:13px; color:var(--text2); }
-.switch { position:relative; width:44px; height:24px; }
-.switch input { opacity:0; width:0; height:0; }
-.slider { position:absolute; inset:0; background:#333; border-radius:24px; cursor:pointer; transition:.2s; }
-.slider:before { content:''; position:absolute; width:18px; height:18px; left:3px; bottom:3px; background:#fff; border-radius:50%; transition:.2s; }
-input:checked + .slider { background:var(--green); }
-input:checked + .slider:before { transform:translateX(20px); }
-.btn-novo { display:flex; align-items:center; gap:8px; width:100%; padding:14px; background:var(--bg3); border:2px dashed #333; border-radius:var(--radius); color:var(--text2); font-family:'Nunito',sans-serif; font-size:14px; font-weight:700; cursor:pointer; justify-content:center; transition:all .2s; margin-bottom:16px; }
-.btn-novo:hover { border-color:var(--brand); color:var(--text); }
-.adicional-item { display:grid; grid-template-columns:1fr auto auto; gap:10px; align-items:center; padding:10px 14px; background:var(--bg2); border-radius:10px; border:1.5px solid #2a2a2a; margin-bottom:8px; }
-.adicional-nome-input { background:var(--bg3); border:1.5px solid #333; border-radius:8px; color:var(--text); font-family:'Nunito',sans-serif; font-size:13px; padding:8px 12px; }
-.adicional-preco-input { width:90px; background:var(--bg3); border:1.5px solid #333; border-radius:8px; color:var(--gold); font-family:'Nunito',sans-serif; font-size:13px; padding:8px 12px; }
-.adicional-nome-input:focus, .adicional-preco-input:focus { outline:none; border-color:var(--brand); }
-.btn-del-add { background:none; border:none; color:#555; font-size:18px; cursor:pointer; padding:4px; }
-.btn-del-add:hover { color:var(--red); }
-#preview-logo { width:80px; height:80px; border-radius:50%; object-fit:cover; border:2px solid var(--brand); margin-top:10px; display:none; }
-.zapi-status { padding:10px 14px; border-radius:10px; font-size:12px; font-weight:700; margin-top:10px; display:none; }
-.zapi-status.ok { background:#1a3a1a; color:var(--green); border:1px solid var(--green); display:block; }
-.zapi-status.erro { background:#3a1a1a; color:var(--red); border:1px solid var(--red); display:block; }
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+#login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+.login-box{background:var(--bg2);border-radius:20px;padding:40px 32px;width:100%;max-width:360px;border:1.5px solid #2a2a2a;text-align:center;}
+.login-box h1{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:3px;color:var(--brand);margin-bottom:6px;}
+.login-box p{font-size:13px;color:var(--text2);margin-bottom:28px;}
+.login-box input{width:100%;padding:13px 16px;background:var(--bg3);border:1.5px solid #333;border-radius:var(--radius);color:var(--text);font-family:'Nunito',sans-serif;font-size:15px;margin-bottom:12px;}
+.login-box input:focus{outline:none;border-color:var(--brand);}
+.btn-primary{width:100%;padding:13px;background:var(--brand);border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:background .2s;}
+.btn-primary:hover{background:var(--brand-dark);}
+#login-erro{color:var(--red);font-size:13px;margin-top:10px;display:none;}
+#painel{display:none;}
+#topbar{background:var(--bg2);border-bottom:1.5px solid #2a2a2a;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+#topbar h1{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;color:var(--brand);}
+#btn-logout{background:var(--bg3);border:1px solid #333;color:var(--text2);padding:7px 16px;border-radius:50px;cursor:pointer;font-size:13px;font-family:'Nunito',sans-serif;}
+#btn-logout:hover{border-color:var(--red);color:var(--red);}
+#tabs{display:flex;gap:6px;padding:16px 16px 0;overflow-x:auto;scrollbar-width:none;}
+#tabs::-webkit-scrollbar{display:none;}
+.tab-btn{flex-shrink:0;padding:9px 18px;border-radius:50px;border:1.5px solid #333;background:var(--bg2);color:var(--text2);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;}
+.tab-btn:hover{border-color:var(--brand);color:var(--text);}
+.tab-btn.ativo{background:var(--brand);border-color:var(--brand);color:#fff;}
+#conteudo{padding:20px 16px 80px;max-width:800px;margin:0 auto;}
+.secao{display:none;}.secao.ativa{display:block;}
+.secao-titulo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;color:var(--brand);margin-bottom:16px;}
+.config-card{background:var(--bg2);border-radius:var(--radius);padding:20px;border:1.5px solid #2a2a2a;margin-bottom:14px;}
+.config-card label{display:block;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:6px;}
+.config-card input,.config-card textarea{width:100%;padding:11px 14px;background:var(--bg3);border:1.5px solid #333;border-radius:10px;color:var(--text);font-family:'Nunito',sans-serif;font-size:14px;}
+.config-card input:focus,.config-card textarea:focus{outline:none;border-color:var(--brand);}
+.config-card textarea{min-height:80px;resize:vertical;}
+.input-hint{font-size:11px;color:var(--text2);margin-top:5px;line-height:1.4;}
+.btn-salvar{display:inline-flex;align-items:center;gap:6px;padding:11px 24px;background:var(--green);border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;transition:background .2s;margin-top:6px;}
+.btn-salvar:hover{background:#27ae60;}
+#toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--green);color:#fff;padding:12px 24px;border-radius:50px;font-size:14px;font-weight:700;z-index:999;transition:transform .3s;white-space:nowrap;}
+#toast.show{transform:translateX(-50%) translateY(0);}
+.produto-item{background:var(--bg2);border-radius:var(--radius);border:1.5px solid #2a2a2a;margin-bottom:12px;overflow:hidden;}
+.produto-header{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;}
+.produto-header img{width:52px;height:52px;border-radius:8px;object-fit:cover;background:var(--bg3);flex-shrink:0;}
+.produto-header-info{flex:1;}
+.produto-header-nome{font-size:15px;font-weight:800;}
+.produto-header-cat{font-size:12px;color:var(--text2);}
+.produto-header-preco{font-size:15px;font-weight:700;color:var(--gold);}
+.produto-toggle{font-size:18px;color:var(--text2);transition:transform .2s;}
+.produto-toggle.aberto{transform:rotate(180deg);}
+.produto-form{padding:0 16px 16px;display:none;border-top:1px solid #2a2a2a;padding-top:14px;}
+.produto-form.aberta{display:block;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.form-row.full{grid-template-columns:1fr;}
+.form-group label{display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:5px;}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 12px;background:var(--bg3);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--brand);}
+.form-group select option{background:var(--bg3);}
+.form-group textarea{min-height:70px;resize:vertical;}
+.produto-actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;}
+.btn-salvar-prod{padding:9px 20px;background:var(--green);border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;}
+.btn-del{padding:9px 20px;background:var(--bg4);border:1.5px solid var(--red);border-radius:50px;color:var(--red);font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;}
+.btn-del:hover{background:var(--red);color:#fff;}
+.switch-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.switch-label{font-size:13px;color:var(--text2);}
+.switch{position:relative;width:44px;height:24px;}
+.switch input{opacity:0;width:0;height:0;}
+.slider{position:absolute;inset:0;background:#333;border-radius:24px;cursor:pointer;transition:.2s;}
+.slider:before{content:'';position:absolute;width:18px;height:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.2s;}
+input:checked+.slider{background:var(--green);}
+input:checked+.slider:before{transform:translateX(20px);}
+.btn-novo{display:flex;align-items:center;gap:8px;width:100%;padding:14px;background:var(--bg3);border:2px dashed #333;border-radius:var(--radius);color:var(--text2);font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;cursor:pointer;justify-content:center;transition:all .2s;margin-bottom:16px;}
+.btn-novo:hover{border-color:var(--brand);color:var(--text);}
+.adicional-item{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:10px 14px;background:var(--bg2);border-radius:10px;border:1.5px solid #2a2a2a;margin-bottom:8px;}
+.adicional-nome-input{background:var(--bg3);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;padding:8px 12px;}
+.adicional-preco-input{width:90px;background:var(--bg3);border:1.5px solid #333;border-radius:8px;color:var(--gold);font-family:'Nunito',sans-serif;font-size:13px;padding:8px 12px;}
+.adicional-nome-input:focus,.adicional-preco-input:focus{outline:none;border-color:var(--brand);}
+.btn-del-add{background:none;border:none;color:#555;font-size:18px;cursor:pointer;padding:4px;}
+.btn-del-add:hover{color:var(--red);}
+#preview-logo{width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--brand);margin-top:10px;display:none;}
+.zapi-status{padding:10px 14px;border-radius:10px;font-size:12px;font-weight:700;margin-top:10px;display:none;}
+.zapi-status.ok{background:#1a3a1a;color:var(--green);border:1px solid var(--green);display:block;}
+.zapi-status.erro{background:#3a1a1a;color:var(--red);border:1px solid var(--red);display:block;}
+/* Modal de telefone */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;}
+.modal-box{background:var(--bg2);border-radius:20px;padding:28px 24px;width:100%;max-width:360px;border:1.5px solid #333;}
+.modal-box h2{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--brand);margin-bottom:6px;}
+.modal-box p{font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.5;}
+.modal-box input{width:100%;padding:12px 14px;background:var(--bg3);border:1.5px solid #333;border-radius:10px;color:var(--text);font-family:'Nunito',sans-serif;font-size:16px;margin-bottom:14px;letter-spacing:1px;}
+.modal-box input:focus{outline:none;border-color:var(--brand);}
+.modal-btns{display:flex;gap:10px;}
+.modal-btns button{flex:1;padding:11px;border:none;border-radius:50px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;}
 </style>
 </head>
 <body>
@@ -107,20 +115,33 @@ input:checked + .slider:before { transform:translateX(20px); }
   </div>
 </div>
 
+<!-- MODAL TELEFONE DO CLIENTE -->
+<div id="modal-fone" class="modal-overlay" style="display:none;">
+  <div class="modal-box">
+    <h2>📱 Telefone do Cliente</h2>
+    <p>Informe o WhatsApp do cliente para receber avisos de entrega. Será salvo automaticamente para próximos pedidos do mesmo número.</p>
+    <input type="tel" id="modal-fone-input" placeholder="5531999999999" inputmode="numeric" maxlength="15">
+    <div style="font-size:11px;color:#555;margin-bottom:14px;">DDI + DDD + número — somente números. Ex: 5531999999999</div>
+    <div class="modal-btns">
+      <button onclick="cancelarModal()" style="background:var(--bg4);color:var(--text2);border:1.5px solid #444;">Cancelar</button>
+      <button onclick="confirmarModal()" style="background:var(--brand);color:#fff;">Confirmar 🛵</button>
+    </div>
+  </div>
+</div>
+
 <!-- PAINEL -->
 <div id="painel">
   <div id="topbar">
     <h1>⚙️ Painel do Gerente</h1>
     <button id="btn-logout" onclick="fazerLogout()">Sair</button>
   </div>
-
   <div id="tabs">
-    <button class="tab-btn ativo" onclick="trocarTab('configuracoes', this)">🏪 Hamburgueria</button>
-    <button class="tab-btn" onclick="trocarTab('pedidos', this)">📋 Pedidos</button>
-    <button class="tab-btn" onclick="trocarTab('entregas', this)">🛵 Entregas</button>
-    <button class="tab-btn" onclick="trocarTab('produtos', this)">🍔 Produtos</button>
-    <button class="tab-btn" onclick="trocarTab('adicionais', this)">➕ Adicionais</button>
-    <button class="tab-btn" onclick="trocarTab('categorias', this)">🗂️ Categorias</button>
+    <button class="tab-btn ativo" onclick="trocarTab('configuracoes',this)">🏪 Hamburgueria</button>
+    <button class="tab-btn" onclick="trocarTab('pedidos',this)">📋 Pedidos</button>
+    <button class="tab-btn" onclick="trocarTab('entregas',this)">🛵 Entregas</button>
+    <button class="tab-btn" onclick="trocarTab('produtos',this)">🍔 Produtos</button>
+    <button class="tab-btn" onclick="trocarTab('adicionais',this)">➕ Adicionais</button>
+    <button class="tab-btn" onclick="trocarTab('categorias',this)">🗂️ Categorias</button>
   </div>
 
   <div id="conteudo">
@@ -128,59 +149,31 @@ input:checked + .slider:before { transform:translateX(20px); }
     <!-- ABA: CONFIGURAÇÕES -->
     <div id="sec-configuracoes" class="secao ativa">
       <div class="secao-titulo">Informações da Hamburgueria</div>
-
-      <div class="config-card">
-        <label>Nome da Hamburgueria</label>
-        <input type="text" id="cfg-nome" placeholder="Ex: Burguer do Zé">
-      </div>
-      <div class="config-card">
-        <label>Slogan</label>
-        <input type="text" id="cfg-slogan" placeholder="Ex: O melhor da cidade!">
-      </div>
+      <div class="config-card"><label>Nome da Hamburgueria</label><input type="text" id="cfg-nome" placeholder="Ex: Burguer do Zé"></div>
+      <div class="config-card"><label>Slogan</label><input type="text" id="cfg-slogan" placeholder="Ex: O melhor da cidade!"></div>
       <div class="config-card">
         <label>URL da Logo</label>
         <input type="url" id="cfg-logo" placeholder="https://..." oninput="previewLogo(this.value)">
-        <p class="input-hint">Cole o link direto de uma imagem (JPG, PNG). Dica: suba no <a href="https://imgur.com" target="_blank" style="color:var(--brand)">Imgur</a> e copie o link.</p>
+        <p class="input-hint">Cole o link direto de uma imagem (JPG, PNG).</p>
         <img id="preview-logo" src="" alt="Preview">
       </div>
-      <div class="config-card">
-        <label>URL do Vídeo</label>
-        <input type="url" id="cfg-video" placeholder="https://youtube.com/... ou link de vídeo MP4">
-        <p class="input-hint">Aceita link do YouTube ou MP4 direto.</p>
-      </div>
-      <div class="config-card">
-        <label>Número do WhatsApp</label>
-        <input type="text" id="cfg-wpp" placeholder="5531999999999 (só números, com DDI)">
-      </div>
-      <div class="config-card">
-        <label>Taxa de Entrega (texto informativo)</label>
-        <textarea id="cfg-taxa" placeholder="Ex: R$ 5,00 para bairros próximos. Demais áreas a combinar."></textarea>
-      </div>
-
+      <div class="config-card"><label>URL do Vídeo</label><input type="url" id="cfg-video" placeholder="https://youtube.com/..."></div>
+      <div class="config-card"><label>Número do WhatsApp</label><input type="text" id="cfg-wpp" placeholder="5531999999999"></div>
+      <div class="config-card"><label>Taxa de Entrega</label><textarea id="cfg-taxa" placeholder="Ex: R$ 5,00 para bairros próximos."></textarea></div>
       <button class="btn-salvar" onclick="salvarConfiguracoes()">💾 Salvar configurações</button>
 
-      <!-- SEÇÃO Z-API -->
+      <!-- Z-API -->
       <div style="margin-top:24px;padding:20px;background:var(--bg3);border-radius:var(--radius);border:1.5px solid #2a2a2a;">
-        <p style="font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:4px;">📱 Integração Z-API (WhatsApp)</p>
-        <p style="font-size:11px;color:#666;margin-bottom:14px;">Configure os dados da sua instância Z-API para envio automático de mensagens ao cliente.</p>
-
+        <p style="font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:14px;">📱 Integração Z-API</p>
         <label style="display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:5px;">Instance ID</label>
-        <input type="text" id="cfg-zapi-instance" placeholder="Ex: 3F50E6C0858F92F84456466CD3C725EB"
-          style="width:100%;padding:10px 12px;background:var(--bg2);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:10px;">
-
+        <input type="text" id="cfg-zapi-instance" style="width:100%;padding:10px 12px;background:var(--bg2);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:10px;">
         <label style="display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:5px;">Token da Instância</label>
-        <input type="text" id="cfg-zapi-token" placeholder="Ex: 9498D0558A1E651A2188803B"
-          style="width:100%;padding:10px 12px;background:var(--bg2);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:10px;">
-
-        <label style="display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:5px;">Client-Token (Token de Segurança da Conta)</label>
-        <input type="text" id="cfg-zapi-client-token" placeholder="Encontre em: painel Z-API → Segurança → Token da Conta"
-          style="width:100%;padding:10px 12px;background:var(--bg2);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:10px;">
-
-        <label style="display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:5px;">URL do Áudio de Chegada (MP3 hospedado)</label>
-        <input type="url" id="cfg-zapi-audio" placeholder="https://seu-servidor.com/audio-chegou.mp3"
-          style="width:100%;padding:10px 12px;background:var(--bg2);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:6px;">
-        <p style="font-size:11px;color:#666;margin-bottom:12px;">Grave um áudio MP3 dizendo que o entregador chegou e suba no seu servidor ou no <a href="https://filebin.net" target="_blank" style="color:var(--brand)">filebin.net</a>. Cole o link direto aqui. Isso garante que o áudio funcione 100% das vezes.</p>
-
+        <input type="text" id="cfg-zapi-token" style="width:100%;padding:10px 12px;background:var(--bg2);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:10px;">
+        <label style="display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:5px;">Client-Token</label>
+        <input type="text" id="cfg-zapi-client-token" style="width:100%;padding:10px 12px;background:var(--bg2);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:10px;">
+        <label style="display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:5px;">URL do Áudio de Chegada (MP3)</label>
+        <input type="url" id="cfg-zapi-audio" placeholder="https://..." style="width:100%;padding:10px 12px;background:var(--bg2);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:6px;">
+        <p style="font-size:11px;color:#666;margin-bottom:12px;">Áudio MP3 que será enviado ao cliente quando o motoboy chegar.</p>
         <div style="display:flex;gap:10px;flex-wrap:wrap;">
           <button class="btn-salvar" onclick="salvarZapi()">💾 Salvar Z-API</button>
           <button onclick="testarZapi()" style="padding:11px 20px;background:var(--bg4);border:1.5px solid #555;border-radius:50px;color:var(--text2);font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">🔌 Testar conexão</button>
@@ -189,7 +182,7 @@ input:checked + .slider:before { transform:translateX(20px); }
       </div>
 
       <div style="margin-top:16px;padding:16px;background:var(--bg3);border-radius:var(--radius);">
-        <p style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:8px;">🔐 Trocar senha de acesso</p>
+        <p style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:8px;">🔐 Trocar senha</p>
         <input type="text" id="cfg-usuario" placeholder="Novo usuário" style="width:100%;padding:10px 12px;background:var(--bg2);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:8px;">
         <input type="password" id="cfg-senha" placeholder="Nova senha" style="width:100%;padding:10px 12px;background:var(--bg2);border:1.5px solid #333;border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;margin-bottom:8px;">
         <button class="btn-salvar" onclick="salvarSenha()" style="background:#555;">🔒 Atualizar acesso</button>
@@ -208,8 +201,7 @@ input:checked + .slider:before { transform:translateX(20px); }
       <div class="secao-titulo">Adicionais</div>
       <p style="font-size:13px;color:var(--text2);margin-bottom:16px;">Estes adicionais aparecem para o cliente escolher ao clicar em qualquer produto.</p>
       <div id="lista-adicionais-edit"></div>
-      <button class="btn-novo" onclick="novoAdicional()">＋ Adicionar novo adicional</button>
-      <br>
+      <button class="btn-novo" onclick="novoAdicional()">＋ Adicionar novo adicional</button><br>
       <button class="btn-salvar" onclick="salvarAdicionais()">💾 Salvar adicionais</button>
     </div>
 
@@ -268,54 +260,51 @@ input:checked + .slider:before { transform:translateX(20px); }
     <!-- ABA: CATEGORIAS -->
     <div id="sec-categorias" class="secao">
       <div class="secao-titulo">Categorias</div>
-      <p style="font-size:13px;color:var(--text2);margin-bottom:16px;">Defina as categorias do cardápio. Categorias sem produtos não aparecem para o cliente.</p>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:16px;">Categorias sem produtos não aparecem para o cliente.</p>
       <div id="lista-categorias-edit"></div>
-      <button class="btn-novo" onclick="novaCategoria()">＋ Adicionar categoria</button>
-      <br>
+      <button class="btn-novo" onclick="novaCategoria()">＋ Adicionar categoria</button><br>
       <button class="btn-salvar" onclick="salvarCategorias()">💾 Salvar categorias</button>
     </div>
-
   </div>
 </div>
 
 <div id="toast">✅ Salvo com sucesso!</div>
 
 <script>
-// ===== DADOS PADRÃO =====
-const DEFAULTS = {
-  credenciais: { usuario:"admin", senha:"1234" },
-  config: {
-    nome:"BURGER HOUSE", slogan:"Feito com fogo. Servido com amor.",
-    logo:"", video:"", wpp:"5531999999999",
-    taxa:"A taxa de entrega varia conforme o bairro e será informada pelo atendente."
-  },
-  // ✅ Client-Token já preenchido, instance e token vindos do painel anterior
-  zapi: {
-    instance: "3F50E6C0858F92F84456466CD3C725EB",
-    token:    "9498D0558A1E651A2188803B",
-    clientToken: "F2106342f8a6f45199a73774b04018613S",
-    audioUrl: ""
-  },
-  categorias: ["Sobremesa","Bebidas","Baratíssimos","Especiais","Combo Individual","Combo Casal/Família"],
-  adicionais: [
-    {nome:"Bacon",preco:3.00},{nome:"Molho especial",preco:2.00},
-    {nome:"Carne extra",preco:8.00},{nome:"Queijo cheddar",preco:3.50},
-    {nome:"Cebola caramelizada",preco:2.50},{nome:"Ovo frito",preco:2.00},
-  ],
-  produtos: [
-    {id:1,nome:"Classic Burger",categoria:"Especiais",preco:29.90,descricao:"Pão brioche, blend 180g, queijo prato, alface, tomate e molho da casa.",foto:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80",ativo:true},
-    {id:2,nome:"Coca-Cola 350ml",categoria:"Bebidas",preco:6.00,descricao:"Gelada, na latinha.",foto:"https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&q=80",ativo:true},
+// ===== DEFAULTS =====
+const DEFAULTS={
+  credenciais:{usuario:"admin",senha:"1234"},
+  config:{nome:"BURGER HOUSE",slogan:"Feito com fogo. Servido com amor.",logo:"",video:"",wpp:"5531999999999",taxa:"A taxa varia conforme o bairro."},
+  zapi:{instance:"3F50E6C0858F92F84456466CD3C725EB",token:"9498D0558A1E651A2188803B",clientToken:"F2106342f8a6f45199a73774b04018613S",audioUrl:"https://res.cloudinary.com/djdl6hnvy/video/upload/v1782413827/WhatsApp_Video_2026-06-25_at_15.45.34_rsmdeg.mp3"},
+  categorias:["Sobremesa","Bebidas","Baratíssimos","Especiais","Combo Individual","Combo Casal/Família"],
+  adicionais:[{nome:"Bacon",preco:3},{nome:"Molho especial",preco:2},{nome:"Carne extra",preco:8},{nome:"Queijo cheddar",preco:3.5},{nome:"Cebola caramelizada",preco:2.5},{nome:"Ovo frito",preco:2}],
+  produtos:[
+    {id:1,nome:"Classic Burger",categoria:"Especiais",preco:29.9,descricao:"Pão brioche, blend 180g, queijo prato, alface, tomate e molho da casa.",foto:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80",ativo:true},
+    {id:2,nome:"Coca-Cola 350ml",categoria:"Bebidas",preco:6,descricao:"Gelada, na latinha.",foto:"https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&q=80",ativo:true}
   ]
 };
 
 // ===== STORAGE =====
-function carregar(c){ try{return JSON.parse(localStorage.getItem('bh_'+c));}catch{return null;} }
-function salvar(c,v){ localStorage.setItem('bh_'+c,JSON.stringify(v)); }
-function getDados(c){ return carregar(c)??DEFAULTS[c]; }
+function carregar(c){try{return JSON.parse(localStorage.getItem('bh_'+c));}catch{return null;}}
+function salvar(c,v){localStorage.setItem('bh_'+c,JSON.stringify(v));}
+function getDados(c){return carregar(c)??DEFAULTS[c];}
 
-// ===== GOOGLE SHEETS =====
+// ===== TELEFONES SALVOS (cache de clientes) =====
+// Chave: nome normalizado do cliente → telefone
+function getTelCache(){return carregar("tel_cache")||{};}
+function setTelCache(nome,fone){
+  const c=getTelCache();
+  const chave=nome.trim().toLowerCase();
+  if(chave&&fone) c[chave]=fone;
+  salvar("tel_cache",c);
+}
+function buscarTelCliente(nome){
+  const c=getTelCache();
+  return c[nome.trim().toLowerCase()]||"";
+}
+
+// ===== SHEETS =====
 const SCRIPT_URL="https://script.google.com/macros/s/AKfycbwa3VKQEkUI9jsx5VzLYZqg8ddiYDAxindVBFUxsPlDPqiMn5Db0MgPto3MmzR-jQzHxQ/exec";
-
 function chamarGet(params){
   return new Promise((resolve,reject)=>{
     const cb='cb_'+Date.now()+'_'+Math.random().toString(36).slice(2);
@@ -329,76 +318,52 @@ function chamarGet(params){
     setTimeout(()=>s.remove(),15000);
   });
 }
-function chamarPost(body){ return fetch(SCRIPT_URL,{method:'POST',body:JSON.stringify(body)}).then(r=>r.json()); }
+function chamarPost(body){return fetch(SCRIPT_URL,{method:'POST',body:JSON.stringify(body)}).then(r=>r.json());}
 
-// ===== Z-API =====
-function getZapi(){ return getDados("zapi"); }
-function getBase(){ const z=getZapi(); return `https://api.z-api.io/instances/${z.instance}/token/${z.token}`; }
+// ===== Z-API PROXY =====
+const PROXY_URL="https://qualityburguer.com.br/zapi-proxy.php";
+function getZapi(){return getDados("zapi");}
 
-async function zapiTexto(fone, msg){
+async function chamarProxy(endpoint,payload){
   const z=getZapi();
-  if(!z.instance||!z.token||!z.clientToken){ console.warn("Z-API: configuração incompleta"); return; }
-  const num=fone.replace(/\D/g,""); if(!num) return;
+  if(!z.instance||!z.token||!z.clientToken){console.warn("Z-API: config incompleta");return null;}
   try{
-    const r=await fetch(`${getBase()}/send-text`,{
-      method:"POST",
-      headers:{"Content-Type":"application/json","Client-Token":z.clientToken},
-      body:JSON.stringify({phone:num,message:msg})
+    const r=await fetch(PROXY_URL,{
+      method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({endpoint,payload,instance:z.instance,token:z.token,clientToken:z.clientToken})
     });
     const j=await r.json();
-    if(!r.ok) console.warn("Z-API texto erro:",j);
-    else console.log("✅ Z-API texto enviado:",j.messageId||j.zaapId);
-  }catch(e){ console.warn("Z-API texto falha:",e.message); }
+    if(!r.ok) console.warn("Z-API erro ["+endpoint+"]:",j);
+    else console.log("✅ Z-API OK ["+endpoint+"]:",j.messageId||j.zaapId||j);
+    return j;
+  }catch(e){console.warn("Z-API falha ["+endpoint+"]:",e.message);return null;}
 }
 
-async function zapiAudio(fone, audioUrl){
-  const z=getZapi();
-  if(!z.instance||!z.token||!z.clientToken){ console.warn("Z-API: configuração incompleta"); return; }
-  if(!audioUrl){ console.warn("Z-API: URL de áudio não configurada"); return; }
-  const num=fone.replace(/\D/g,""); if(!num) return;
-  try{
-    const r=await fetch(`${getBase()}/send-audio`,{
-      method:"POST",
-      headers:{"Content-Type":"application/json","Client-Token":z.clientToken},
-      body:JSON.stringify({phone:num,audio:audioUrl,waveform:true})
-    });
-    const j=await r.json();
-    if(!r.ok) console.warn("Z-API áudio erro:",j);
-    else console.log("✅ Z-API áudio enviado:",j.messageId||j.zaapId);
-  }catch(e){ console.warn("Z-API áudio falha:",e.message); }
+async function zapiTexto(fone,msg){
+  const num=fone.replace(/\D/g,"");if(!num)return;
+  await chamarProxy("send-text",{phone:num,message:msg});
+}
+async function zapiAudio(fone,audioUrl){
+  const num=fone.replace(/\D/g,"");if(!num||!audioUrl)return;
+  await chamarProxy("send-audio",{phone:num,audio:audioUrl,waveform:true});
 }
 
 async function testarZapi(){
-  const z=getZapi();
-  const el=document.getElementById("zapi-status-msg");
-  if(!z.instance||!z.token||!z.clientToken){
-    el.className="zapi-status erro";
-    el.textContent="❌ Preencha Instance ID, Token e Client-Token.";
-    return;
-  }
-  el.className="zapi-status ok"; el.textContent="⏳ Testando...";
+  const z=getZapi(),el=document.getElementById("zapi-status-msg");
+  if(!z.instance||!z.token||!z.clientToken){el.className="zapi-status erro";el.textContent="❌ Preencha todos os campos Z-API.";return;}
+  el.className="zapi-status ok";el.textContent="⏳ Testando via proxy...";
   try{
-    const r=await fetch(`https://api.z-api.io/instances/${z.instance}/token/${z.token}/status`,{
-      headers:{"Client-Token":z.clientToken}
-    });
+    const r=await fetch(PROXY_URL,{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({endpoint:"status",payload:{},instance:z.instance,token:z.token,clientToken:z.clientToken})});
     const j=await r.json();
-    if(r.ok&&(j.connected||j.status)){
-      el.className="zapi-status ok";
-      el.textContent="✅ Z-API conectada! Status: "+(j.status||"online");
-    } else {
-      el.className="zapi-status erro";
-      el.textContent="❌ Erro: "+(j.message||JSON.stringify(j));
-    }
-  }catch(e){
-    el.className="zapi-status erro";
-    el.textContent="❌ Falha: "+e.message;
-  }
+    if(r.ok&&(j.connected||j.status)){el.className="zapi-status ok";el.textContent="✅ Z-API conectada! Status: "+(j.status||"online");}
+    else{el.className="zapi-status erro";el.textContent="❌ Erro: "+(j.message||JSON.stringify(j));}
+  }catch(e){el.className="zapi-status erro";el.textContent="❌ Proxy não encontrado. Suba zapi-proxy.php no servidor.";}
 }
 
 // ===== LOGIN =====
 document.getElementById("login-usuario").addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("login-senha").focus();});
 document.getElementById("login-senha").addEventListener("keydown",e=>{if(e.key==="Enter")fazerLogin();});
-
 function fazerLogin(){
   const u=document.getElementById("login-usuario").value.trim();
   const s=document.getElementById("login-senha").value;
@@ -407,9 +372,7 @@ function fazerLogin(){
     document.getElementById("login-screen").style.display="none";
     document.getElementById("painel").style.display="block";
     carregarTudo();
-  } else {
-    document.getElementById("login-erro").style.display="block";
-  }
+  }else{document.getElementById("login-erro").style.display="block";}
 }
 function fazerLogout(){
   document.getElementById("login-screen").style.display="flex";
@@ -424,13 +387,13 @@ function trocarTab(id,btn){
   document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("ativo"));
   document.getElementById("sec-"+id).classList.add("ativa");
   btn.classList.add("ativo");
-  if(id==="entregas") carregarEntregas();
+  if(id==="entregas")carregarEntregas();
 }
 
 // ===== TOAST =====
-function mostrarToast(msg="✅ Salvo com sucesso!"){
+function mostrarToast(msg="✅ Salvo!"){
   const t=document.getElementById("toast");
-  t.textContent=msg; t.classList.add("show");
+  t.textContent=msg;t.classList.add("show");
   setTimeout(()=>t.classList.remove("show"),2500);
 }
 
@@ -446,7 +409,7 @@ async function carregarTudo(){
       document.getElementById("cfg-video").value=c.video||"";
       document.getElementById("cfg-wpp").value=c.wpp||"";
       document.getElementById("cfg-taxa").value=c.taxa||"";
-      if(c.logo) previewLogoUrl(c.logo);
+      if(c.logo)previewLogoUrl(c.logo);
     }
   }catch(e){
     const cfg=getDados("config");
@@ -456,125 +419,70 @@ async function carregarTudo(){
     document.getElementById("cfg-video").value=cfg.video||"";
     document.getElementById("cfg-wpp").value=cfg.wpp||"";
     document.getElementById("cfg-taxa").value=cfg.taxa||"";
-    if(cfg.logo) previewLogoUrl(cfg.logo);
+    if(cfg.logo)previewLogoUrl(cfg.logo);
   }
-
   const z=getDados("zapi");
   document.getElementById("cfg-zapi-instance").value=z.instance||"";
   document.getElementById("cfg-zapi-token").value=z.token||"";
   document.getElementById("cfg-zapi-client-token").value=z.clientToken||"";
   document.getElementById("cfg-zapi-audio").value=z.audioUrl||"";
-
   const creds=getDados("credenciais");
   document.getElementById("cfg-usuario").value=creds.usuario||"";
-
   await carregarProdutosDoSheets();
   await carregarAdicionaisDoSheets();
   renderizarCategorias();
   renderizarPedidos();
 }
 
-// ===== CONFIGURAÇÕES =====
+// ===== CONFIG =====
 async function salvarConfiguracoes(){
-  const cfg={
-    nome:document.getElementById("cfg-nome").value.trim(),
-    slogan:document.getElementById("cfg-slogan").value.trim(),
-    logo:document.getElementById("cfg-logo").value.trim(),
-    video:document.getElementById("cfg-video").value.trim(),
-    wpp:document.getElementById("cfg-wpp").value.trim(),
-    taxa:document.getElementById("cfg-taxa").value.trim(),
-  };
-  try{ await chamarPost({acao:"config",config:cfg}); mostrarToast("✅ Configurações salvas no cardápio!"); }
-  catch(e){ salvar("config",cfg); mostrarToast("✅ Configurações salvas!"); }
+  const cfg={nome:document.getElementById("cfg-nome").value.trim(),slogan:document.getElementById("cfg-slogan").value.trim(),logo:document.getElementById("cfg-logo").value.trim(),video:document.getElementById("cfg-video").value.trim(),wpp:document.getElementById("cfg-wpp").value.trim(),taxa:document.getElementById("cfg-taxa").value.trim()};
+  try{await chamarPost({acao:"config",config:cfg});mostrarToast("✅ Configurações salvas no cardápio!");}
+  catch(e){salvar("config",cfg);mostrarToast("✅ Configurações salvas!");}
 }
-
 function salvarZapi(){
-  const z={
-    instance:document.getElementById("cfg-zapi-instance").value.trim(),
-    token:document.getElementById("cfg-zapi-token").value.trim(),
-    clientToken:document.getElementById("cfg-zapi-client-token").value.trim(),
-    audioUrl:document.getElementById("cfg-zapi-audio").value.trim(),
-  };
-  salvar("zapi",z);
+  salvar("zapi",{instance:document.getElementById("cfg-zapi-instance").value.trim(),token:document.getElementById("cfg-zapi-token").value.trim(),clientToken:document.getElementById("cfg-zapi-client-token").value.trim(),audioUrl:document.getElementById("cfg-zapi-audio").value.trim()});
   mostrarToast("✅ Z-API salva!");
 }
-
 function salvarSenha(){
-  const u=document.getElementById("cfg-usuario").value.trim();
-  const s=document.getElementById("cfg-senha").value;
-  if(!u||!s) return mostrarToast("⚠️ Preencha usuário e senha");
-  salvar("credenciais",{usuario:u,senha:s});
-  mostrarToast("🔒 Acesso atualizado!");
+  const u=document.getElementById("cfg-usuario").value.trim(),s=document.getElementById("cfg-senha").value;
+  if(!u||!s)return mostrarToast("⚠️ Preencha usuário e senha");
+  salvar("credenciais",{usuario:u,senha:s});mostrarToast("🔒 Acesso atualizado!");
 }
-
-function previewLogo(url){ previewLogoUrl(url); }
-function previewLogoUrl(url){
-  const img=document.getElementById("preview-logo"); if(!img) return;
-  if(url){img.src=url;img.style.display="block";}else img.style.display="none";
-}
+function previewLogo(url){previewLogoUrl(url);}
+function previewLogoUrl(url){const img=document.getElementById("preview-logo");if(!img)return;if(url){img.src=url;img.style.display="block";}else img.style.display="none";}
 
 // ===== PRODUTOS =====
 let produtos=[];
-
 async function carregarProdutosDoSheets(){
   try{
     const res=await chamarGet({acao:"produtos"});
-    if(res.ok){
-      produtos=(res.produtos||[]).map(p=>({
-        id:p.id||Date.now().toString(),nome:p.nome||"",categoria:p.categoria||"",
-        preco:parseFloat(p.preco)||0,descricao:p.descricao||"",foto:p.foto||"",
-        ativo:String(p.ativo).toLowerCase()!=="nao",
-      }));
-      renderizarProdutos();
-    }
+    if(res.ok){produtos=(res.produtos||[]).map(p=>({id:p.id||Date.now().toString(),nome:p.nome||"",categoria:p.categoria||"",preco:parseFloat(p.preco)||0,descricao:p.descricao||"",foto:p.foto||"",ativo:String(p.ativo).toLowerCase()!=="nao"}));renderizarProdutos();}
   }catch(e){produtos=getDados("produtos");renderizarProdutos();}
 }
-
 async function carregarAdicionaisDoSheets(){
   try{const res=await chamarGet({acao:"adicionais"});if(res.ok)renderizarAdicionais(res.adicionais||[]);}
   catch(e){renderizarAdicionais([]);}
 }
-
 function renderizarProdutos(){
   document.getElementById("lista-produtos").innerHTML=produtos.map(p=>`
     <div class="produto-item" id="prod-item-${p.id}">
       <div class="produto-header" onclick="toggleProduto(${p.id})">
         <img src="${p.foto||''}" alt="" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 60 60%22><rect fill=%22%23242424%22 width=%2260%22 height=%2260%22/><text y=%2250%25%22 x=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23555%22 font-size=%2224%22>🍔</text></svg>'">
-        <div class="produto-header-info">
-          <div class="produto-header-nome">${p.nome}</div>
-          <div class="produto-header-cat">${p.categoria} • ${p.ativo?'<span style="color:var(--green)">Ativo</span>':'<span style="color:var(--red)">Oculto</span>'}</div>
-        </div>
+        <div class="produto-header-info"><div class="produto-header-nome">${p.nome}</div><div class="produto-header-cat">${p.categoria} • ${p.ativo?'<span style="color:var(--green)">Ativo</span>':'<span style="color:var(--red)">Oculto</span>'}</div></div>
         <div class="produto-header-preco">R$ ${p.preco.toFixed(2).replace(".",",")}</div>
         <span class="produto-toggle" id="toggle-${p.id}">▾</span>
       </div>
       <div class="produto-form" id="form-${p.id}">
-        <div class="switch-row">
-          <label class="switch"><input type="checkbox" id="p-ativo-${p.id}" ${p.ativo?'checked':''}><span class="slider"></span></label>
-          <span class="switch-label">Produto visível no cardápio</span>
-        </div>
-        <div class="form-row">
-          <div class="form-group"><label>Nome</label><input type="text" id="p-nome-${p.id}" value="${p.nome}"></div>
-          <div class="form-group"><label>Categoria</label><select id="p-cat-${p.id}">${getCategoriaOptions(p.categoria)}</select></div>
-        </div>
-        <div class="form-row">
-          <div class="form-group"><label>Preço (R$)</label><input type="number" id="p-preco-${p.id}" value="${p.preco}" step="0.01" min="0"></div>
-          <div class="form-group"><label>URL da Foto</label><input type="url" id="p-foto-${p.id}" value="${p.foto||''}" placeholder="https://..."></div>
-        </div>
-        <div class="form-row full">
-          <div class="form-group"><label>Descrição</label><textarea id="p-desc-${p.id}">${p.descricao}</textarea></div>
-        </div>
-        <div class="produto-actions">
-          <button class="btn-salvar-prod" onclick="salvarProduto(${p.id})">💾 Salvar</button>
-          <button class="btn-del" onclick="deletarProduto(${p.id})">🗑 Remover</button>
-        </div>
+        <div class="switch-row"><label class="switch"><input type="checkbox" id="p-ativo-${p.id}" ${p.ativo?'checked':''}><span class="slider"></span></label><span class="switch-label">Produto visível no cardápio</span></div>
+        <div class="form-row"><div class="form-group"><label>Nome</label><input type="text" id="p-nome-${p.id}" value="${p.nome}"></div><div class="form-group"><label>Categoria</label><select id="p-cat-${p.id}">${getCategoriaOptions(p.categoria)}</select></div></div>
+        <div class="form-row"><div class="form-group"><label>Preço (R$)</label><input type="number" id="p-preco-${p.id}" value="${p.preco}" step="0.01" min="0"></div><div class="form-group"><label>URL da Foto</label><input type="url" id="p-foto-${p.id}" value="${p.foto||''}" placeholder="https://..."></div></div>
+        <div class="form-row full"><div class="form-group"><label>Descrição</label><textarea id="p-desc-${p.id}">${p.descricao}</textarea></div></div>
+        <div class="produto-actions"><button class="btn-salvar-prod" onclick="salvarProduto(${p.id})">💾 Salvar</button><button class="btn-del" onclick="deletarProduto(${p.id})">🗑 Remover</button></div>
       </div>
-    </div>
-  `).join("");
+    </div>`).join("");
 }
-
-function getCategoriaOptions(sel){
-  return getDados("categorias").map(c=>`<option value="${c}" ${c===sel?'selected':''}>${c}</option>`).join("");
-}
+function getCategoriaOptions(sel){return getDados("categorias").map(c=>`<option value="${c}" ${c===sel?'selected':''}>${c}</option>`).join("");}
 function toggleProduto(id){
   const f=document.getElementById("form-"+id),t=document.getElementById("toggle-"+id),a=f.classList.contains("aberta");
   document.querySelectorAll(".produto-form").forEach(x=>x.classList.remove("aberta"));
@@ -582,53 +490,32 @@ function toggleProduto(id){
   if(!a){f.classList.add("aberta");t.classList.add("aberto");}
 }
 function salvarProduto(id){
-  const idx=produtos.findIndex(p=>p.id===id); if(idx===-1) return;
-  produtos[idx]={id,
-    nome:document.getElementById("p-nome-"+id).value.trim(),
-    categoria:document.getElementById("p-cat-"+id).value,
-    preco:parseFloat(document.getElementById("p-preco-"+id).value)||0,
-    foto:document.getElementById("p-foto-"+id).value.trim(),
-    descricao:document.getElementById("p-desc-"+id).value.trim(),
-    ativo:document.getElementById("p-ativo-"+id).checked,
-  };
-  salvar("produtos",produtos); renderizarProdutos(); mostrarToast("✅ Produto salvo!");
+  const idx=produtos.findIndex(p=>p.id===id);if(idx===-1)return;
+  produtos[idx]={id,nome:document.getElementById("p-nome-"+id).value.trim(),categoria:document.getElementById("p-cat-"+id).value,preco:parseFloat(document.getElementById("p-preco-"+id).value)||0,foto:document.getElementById("p-foto-"+id).value.trim(),descricao:document.getElementById("p-desc-"+id).value.trim(),ativo:document.getElementById("p-ativo-"+id).checked};
+  salvar("produtos",produtos);renderizarProdutos();mostrarToast("✅ Produto salvo!");
 }
-function deletarProduto(id){
-  if(!confirm("Remover este produto?")) return;
-  produtos=produtos.filter(p=>p.id!==id);
-  salvar("produtos",produtos); renderizarProdutos(); mostrarToast("🗑 Produto removido.");
-}
+function deletarProduto(id){if(!confirm("Remover este produto?"))return;produtos=produtos.filter(p=>p.id!==id);salvar("produtos",produtos);renderizarProdutos();mostrarToast("🗑 Produto removido.");}
 function novoProduto(){
   const cats=getDados("categorias"),id=Date.now();
   produtos.push({id,nome:"Novo Produto",categoria:cats[0]||"Especiais",preco:0,descricao:"",foto:"",ativo:true});
-  salvar("produtos",produtos); renderizarProdutos();
+  salvar("produtos",produtos);renderizarProdutos();
   setTimeout(()=>{toggleProduto(id);document.getElementById("prod-item-"+id).scrollIntoView({behavior:"smooth"});},100);
 }
 
 // ===== ADICIONAIS =====
 function renderizarAdicionais(lista){
-  const adicionais=lista||getDados("adicionais");
-  document.getElementById("lista-adicionais-edit").innerHTML=adicionais.map((a,i)=>`
+  document.getElementById("lista-adicionais-edit").innerHTML=(lista||getDados("adicionais")).map((a,i)=>`
     <div class="adicional-item">
-      <input class="adicional-nome-input" type="text" value="${a.nome}" placeholder="Nome do adicional" data-idx="${i}" data-campo="nome">
-      <input class="adicional-preco-input" type="number" value="${a.preco}" step="0.50" min="0" placeholder="R$ 0,00" data-idx="${i}" data-campo="preco">
+      <input class="adicional-nome-input" type="text" value="${a.nome}" placeholder="Nome" data-idx="${i}" data-campo="nome">
+      <input class="adicional-preco-input" type="number" value="${a.preco}" step="0.50" min="0" data-idx="${i}" data-campo="preco">
       <button class="btn-del-add" onclick="removerAdicional(${i})">✕</button>
-    </div>
-  `).join("");
+    </div>`).join("");
 }
-function novoAdicional(){
-  const d=document.createElement("div"); d.className="adicional-item";
-  d.innerHTML=`<input class="adicional-nome-input" type="text" placeholder="Nome do adicional" data-campo="nome"><input class="adicional-preco-input" type="number" value="0" step="0.50" min="0" data-campo="preco"><button class="btn-del-add" onclick="this.parentElement.remove()">✕</button>`;
-  document.getElementById("lista-adicionais-edit").appendChild(d);
-}
+function novoAdicional(){const d=document.createElement("div");d.className="adicional-item";d.innerHTML=`<input class="adicional-nome-input" type="text" placeholder="Nome" data-campo="nome"><input class="adicional-preco-input" type="number" value="0" step="0.50" min="0" data-campo="preco"><button class="btn-del-add" onclick="this.parentElement.remove()">✕</button>`;document.getElementById("lista-adicionais-edit").appendChild(d);}
 function removerAdicional(idx){const items=document.querySelectorAll(".adicional-item");if(items[idx])items[idx].remove();}
 async function salvarAdicionais(){
   const adicionais=[];
-  document.querySelectorAll(".adicional-item").forEach(item=>{
-    const nome=item.querySelector('[data-campo="nome"]')?.value.trim();
-    const preco=parseFloat(item.querySelector('[data-campo="preco"]')?.value)||0;
-    if(nome) adicionais.push({nome,preco});
-  });
+  document.querySelectorAll(".adicional-item").forEach(item=>{const nome=item.querySelector('[data-campo="nome"]')?.value.trim();const preco=parseFloat(item.querySelector('[data-campo="preco"]')?.value)||0;if(nome)adicionais.push({nome,preco});});
   try{await chamarPost({acao:"adicionais",adicionais});mostrarToast("✅ Adicionais salvos!");}
   catch(e){salvar("adicionais",adicionais);mostrarToast("✅ Adicionais salvos!");}
 }
@@ -636,48 +523,42 @@ async function salvarAdicionais(){
 // ===== CATEGORIAS =====
 function renderizarCategorias(){
   document.getElementById("lista-categorias-edit").innerHTML=getDados("categorias").map((c,i)=>`
-    <div class="adicional-item">
-      <input class="adicional-nome-input" type="text" value="${c}" placeholder="Nome da categoria" data-idx="${i}" style="grid-column:1/3;">
-      <button class="btn-del-add" onclick="removerCategoria(${i})">✕</button>
-    </div>
-  `).join("");
+    <div class="adicional-item"><input class="adicional-nome-input" type="text" value="${c}" placeholder="Nome da categoria" data-idx="${i}" style="grid-column:1/3;"><button class="btn-del-add" onclick="removerCategoria(${i})">✕</button></div>`).join("");
 }
 function novaCategoria(){const cats=getDados("categorias");cats.push("");salvar("categorias",cats);renderizarCategorias();}
 function removerCategoria(idx){const cats=getDados("categorias");cats.splice(idx,1);salvar("categorias",cats);renderizarCategorias();}
-function salvarCategorias(){
-  const cats=Array.from(document.querySelectorAll("#lista-categorias-edit .adicional-nome-input")).map(i=>i.value.trim()).filter(Boolean);
-  salvar("categorias",cats); mostrarToast("✅ Categorias salvas!");
-}
+function salvarCategorias(){const cats=Array.from(document.querySelectorAll("#lista-categorias-edit .adicional-nome-input")).map(i=>i.value.trim()).filter(Boolean);salvar("categorias",cats);mostrarToast("✅ Categorias salvas!");}
 
 // ===== PEDIDOS =====
-function hojeStr(){
-  const a=new Date(new Date().toLocaleString("en-US",{timeZone:"America/Sao_Paulo"}));
-  return a.getFullYear()+"-"+String(a.getMonth()+1).padStart(2,"0")+"-"+String(a.getDate()).padStart(2,"0");
-}
+function hojeStr(){const a=new Date(new Date().toLocaleString("en-US",{timeZone:"America/Sao_Paulo"}));return a.getFullYear()+"-"+String(a.getMonth()+1).padStart(2,"0")+"-"+String(a.getDate()).padStart(2,"0");}
+
 async function renderizarPedidos(){
   const lista=document.getElementById("lista-pedidos");
   const filtroEl=document.getElementById("filtro-data");
   const data=filtroEl?(filtroEl.value||hojeStr()):hojeStr();
-  if(filtroEl) filtroEl.value=data;
-  if(lista) lista.innerHTML=`<div style="text-align:center;padding:40px;color:var(--text2);">⏳ Carregando pedidos...</div>`;
+  if(filtroEl)filtroEl.value=data;
+  if(lista)lista.innerHTML=`<div style="text-align:center;padding:40px;color:var(--text2);">⏳ Carregando...</div>`;
   try{
     const json=await chamarGet({acao:"pedidos",data});
-    if(!json.ok) throw new Error(json.erro||"Erro");
+    if(!json.ok)throw new Error(json.erro||"Erro");
     const doDia=(json.pedidos||[]).filter(p=>p.data===data);
     const pagos=doDia.filter(p=>p.status==="pago");
     const pendentes=doDia.filter(p=>p.status==="pendente");
     const abandonados=doDia.filter(p=>p.status==="abandonado");
     const totalDia=pagos.reduce((s,p)=>s+parseFloat(p.total||0),0);
-    if(document.getElementById("res-total-dia")) document.getElementById("res-total-dia").textContent="R$ "+totalDia.toFixed(2).replace(".",",");
-    if(document.getElementById("res-qtd-dia")) document.getElementById("res-qtd-dia").textContent=pagos.length+" pago"+(pagos.length!==1?"s":"");
-    if(document.getElementById("res-pendentes")) document.getElementById("res-pendentes").textContent=pendentes.length;
-    if(document.getElementById("res-abandonados")) document.getElementById("res-abandonados").textContent=abandonados.length;
-    if(!doDia.length){if(lista)lista.innerHTML=`<div style="text-align:center;padding:40px;color:var(--text2);">Nenhum pedido nesta data.</div>`;return;}
-    const ordem={pendente:0,pago:1,abandonado:2};
-    doDia.sort((a,b)=>ordem[a.status]-ordem[b.status]);
-    if(lista) lista.innerHTML=doDia.map(p=>{
+    document.getElementById("res-total-dia").textContent="R$ "+totalDia.toFixed(2).replace(".",",");
+    document.getElementById("res-qtd-dia").textContent=pagos.length+" pago"+(pagos.length!==1?"s":"");
+    document.getElementById("res-pendentes").textContent=pendentes.length;
+    document.getElementById("res-abandonados").textContent=abandonados.length;
+    if(!doDia.length){lista.innerHTML=`<div style="text-align:center;padding:40px;color:var(--text2);">Nenhum pedido nesta data.</div>`;return;}
+    doDia.sort((a,b)=>({pendente:0,pago:1,abandonado:2}[a.status])-({pendente:0,pago:1,abandonado:2}[b.status]));
+    lista.innerHTML=doDia.map(p=>{
       const cor=p.status==="pago"?"var(--green)":p.status==="abandonado"?"#555":"var(--gold)";
       const emoji=p.status==="pago"?"✅":p.status==="abandonado"?"❌":"⏳";
+      const jaSaiu=JSON.parse(localStorage.getItem('bh_entregas')||'[]').some(e=>e.pedido_id===p.id);
+      // ✅ Telefone salvo em cache para este cliente
+      const telSalvo=buscarTelCliente(p.cliente||"");
+      const telBadge=telSalvo?`<span style="font-size:11px;color:var(--green);margin-left:6px;">📱 tel salvo</span>`:`<span style="font-size:11px;color:#555;margin-left:6px;">📱 sem tel</span>`;
       return `<div style="background:var(--bg2);border-radius:var(--radius);border:1.5px solid #2a2a2a;margin-bottom:10px;overflow:hidden;">
         <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;">
           <div style="flex-shrink:0;text-align:center;">
@@ -685,7 +566,7 @@ async function renderizarPedidos(){
             <div style="font-size:10px;color:var(--text2);">${p.hora}</div>
           </div>
           <div style="flex:1;">
-            <div style="font-size:13px;font-weight:800;margin-bottom:2px;">👤 ${p.cliente||"—"}</div>
+            <div style="font-size:13px;font-weight:800;margin-bottom:2px;">👤 ${p.cliente||"—"}${telBadge}</div>
             <div style="font-size:12px;color:var(--text2);margin-bottom:2px;">🛒 ${p.itens||"—"}</div>
             ${p.adicionais?`<div style="font-size:11px;color:var(--text2);">+ ${p.adicionais}</div>`:""}
             <div style="font-size:12px;color:var(--text2);">📍 ${p.endereco||"—"}</div>
@@ -695,40 +576,78 @@ async function renderizarPedidos(){
             <div style="font-size:13px;margin-top:4px;">${emoji} <span style="color:${cor};font-weight:700;text-transform:capitalize;">${p.status}</span></div>
           </div>
         </div>
-        ${p.status==="pendente"?`<div style="display:flex;gap:8px;padding:0 16px 14px;">
-          <button onclick="mudarStatus('${p.id}','pago')" style="flex:1;padding:8px;background:var(--green);border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">✅ Pago</button>
-          <button onclick="mudarStatus('${p.id}','abandonado')" style="flex:1;padding:8px;background:var(--bg3);border:1.5px solid #555;border-radius:50px;color:#888;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">❌ Abandonado</button>
-          <button onclick="imprimirPedido('${p.id}','${p.num}','${p.hora}','${p.data}','${(p.cliente||'').replace(/'/g,'`')}','${(p.itens||'').replace(/'/g,'`')}','${(p.adicionais||'').replace(/'/g,'`')}','${(p.endereco||'').replace(/'/g,'`')}','${p.total}','${p.status}')" style="padding:8px 12px;background:#444;border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">🖨️</button>
-        </div>`:`<div style="display:flex;justify-content:flex-end;padding:0 16px 14px;">
-          <button onclick="imprimirPedido('${p.id}','${p.num}','${p.hora}','${p.data}','${(p.cliente||'').replace(/'/g,'`')}','${(p.itens||'').replace(/'/g,'`')}','${(p.adicionais||'').replace(/'/g,'`')}','${(p.endereco||'').replace(/'/g,'`')}','${p.total}','${p.status}')" style="padding:8px 16px;background:#444;border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">🖨️ Imprimir</button>
-        </div>`}
+        <div style="display:flex;gap:8px;padding:0 16px 14px;flex-wrap:wrap;">
+          ${p.status==="pendente"?`
+            <button onclick="mudarStatus('${p.id}','pago')" style="flex:1;min-width:80px;padding:8px;background:var(--green);border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">✅ Pago</button>
+            <button onclick="mudarStatus('${p.id}','abandonado')" style="flex:1;min-width:80px;padding:8px;background:var(--bg3);border:1.5px solid #555;border-radius:50px;color:#888;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">❌ Abandonado</button>
+          `:""}
+          ${!jaSaiu&&p.status!=="abandonado"?`
+            <button onclick="abrirModalEntrega('${p.id}','${p.num}','${(p.cliente||'').replace(/'/g,'`')}','${(p.endereco||'').replace(/'/g,'`')}','${(p.itens||'').replace(/'/g,'`')}','${p.total}','${p.status}')"
+              style="flex:1;min-width:100px;padding:8px;background:var(--brand);border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">
+              🛵 ${p.status==="pago"?"Enviar p/ entrega":"Enviar (paga na entrega)"}
+            </button>
+          `:(jaSaiu?`<span style="font-size:12px;color:var(--green);padding:8px;">✅ Em rota</span>`:"")}
+          <button onclick="imprimirPedido('${p.id}','${p.num}','${p.hora}','${p.data}','${(p.cliente||'').replace(/'/g,'`')}','${(p.itens||'').replace(/'/g,'`')}','${(p.adicionais||'').replace(/'/g,'`')}','${(p.endereco||'').replace(/'/g,'`')}','${p.total}','${p.status}')" style="padding:8px 14px;background:#444;border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">🖨️</button>
+        </div>
       </div>`;
     }).join("");
   }catch(err){
-    if(lista) lista.innerHTML=`<div style="text-align:center;padding:40px;color:var(--red);">❌ Erro ao carregar.<br><small>${err.message}</small><br><br><button onclick="renderizarPedidos()" style="padding:10px 20px;background:var(--brand);border:none;border-radius:50px;color:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;">Tentar novamente</button></div>`;
+    lista.innerHTML=`<div style="text-align:center;padding:40px;color:var(--red);">❌ Erro ao carregar.<br><small>${err.message}</small><br><br><button onclick="renderizarPedidos()" style="padding:10px 20px;background:var(--brand);border:none;border-radius:50px;color:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;">Tentar novamente</button></div>`;
   }
 }
+
 async function mudarStatus(id,status){
   try{await chamarGet({acao:"status",id,status});mostrarToast(status==="pago"?"✅ Marcado como pago!":"❌ Marcado como abandonado.");renderizarPedidos();}
   catch(e){mostrarToast("❌ Erro ao atualizar");}
 }
+
+// ===== MODAL DE TELEFONE — lógica central =====
+let _modalDados=null;
+
+function abrirModalEntrega(pedidoId,num,cliente,endereco,itens,total,status){
+  // Tenta recuperar telefone já salvo para este cliente
+  const telSalvo=buscarTelCliente(cliente);
+  const input=document.getElementById("modal-fone-input");
+  input.value=telSalvo;
+  _modalDados={pedidoId,num,cliente,endereco,itens,total,status};
+  document.getElementById("modal-fone").style.display="flex";
+  // Foca automaticamente só se não tiver telefone salvo
+  if(!telSalvo) setTimeout(()=>input.focus(),100);
+}
+
+function cancelarModal(){
+  document.getElementById("modal-fone").style.display="none";
+  _modalDados=null;
+}
+
+async function confirmarModal(){
+  if(!_modalDados)return;
+  const fone=document.getElementById("modal-fone-input").value.trim();
+  // Salva o telefone em cache vinculado ao nome do cliente
+  if(fone) setTelCache(_modalDados.cliente,fone);
+  document.getElementById("modal-fone").style.display="none";
+  await enviarParaEntrega(
+    _modalDados.pedidoId,_modalDados.num,_modalDados.cliente,
+    _modalDados.endereco,_modalDados.itens,_modalDados.total,fone,_modalDados.status
+  );
+  _modalDados=null;
+}
+
+// Enter confirma modal
+document.getElementById("modal-fone-input").addEventListener("keydown",e=>{if(e.key==="Enter")confirmarModal();});
+
 function imprimirPedido(id,num,hora,data,cliente,itens,adicionais,endereco,total,status){
   const nomeLoja=document.getElementById("cfg-nome")?.value||"Quality+ Burger";
   const dataF=data.split("-").reverse().join("/");
   const stTxt=status==="pago"?"✅ PAGO":status==="abandonado"?"❌ ABANDONADO":"⏳ PENDENTE";
   const taxaInput=prompt("💰 Taxa de entrega (em branco = retirada no local):","R$ 0,00");
-  if(taxaInput===null) return;
+  if(taxaInput===null)return;
   const taxa=taxaInput.trim();
   const totalNum=parseFloat(total)||0;
   const taxaNum=parseFloat(taxa.replace("R$","").replace(",",".").trim())||0;
   const totalFinal=totalNum+taxaNum;
   const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Pedido #${String(num).padStart(2,"0")}</title>
-  <style>@page{margin:10mm;size:80mm auto;}*{margin:0;padding:0;box-sizing:border-box;}body{font-family:'Courier New',monospace;font-size:13px;color:#000;}
-  .center{text-align:center;}.linha{border-top:1px dashed #000;margin:8px 0;}.titulo{font-size:18px;font-weight:bold;text-align:center;margin-bottom:2px;}
-  .pedido-num{font-size:28px;font-weight:bold;text-align:center;margin:6px 0;}.label{color:#555;font-size:11px;text-transform:uppercase;}
-  .valor{font-weight:bold;}.total-box{background:#000;color:#fff;padding:8px;border-radius:4px;text-align:center;margin:10px 0;}
-  .total-val{font-size:20px;font-weight:bold;}.linha-val{display:flex;justify-content:space-between;margin:3px 0;font-size:12px;}
-  @media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}</style></head><body>
+  <style>@page{margin:10mm;size:80mm auto;}*{margin:0;padding:0;box-sizing:border-box;}body{font-family:'Courier New',monospace;font-size:13px;color:#000;}.center{text-align:center;}.linha{border-top:1px dashed #000;margin:8px 0;}.titulo{font-size:18px;font-weight:bold;text-align:center;margin-bottom:2px;}.pedido-num{font-size:28px;font-weight:bold;text-align:center;margin:6px 0;}.label{color:#555;font-size:11px;text-transform:uppercase;}.valor{font-weight:bold;}.total-box{background:#000;color:#fff;padding:8px;border-radius:4px;text-align:center;margin:10px 0;}.total-val{font-size:20px;font-weight:bold;}.linha-val{display:flex;justify-content:space-between;margin:3px 0;font-size:12px;}@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}</style></head><body>
   <div class="titulo">${nomeLoja}</div><div class="center" style="font-size:11px;margin-bottom:8px;">Comprovante de Pedido</div>
   <div class="linha"></div><div class="pedido-num">PEDIDO #${String(num).padStart(2,"0")}</div>
   <div class="center" style="font-size:11px;color:#555;">${dataF} às ${hora}</div><div class="linha"></div>
@@ -748,15 +667,32 @@ function imprimirPedido(id,num,hora,data,cliente,itens,adicionais,endereco,total
   setTimeout(()=>{jan.print();jan.close();},500);
 }
 
+// ===== AGENDA DE TELEFONES (automático) =====
+// Salva e recupera o número de cada cliente pelo nome
+function salvarFoneCliente(nome, fone){
+  if(!nome||!fone) return;
+  const agenda = JSON.parse(localStorage.getItem('bh_agenda')||'{}');
+  agenda[nome.trim().toLowerCase()] = fone.replace(/\D/g,"");
+  localStorage.setItem('bh_agenda', JSON.stringify(agenda));
+}
+function getFoneCliente(nome){
+  if(!nome) return "";
+  const agenda = JSON.parse(localStorage.getItem('bh_agenda')||'{}');
+  return agenda[nome.trim().toLowerCase()]||"";
+}
+
+// Busca pedidos pendentes do dia (além dos pagos)
+async function buscarTodosPedidosHoje(hoje){
+  try{
+    const res = await chamarGet({acao:"pedidos", data:hoje});
+    if(res.ok) return (res.pedidos||[]).filter(p=>p.data===hoje);
+  }catch(e){}
+  return [];
+}
+
 // ===== ENTREGAS =====
-function hojeStrEnt(){
-  const a=new Date(new Date().toLocaleString("en-US",{timeZone:"America/Sao_Paulo"}));
-  return a.getFullYear()+"-"+String(a.getMonth()+1).padStart(2,"0")+"-"+String(a.getDate()).padStart(2,"0");
-}
-function agora(){
-  const a=new Date(new Date().toLocaleString("en-US",{timeZone:"America/Sao_Paulo"}));
-  return String(a.getHours()).padStart(2,"0")+":"+String(a.getMinutes()).padStart(2,"0");
-}
+function hojeStrEnt(){const a=new Date(new Date().toLocaleString("en-US",{timeZone:"America/Sao_Paulo"}));return a.getFullYear()+"-"+String(a.getMonth()+1).padStart(2,"0")+"-"+String(a.getDate()).padStart(2,"0");}
+function agora(){const a=new Date(new Date().toLocaleString("en-US",{timeZone:"America/Sao_Paulo"}));return String(a.getHours()).padStart(2,"0")+":"+String(a.getMinutes()).padStart(2,"0");}
 
 async function carregarEntregas(){
   const todas=JSON.parse(localStorage.getItem('bh_entregas')||'[]');
@@ -764,74 +700,64 @@ async function carregarEntregas(){
   const emRota=todas.filter(e=>e.status==="em_rota"||e.status==="chegou");
   const concluidas=todas.filter(e=>e.status==="entregue"&&e.data===hoje);
   const semSucesso=todas.filter(e=>e.status==="nao_encontrado"&&e.data===hoje);
-
   document.getElementById("ent-em-rota").textContent=emRota.length;
   document.getElementById("ent-concluidas").textContent=concluidas.length;
-
-  const tempos=concluidas.filter(e=>e.hora_saida&&e.hora_entrega).map(e=>{
-    const [hS,mS]=e.hora_saida.split(":").map(Number);
-    const [hE,mE]=e.hora_entrega.split(":").map(Number);
-    return (hE*60+mE)-(hS*60+mS);
-  }).filter(t=>t>0);
-  document.getElementById("ent-tempo-medio").textContent=tempos.length
-    ?Math.round(tempos.reduce((a,b)=>a+b,0)/tempos.length)+"min":"—";
+  const tempos=concluidas.filter(e=>e.hora_saida&&e.hora_entrega).map(e=>{const [hS,mS]=e.hora_saida.split(":").map(Number);const [hE,mE]=e.hora_entrega.split(":").map(Number);return (hE*60+mE)-(hS*60+mS);}).filter(t=>t>0);
+  document.getElementById("ent-tempo-medio").textContent=tempos.length?Math.round(tempos.reduce((a,b)=>a+b,0)/tempos.length)+"min":"—";
 
   let pedidosPagos=[];
-  try{
-    const res=await chamarGet({acao:"pedidos",data:hoje});
-    if(res.ok) pedidosPagos=(res.pedidos||[]).filter(p=>p.status==="pago"&&p.data===hoje);
-  }catch(e){pedidosPagos=[];}
-
+  try{const res=await chamarGet({acao:"pedidos",data:hoje});if(res.ok)pedidosPagos=(res.pedidos||[]).filter(p=>p.status==="pago"&&p.data===hoje);}catch(e){pedidosPagos=[];}
   const entregasIds=todas.map(e=>e.pedido_id);
-  const aguardando=pedidosPagos.filter(p=>!entregasIds.includes(p.id));
+  // ✅ Inclui pendentes (paga na entrega) + pagos
+  let pedidosDoDia=[];
+  try{const rr=await chamarGet({acao:"pedidos",data:hoje});if(rr.ok)pedidosDoDia=(rr.pedidos||[]).filter(p=>p.data===hoje);}catch(e){}
+  const pedidosPendentes=pedidosDoDia.filter(p=>p.status==="pendente"&&!entregasIds.includes(p.id));
+  const aguardando=[...pedidosPagos.filter(p=>!entregasIds.includes(p.id)),...pedidosPendentes];
 
   const lpe=document.getElementById("lista-para-entrega");
-  lpe.innerHTML=aguardando.length?aguardando.map(p=>`
-    <div style="background:var(--bg2);border-radius:var(--radius);border:1.5px solid #2a2a2a;padding:14px;margin-bottom:10px;">
+  lpe.innerHTML=aguardando.length?aguardando.map(p=>{
+    const isPendente=p.status==="pendente";
+    const telSalvo=buscarTelCliente(p.cliente||"");
+    return `<div style="background:var(--bg2);border-radius:var(--radius);border:1.5px solid ${isPendente?'var(--gold)':'#2a2a2a'};padding:14px;margin-bottom:10px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-        <div>
-          <span style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--brand);">#${String(p.num).padStart(2,"0")}</span>
-          <span style="font-size:12px;color:var(--text2);margin-left:8px;">${p.hora}</span>
+        <div><span style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--brand);">#${String(p.num).padStart(2,"0")}</span><span style="font-size:12px;color:var(--text2);margin-left:8px;">${p.hora}</span></div>
+        <div style="text-align:right;">
+          <div style="font-size:14px;font-weight:800;color:var(--gold);">R$ ${parseFloat(p.total||0).toFixed(2).replace(".",",")}</div>
+          <div style="font-size:10px;font-weight:800;">${isPendente?'<span style="color:var(--gold);">💰 PAGA NA ENTREGA</span>':'<span style="color:var(--green);">✅ PAGO</span>'}</div>
         </div>
-        <div style="font-size:14px;font-weight:800;color:var(--gold);">R$ ${parseFloat(p.total||0).toFixed(2).replace(".",",")}</div>
       </div>
-      <div style="font-size:13px;font-weight:700;margin-bottom:4px;">👤 ${p.cliente}</div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:4px;">👤 ${p.cliente} ${telSalvo?'<span style="font-size:11px;color:var(--green);">📱 tel salvo</span>':'<span style="font-size:11px;color:#666;">📱 sem tel</span>'}</div>
       <div style="font-size:12px;color:var(--text2);margin-bottom:4px;">📍 ${p.endereco}</div>
       <div style="font-size:12px;color:var(--text2);margin-bottom:10px;">🛒 ${p.itens}</div>
-      <div style="display:flex;gap:8px;">
-        <input type="text" id="fone-${p.id}" placeholder="📱 Tel. cliente com DDD" style="flex:1;padding:8px 12px;background:var(--bg3);border:1.5px solid #333;border-radius:50px;color:var(--text);font-family:'Nunito',sans-serif;font-size:12px;">
-        <button onclick="enviarParaEntrega('${p.id}','${p.num}','${(p.cliente||'').replace(/'/g,'`')}','${(p.endereco||'').replace(/'/g,'`')}','${(p.itens||'').replace(/'/g,'`')}','${p.total}')" style="padding:8px 16px;background:var(--brand);border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">🛵 Enviar p/ entrega</button>
-      </div>
-    </div>
-  `).join(""):`<div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhum pedido aguardando entrega.</div>`;
+      <button onclick="abrirModalEntrega('${p.id}','${p.num}','${(p.cliente||'').replace(/'/g,'`')}','${(p.endereco||'').replace(/'/g,'`')}','${(p.itens||'').replace(/'/g,'`')}','${p.total}','${isPendente?"pendente":"pago"}')"
+        style="width:100%;padding:10px;background:var(--brand);border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;">
+        🛵 Enviar para entrega${telSalvo?' (1 clique)':''}
+      </button>
+    </div>`;
+  }).join(""):`<div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhum pedido aguardando entrega.</div>`;
 
   const ler=document.getElementById("lista-em-rota");
   ler.innerHTML=emRota.length?emRota.map(e=>`
     <div style="background:var(--bg2);border-radius:var(--radius);border:1.5px solid var(--brand);padding:14px;margin-bottom:10px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
         <span style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--brand);">#${String(e.num).padStart(2,"0")}</span>
-        <span style="font-size:11px;color:var(--text2);">Saiu: ${e.hora_saida}</span>
+        <span style="font-size:11px;color:var(--text2);">Saiu: ${e.hora_saida}${e.pagaNaEntrega?'  <span style="color:var(--gold);">💰 paga na entrega</span>':''}</span>
       </div>
       <div style="font-size:13px;font-weight:700;">👤 ${e.cliente}</div>
       <div style="font-size:12px;color:var(--text2);margin-bottom:10px;">📍 ${e.endereco}</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <button onclick="marcarChegou('${e.id}')" style="flex:1;padding:8px;background:#444;border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;cursor:pointer;">📍 Chegou ao local</button>
+        <button onclick="marcarChegou('${e.id}')" style="flex:1;padding:8px;background:#444;border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;cursor:pointer;">📍 Cheguei</button>
         <button onclick="marcarEntregue('${e.id}')" style="flex:1;padding:8px;background:var(--green);border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;cursor:pointer;">✅ Entregue</button>
         <button onclick="marcarNaoEncontrado('${e.id}')" style="flex:1;padding:8px;background:var(--bg3);border:1.5px solid var(--red);border-radius:50px;color:var(--red);font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;cursor:pointer;">❌ Não encontrado</button>
       </div>
-    </div>
-  `).join(""):`<div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhuma entrega em andamento.</div>`;
+    </div>`).join(""):`<div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhuma entrega em andamento.</div>`;
 
   const lc2=document.getElementById("lista-concluidas");
   const todasHoje=[...concluidas,...semSucesso].sort((a,b)=>(b.hora_entrega||"").localeCompare(a.hora_entrega||""));
   lc2.innerHTML=todasHoje.length?todasHoje.map(e=>{
     const cor=e.status==="entregue"?"var(--green)":"var(--red)";
     const emoji=e.status==="entregue"?"✅":"❌";
-    const tempo=(e.hora_saida&&e.hora_entrega)?(()=>{
-      const [hS,mS]=e.hora_saida.split(":").map(Number);
-      const [hE,mE]=e.hora_entrega.split(":").map(Number);
-      return `${(hE*60+mE)-(hS*60+mS)}min`;
-    })():"—";
+    const tempo=(e.hora_saida&&e.hora_entrega)?(()=>{const [hS,mS]=e.hora_saida.split(":").map(Number);const [hE,mE]=e.hora_entrega.split(":").map(Number);return `${(hE*60+mE)-(hS*60+mS)}min`;})():"—";
     return `<div style="background:var(--bg2);border-radius:var(--radius);border:1.5px solid #2a2a2a;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;">
       <div style="font-size:22px;">${emoji}</div>
       <div style="flex:1;"><div style="font-size:13px;font-weight:700;">#${String(e.num).padStart(2,"0")} — ${e.cliente}</div>
@@ -841,51 +767,41 @@ async function carregarEntregas(){
   }).join(""):`<div style="text-align:center;padding:30px;color:var(--text2);font-size:13px;">Nenhuma entrega concluída ainda.</div>`;
 }
 
-async function enviarParaEntrega(pedidoId,num,cliente,endereco,itens,total){
-  const fone=document.getElementById("fone-"+pedidoId)?.value.trim()||"";
+async function enviarParaEntrega(pedidoId,num,cliente,endereco,itens,total,fone,status){
   const hora=agora(),hoje=hojeStrEnt();
+  const pagaNaEntrega=(status==="pendente");
   const entregas=JSON.parse(localStorage.getItem('bh_entregas')||'[]');
-  entregas.push({id:Date.now().toString(),pedido_id:pedidoId,num,cliente,endereco,itens,total,telefone:fone,status:"em_rota",data:hoje,hora_saida:hora,hora_chegada:null,hora_entrega:null});
+  entregas.push({id:Date.now().toString(),pedido_id:pedidoId,num,cliente,endereco,itens,total,telefone:fone||"",status:"em_rota",data:hoje,hora_saida:hora,hora_chegada:null,hora_entrega:null,pagaNaEntrega});
   localStorage.setItem('bh_entregas',JSON.stringify(entregas));
-  if(fone){
-    await zapiTexto(fone,`🛵 Olá *${cliente}*! Seu pedido saiu para entrega!\n\n🍔 *Quality+ Burger*\n📍 A caminho do seu endereço.\n⏱️ Previsão: 30-45 minutos.\n\nQualquer dúvida, responda esta mensagem! 😊`);
-  }
   mostrarToast("🛵 Pedido enviado para entrega!");
+  renderizarPedidos();
   carregarEntregas();
 }
 
 async function marcarChegou(entregaId){
   const entregas=JSON.parse(localStorage.getItem('bh_entregas')||'[]');
-  const idx=entregas.findIndex(e=>e.id===entregaId); if(idx===-1) return;
+  const idx=entregas.findIndex(e=>e.id===entregaId);if(idx===-1)return;
   entregas[idx].hora_chegada=agora();
   entregas[idx].status="chegou";
   localStorage.setItem('bh_entregas',JSON.stringify(entregas));
-
-  if(entregas[idx].telefone){
-    // ✅ Envia texto
-    await zapiTexto(entregas[idx].telefone,
-      `📍 Olá *${entregas[idx].cliente}*!\n\nNosso entregador *chegou ao seu endereço*! 🛵\n\n📍 ${entregas[idx].endereco}\n\n⚠️ *O entregador não sobe em prédios.* Por favor, desça para receber seu pedido.\n\n🍔 *Quality+ Burger*`
-    );
-    // ✅ Envia áudio — usa URL configurada no painel (mp3 hospedado pelo usuário)
+  // ✅ Envia SOMENTE o áudio (sem texto)
+  const fone=entregas[idx].telefone;
+  if(fone){
     const z=getZapi();
-    if(z.audioUrl){
-      await zapiAudio(entregas[idx].telefone, z.audioUrl);
-    }
+    if(z.audioUrl) await zapiAudio(fone,z.audioUrl);
   }
-  mostrarToast("📍 Chegada registrada! Mensagens enviadas ao cliente.");
+  mostrarToast("📍 Chegada registrada! Áudio enviado ao cliente.");
   carregarEntregas();
 }
 
 async function marcarEntregue(entregaId){
   const entregas=JSON.parse(localStorage.getItem('bh_entregas')||'[]');
-  const idx=entregas.findIndex(e=>e.id===entregaId); if(idx===-1) return;
+  const idx=entregas.findIndex(e=>e.id===entregaId);if(idx===-1)return;
   entregas[idx].status="entregue";
   entregas[idx].hora_entrega=agora();
   localStorage.setItem('bh_entregas',JSON.stringify(entregas));
   if(entregas[idx].telefone){
-    await zapiTexto(entregas[idx].telefone,
-      `✅ *Pedido entregue com sucesso!*\n\nObrigado pela preferência, *${entregas[idx].cliente}*! 🙏\nEsperamos que aproveite muito! 🍔\n\n⭐ Avalie nosso atendimento!\n\n📲 *Quality+ Burger*`
-    );
+    await zapiTexto(entregas[idx].telefone,`✅ *Pedido entregue com sucesso!*\n\nObrigado pela preferência, *${entregas[idx].cliente}*! 🙏\nEsperamos que aproveite muito! 🍔\n\n⭐ Avalie nosso atendimento!\n\n📲 *Quality+ Burger*`);
   }
   mostrarToast("✅ Entrega concluída!");
   carregarEntregas();
@@ -893,14 +809,12 @@ async function marcarEntregue(entregaId){
 
 async function marcarNaoEncontrado(entregaId){
   const entregas=JSON.parse(localStorage.getItem('bh_entregas')||'[]');
-  const idx=entregas.findIndex(e=>e.id===entregaId); if(idx===-1) return;
+  const idx=entregas.findIndex(e=>e.id===entregaId);if(idx===-1)return;
   entregas[idx].status="nao_encontrado";
   entregas[idx].hora_entrega=agora();
   localStorage.setItem('bh_entregas',JSON.stringify(entregas));
   if(entregas[idx].telefone){
-    await zapiTexto(entregas[idx].telefone,
-      `⚠️ Olá *${entregas[idx].cliente}*!\n\nNosso entregador está no local mas *não conseguiu contato*.\n\nPor favor, responda esta mensagem *urgente*.\n\n📍 Seu entregador aguarda.\n\n🍔 *Quality+ Burger*`
-    );
+    await zapiTexto(entregas[idx].telefone,`⚠️ Olá *${entregas[idx].cliente}*!\n\nNosso entregador está no local mas *não conseguiu contato*.\n\nPor favor, responda esta mensagem *urgente*.\n\n🍔 *Quality+ Burger*`);
   }
   mostrarToast("❌ Registrado. Cliente avisado.");
   carregarEntregas();
