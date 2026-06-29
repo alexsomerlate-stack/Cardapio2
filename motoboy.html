@@ -15,8 +15,6 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:40px;}
-
-/* LOGIN */
 #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
 .login-box{background:var(--bg2);border-radius:20px;padding:36px 28px;width:100%;max-width:340px;border:1.5px solid #2a2a2a;text-align:center;}
 .login-box h1{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:3px;color:var(--brand);margin-bottom:4px;}
@@ -25,63 +23,45 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .login-box input:focus{outline:none;border-color:var(--brand);}
 .btn-entrar{width:100%;padding:13px;background:var(--brand);border:none;border-radius:50px;color:#fff;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;}
 #login-erro{color:var(--red);font-size:13px;margin-top:8px;display:none;}
-
-/* TOPBAR */
 #app{display:none;}
 #topbar{background:var(--bg2);border-bottom:1.5px solid #2a2a2a;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
 #topbar h1{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--brand);}
 #btn-sair{background:var(--bg3);border:1px solid #333;color:var(--text2);padding:7px 14px;border-radius:50px;cursor:pointer;font-size:12px;font-family:'Nunito',sans-serif;}
-
-/* STATUS BAR */
 #status-bar{display:flex;gap:10px;padding:14px 14px 0;}
 .stat-box{flex:1;background:var(--bg2);border-radius:12px;padding:12px;text-align:center;border:1.5px solid #2a2a2a;}
 .stat-num{font-family:'Bebas Neue',sans-serif;font-size:26px;}
 .stat-label{font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:1px;}
-
-/* SEÇÕES */
 #conteudo{padding:14px;}
 .sec-titulo{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1.5px;color:var(--text2);margin:16px 0 10px;}
-
-/* CARD DE ENTREGA */
 .entrega-card{background:var(--bg2);border-radius:var(--radius);border:1.5px solid #2a2a2a;padding:16px;margin-bottom:12px;}
 .entrega-card.em-rota{border-color:var(--brand);}
-.entrega-card.concluida{border-color:#2a3a2a;}
 .entrega-num{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--brand);}
 .entrega-hora{font-size:11px;color:var(--text2);}
 .entrega-cliente{font-size:14px;font-weight:800;margin:6px 0 2px;}
 .entrega-end{font-size:12px;color:var(--text2);margin-bottom:10px;line-height:1.5;}
-.entrega-itens{font-size:12px;color:var(--text2);margin-bottom:12px;padding:8px 10px;background:var(--bg3);border-radius:8px;}
-
-/* BOTÕES */
+.entrega-itens{font-size:12px;color:var(--text2);margin-bottom:12px;padding:8px 10px;background:var(--bg3);border-radius:8px;line-height:1.5;}
 .btns{display:flex;gap:8px;flex-wrap:wrap;}
-.btn{padding:10px 14px;border:none;border-radius:50px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;flex:1;min-width:120px;text-align:center;}
+.btn{padding:10px 14px;border:none;border-radius:50px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;flex:1;min-width:100px;text-align:center;}
 .btn-chegou{background:#444;color:#fff;}
 .btn-entregue{background:var(--green);color:#fff;}
 .btn-nao{background:var(--bg3);border:1.5px solid var(--red);color:var(--red);}
-.btn-nav{background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;gap:6px;}
+.btn-nav{background:#1a3a5a;color:#4aa8ff;border:1.5px solid #4aa8ff;}
 .badge{display:inline-block;padding:3px 10px;border-radius:50px;font-size:11px;font-weight:800;}
 .badge-rota{background:#3a1a0a;color:var(--brand);}
+.badge-pendente{background:#3a2a00;color:var(--gold);}
 .badge-entregue{background:#1a3a1a;color:var(--green);}
 .badge-nao{background:#3a1a1a;color:var(--red);}
-
-/* VAZIO */
 .vazio{text-align:center;padding:30px;color:var(--text2);font-size:13px;}
-
-/* TOAST */
 #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--green);color:#fff;padding:12px 22px;border-radius:50px;font-size:13px;font-weight:700;z-index:999;transition:transform .3s;white-space:nowrap;}
 #toast.show{transform:translateX(-50%) translateY(0);}
-
-/* ATUALIZAR */
 #btn-refresh{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:16px;padding:13px;background:var(--bg3);border:1.5px solid #333;border-radius:50px;color:var(--text2);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;}
-
-/* Spinner */
 .spin{display:inline-block;animation:spin 1s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
+.loading-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:100;flex-direction:column;gap:12px;font-size:14px;color:var(--text2);}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
     <h1>🛵 MOTOBOY</h1>
@@ -90,16 +70,15 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
     <input type="password" id="l-pass" placeholder="Senha" autocomplete="current-password">
     <button class="btn-entrar" onclick="login()">Entrar</button>
     <div id="login-erro">Usuário ou senha incorretos.</div>
+    <p style="font-size:11px;color:#444;margin-top:14px;">motoboy / moto123</p>
   </div>
 </div>
 
-<!-- APP -->
 <div id="app">
   <div id="topbar">
     <h1>🛵 ENTREGAS</h1>
     <button id="btn-sair" onclick="logout()">Sair</button>
   </div>
-
   <div id="status-bar">
     <div class="stat-box">
       <div class="stat-num" id="st-rota" style="color:var(--brand)">0</div>
@@ -114,14 +93,11 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <div class="stat-label">Tempo médio</div>
     </div>
   </div>
-
   <div id="conteudo">
     <div class="sec-titulo">EM ROTA AGORA</div>
-    <div id="lista-rota"><div class="vazio">Nenhuma entrega em andamento.</div></div>
-
+    <div id="lista-rota"><div class="vazio">Carregando...</div></div>
     <div class="sec-titulo">CONCLUÍDAS HOJE</div>
-    <div id="lista-concluidas"><div class="vazio">Nenhuma entrega concluída ainda.</div></div>
-
+    <div id="lista-concluidas"><div class="vazio">Carregando...</div></div>
     <button id="btn-refresh" onclick="carregar()">🔄 Atualizar entregas</button>
   </div>
 </div>
@@ -129,28 +105,64 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 <div id="toast"></div>
 
 <script>
-// ===== CONFIG =====
-// Credenciais do motoboy (separadas do gerente)
-const CREDS_MOTOBOY = { usuario:"motoboy", senha:"moto123" };
-const PROXY_URL = "https://qualityburguer.com.br/zapi-proxy.php";
+// =====================================================
+// CONFIGURAÇÕES — mesmas do gerente
+// =====================================================
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwa3VKQEkUI9jsx5VzLYZqg8ddiYDAxindVBFUxsPlDPqiMn5Db0MgPto3MmzR-jQzHxQ/exec";
+const PROXY_URL  = "https://qualityburguer.com.br/zapi-proxy.php";
 
-function getZapi(){ try{ return JSON.parse(localStorage.getItem('bh_zapi'))||{}; }catch{return{};} }
+// Credenciais fixas do motoboy + aceita credenciais do gerente salvas no localStorage
+const CRED_MOTOBOY = { u:"motoboy", s:"moto123" };
 
-// ===== LOGIN =====
+// =====================================================
+// CHAVE DA PLANILHA: o gerente salva as entregas no
+// Google Sheets via ação "entregas" — o motoboy lê de lá
+// IMPORTANTE: as entregas precisam estar na planilha,
+// não no localStorage do gerente.
+// Enquanto o Sheets não tiver aba entregas, usamos
+// uma solução híbrida: tenta Sheets, fallback para
+// localStorage compartilhado via URL hash (workaround).
+// =====================================================
+
+function getZapi(){
+  // Tenta pegar do localStorage (se motoboy usa mesmo device)
+  // ou dos defaults embutidos
+  try{ return JSON.parse(localStorage.getItem('bh_zapi'))||{}; }catch{ return {}; }
+}
+
+// =====================================================
+// JSONP helper — igual ao gerente
+// =====================================================
+function chamarGet(params){
+  return new Promise((resolve,reject)=>{
+    const cb='cb_'+Date.now()+'_'+Math.random().toString(36).slice(2);
+    const t=setTimeout(()=>{delete window[cb];reject(new Error("Timeout"));},15000);
+    window[cb]=(data)=>{clearTimeout(t);delete window[cb];resolve(data);};
+    const qs=Object.entries({...params,callback:cb}).map(([k,v])=>`${k}=${encodeURIComponent(v)}`).join('&');
+    const s=document.createElement('script');
+    s.src=`${SCRIPT_URL}?${qs}`;
+    s.onerror=()=>{clearTimeout(t);delete window[cb];reject(new Error("Erro de conexão"));};
+    document.head.appendChild(s);
+    setTimeout(()=>s.remove(),18000);
+  });
+}
+
+// =====================================================
+// LOGIN
+// =====================================================
 document.getElementById("l-user").addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("l-pass").focus();});
 document.getElementById("l-pass").addEventListener("keydown",e=>{if(e.key==="Enter")login();});
 
 function login(){
   const u=document.getElementById("l-user").value.trim();
   const s=document.getElementById("l-pass").value;
-  // Aceita credenciais do motoboy OU do gerente (flexibilidade)
-  const creds = JSON.parse(localStorage.getItem('bh_credenciais')||'null') || {usuario:"admin",senha:"1234"};
-  if((u===CREDS_MOTOBOY.usuario&&s===CREDS_MOTOBOY.senha)||(u===creds.usuario&&s===creds.senha)){
+  // Aceita motoboy/moto123 ou as mesmas credenciais do gerente
+  const credsGerente=JSON.parse(localStorage.getItem('bh_credenciais')||'{"usuario":"admin","senha":"1234"}');
+  if((u===CRED_MOTOBOY.u&&s===CRED_MOTOBOY.s)||(u===credsGerente.usuario&&s===credsGerente.senha)){
     document.getElementById("login-screen").style.display="none";
     document.getElementById("app").style.display="block";
     carregar();
-    // Auto-refresh a cada 30s
-    setInterval(carregar, 30000);
+    setInterval(carregar,30000); // auto-refresh 30s
   } else {
     document.getElementById("login-erro").style.display="block";
   }
@@ -162,7 +174,9 @@ function logout(){
   document.getElementById("l-pass").value="";
 }
 
-// ===== TOAST =====
+// =====================================================
+// TOAST
+// =====================================================
 function toast(msg,cor="var(--green)"){
   const t=document.getElementById("toast");
   t.textContent=msg; t.style.background=cor;
@@ -170,7 +184,9 @@ function toast(msg,cor="var(--green)"){
   setTimeout(()=>t.classList.remove("show"),2800);
 }
 
-// ===== TEMPO =====
+// =====================================================
+// HELPERS DE TEMPO
+// =====================================================
 function hojeStr(){
   const a=new Date(new Date().toLocaleString("en-US",{timeZone:"America/Sao_Paulo"}));
   return a.getFullYear()+"-"+String(a.getMonth()+1).padStart(2,"0")+"-"+String(a.getDate()).padStart(2,"0");
@@ -186,12 +202,35 @@ function diffMin(h1,h2){
   return (hB*60+mB)-(hA*60+mA);
 }
 
-// ===== CARREGAR =====
-function carregar(){
+// =====================================================
+// CARREGAR ENTREGAS
+// Tenta buscar do Google Sheets (ação "entregas").
+// Se não existir a aba ainda, usa o localStorage como
+// fallback (funciona se gerente e motoboy usam o mesmo
+// dispositivo ou navegador).
+// =====================================================
+async function carregar(){
   const btn=document.getElementById("btn-refresh");
   btn.innerHTML='<span class="spin">⏳</span> Atualizando...';
-  const todas=JSON.parse(localStorage.getItem('bh_entregas')||'[]');
+
+  let todas=[];
   const hoje=hojeStr();
+
+  // 1️⃣ Tenta buscar do Google Sheets
+  try{
+    const res=await chamarGet({acao:"entregas", data:hoje});
+    if(res.ok && res.entregas){
+      todas=res.entregas;
+      console.log("✅ Entregas carregadas do Sheets:",todas.length);
+    } else {
+      throw new Error("Sheets sem aba entregas");
+    }
+  }catch(e){
+    // 2️⃣ Fallback: localStorage (mesmo dispositivo)
+    console.warn("⚠️ Sheets não retornou entregas, usando localStorage:", e.message);
+    todas=JSON.parse(localStorage.getItem('bh_entregas')||'[]');
+  }
+
   const emRota=todas.filter(e=>e.status==="em_rota"||e.status==="chegou");
   const concluidas=todas.filter(e=>(e.status==="entregue"||e.status==="nao_encontrado")&&e.data===hoje);
 
@@ -207,18 +246,21 @@ function carregar(){
   const lr=document.getElementById("lista-rota");
   lr.innerHTML=emRota.length?emRota.map(e=>`
     <div class="entrega-card em-rota" id="card-${e.id}">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
         <div>
-          <span class="entrega-num">#${String(e.num).padStart(2,"0")}</span>
-          <span class="entrega-hora"> · Saiu ${e.hora_saida}</span>
+          <span class="entrega-num">#${String(e.num||"?").padStart(2,"0")}</span>
+          <span class="entrega-hora"> · Saiu ${e.hora_saida||"—"}</span>
         </div>
-        <span class="badge badge-rota">🛵 EM ROTA</span>
+        <span class="badge ${e.pagaNaEntrega==="true"||e.paga_na_entrega==="true"?'badge-pendente':'badge-rota'}">
+          ${e.pagaNaEntrega==="true"||e.paga_na_entrega==="true"?'💰 COBRAR':'🛵 EM ROTA'}
+        </span>
       </div>
-      <div class="entrega-cliente">👤 ${e.cliente}</div>
-      <div class="entrega-end">📍 ${e.endereco}</div>
-      <div class="entrega-itens">🛒 ${e.itens}</div>
+      <div class="entrega-cliente">👤 ${e.cliente||"—"}</div>
+      <div class="entrega-end">📍 ${e.endereco||"—"}</div>
+      <div class="entrega-itens">🛒 ${e.itens||"—"}</div>
+      ${parseFloat(e.total||0)>0?`<div style="font-size:13px;font-weight:800;color:var(--gold);margin-bottom:10px;">Total: R$ ${parseFloat(e.total).toFixed(2).replace(".",",")}</div>`:""}
       <div class="btns">
-        <button class="btn btn-nav" onclick="abrirMapa('${encodeURIComponent(e.endereco)}')">🗺️ Navegar</button>
+        <button class="btn btn-nav" onclick="abrirMapa('${encodeURIComponent(e.endereco||'')}')">🗺️ Waze</button>
         <button class="btn btn-chegou" onclick="marcarChegou('${e.id}','${(e.telefone||'').replace(/'/g,"\\'")}')">📍 Cheguei</button>
       </div>
       <div class="btns" style="margin-top:8px;">
@@ -234,12 +276,12 @@ function carregar(){
   lc.innerHTML=ord.length?ord.map(e=>{
     const ok=e.status==="entregue";
     const tempo=diffMin(e.hora_saida,e.hora_entrega);
-    return `<div class="entrega-card concluida">
+    return `<div class="entrega-card">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-        <span class="entrega-num" style="font-size:18px;">#${String(e.num).padStart(2,"0")}</span>
+        <span class="entrega-num" style="font-size:18px;">#${String(e.num||"?").padStart(2,"0")}</span>
         <span class="badge ${ok?'badge-entregue':'badge-nao'}">${ok?"✅ ENTREGUE":"❌ NÃO ENCONTRADO"}</span>
       </div>
-      <div style="font-size:13px;font-weight:700;">👤 ${e.cliente}</div>
+      <div style="font-size:13px;font-weight:700;">👤 ${e.cliente||"—"}</div>
       <div style="font-size:11px;color:var(--text2);">⏱️ ${e.hora_saida||"—"} → ${e.hora_entrega||"—"}${tempo?" ("+tempo+"min)":""}</div>
     </div>`;
   }).join(""):`<div class="vazio">Nenhuma entrega concluída ainda.</div>`;
@@ -247,51 +289,62 @@ function carregar(){
   btn.innerHTML='🔄 Atualizar entregas';
 }
 
-// ===== NAVEGAÇÃO GPS =====
-function abrirMapa(enderecoEnc){
-  const end=decodeURIComponent(enderecoEnc);
-  // Tenta abrir no Waze, fallback Google Maps
-  const waze=`https://waze.com/ul?q=${encodeURIComponent(end)}&navigate=yes`;
-  window.open(waze,"_blank");
+// =====================================================
+// AÇÕES DO MOTOBOY — salvam no Sheets E no localStorage
+// =====================================================
+async function atualizarEntrega(id, campos){
+  // Atualiza localStorage
+  const todas=JSON.parse(localStorage.getItem('bh_entregas')||'[]');
+  const idx=todas.findIndex(e=>e.id===id);
+  if(idx!==-1){
+    Object.assign(todas[idx], campos);
+    localStorage.setItem('bh_entregas',JSON.stringify(todas));
+  }
+  // Atualiza Sheets
+  try{
+    await chamarGet({acao:"atualizar_entrega", id, ...campos});
+  }catch(e){
+    console.warn("Sheets não atualizou entrega:", e.message);
+  }
 }
 
-// ===== AÇÕES =====
 async function marcarChegou(id, fone){
-  const entregas=JSON.parse(localStorage.getItem('bh_entregas')||'[]');
-  const idx=entregas.findIndex(e=>e.id===id); if(idx===-1) return;
-  entregas[idx].hora_chegada=agora();
-  entregas[idx].status="chegou";
-  localStorage.setItem('bh_entregas',JSON.stringify(entregas));
-
-  // ✅ Envia SOMENTE ÁUDIO (sem texto antes)
+  await atualizarEntrega(id,{status:"chegou", hora_chegada:agora()});
+  // Envia SOMENTE áudio via proxy
   if(fone){
     const z=getZapi();
-    if(z.audioUrl){
+    if(z.audioUrl && z.instance && z.token && z.clientToken){
       await chamarProxy("send-audio",{phone:fone.replace(/\D/g,""),audio:z.audioUrl,waveform:true});
     }
   }
-  toast("📍 Chegada registrada! Áudio enviado ao cliente.");
+  toast("📍 Chegada registrada! Áudio enviado.");
   carregar();
 }
 
 async function marcarEntregue(id, fone){
-  const entregas=JSON.parse(localStorage.getItem('bh_entregas')||'[]');
-  const idx=entregas.findIndex(e=>e.id===id); if(idx===-1) return;
-  entregas[idx].status="entregue";
-  entregas[idx].hora_entrega=agora();
-  localStorage.setItem('bh_entregas',JSON.stringify(entregas));
+  await atualizarEntrega(id,{status:"entregue", hora_entrega:agora()});
   toast("✅ Entrega concluída!");
   carregar();
 }
 
 async function marcarNaoEncontrado(id, fone){
-  const entregas=JSON.parse(localStorage.getItem('bh_entregas')||'[]');
-  const idx=entregas.findIndex(e=>e.id===id); if(idx===-1) return;
-  entregas[idx].status="nao_encontrado";
-  entregas[idx].hora_entrega=agora();
-  localStorage.setItem('bh_entregas',JSON.stringify(entregas));
+  await atualizarEntrega(id,{status:"nao_encontrado", hora_entrega:agora()});
+  if(fone){
+    const z=getZapi();
+    if(z.instance && z.token && z.clientToken){
+      await chamarProxy("send-text",{
+        phone:fone.replace(/\D/g,""),
+        message:`⚠️ Nosso entregador está no local mas não conseguiu contato.\n\nPor favor, responda esta mensagem urgente.\n\n📍 Seu entregador aguarda.\n\n🍔 Quality+ Burger`
+      });
+    }
+  }
   toast("❌ Registrado como não encontrado.","var(--red)");
   carregar();
+}
+
+function abrirMapa(enderecoEnc){
+  const end=decodeURIComponent(enderecoEnc);
+  window.open(`https://waze.com/ul?q=${encodeURIComponent(end)}&navigate=yes`,"_blank");
 }
 
 async function chamarProxy(endpoint, payload){
@@ -303,7 +356,7 @@ async function chamarProxy(endpoint, payload){
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({endpoint,payload,instance:z.instance,token:z.token,clientToken:z.clientToken})
     });
-  }catch(e){ console.warn("Proxy falha:",e.message); }
+  }catch(e){console.warn("Proxy falha:",e.message);}
 }
 </script>
 </body>
