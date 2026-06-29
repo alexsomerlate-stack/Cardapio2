@@ -694,8 +694,52 @@ async function buscarTodosPedidosHoje(hoje){
 function hojeStrEnt(){const a=new Date(new Date().toLocaleString("en-US",{timeZone:"America/Sao_Paulo"}));return a.getFullYear()+"-"+String(a.getMonth()+1).padStart(2,"0")+"-"+String(a.getDate()).padStart(2,"0");}
 function agora(){const a=new Date(new Date().toLocaleString("en-US",{timeZone:"America/Sao_Paulo"}));return String(a.getHours()).padStart(2,"0")+":"+String(a.getMinutes()).padStart(2,"0");}
 
+
+// =====================================================
+// FUNÇÕES DE SINCRONIZAÇÃO COM SERVIDOR
+// =====================================================
+async function salvarEntregaServidor(entrega){
+  try{
+    await fetch("https://qualityburguer.com.br/zapi-proxy.php",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({acao:"salvar_entrega", entrega})
+    });
+    console.log("✅ Entrega salva no servidor");
+  }catch(e){ console.warn("Servidor: falha ao salvar entrega", e.message); }
+}
+
+async function atualizarEntregaServidor(id, entrega){
+  try{
+    await fetch("https://qualityburguer.com.br/zapi-proxy.php",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({acao:"atualizar_entrega", id, campos: entrega})
+    });
+    console.log("✅ Status entrega atualizado no servidor");
+  }catch(e){ console.warn("Servidor: falha ao atualizar entrega", e.message); }
+}
+
+async function buscarEntregasServidor(){
+  try{
+    const r=await fetch("https://qualityburguer.com.br/zapi-proxy.php",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({acao:"buscar_entregas"})
+    });
+    const j=await r.json();
+    if(j.ok && j.entregas){
+      // Sincroniza localStorage com servidor
+      localStorage.setItem('bh_entregas',JSON.stringify(j.entregas));
+      return j.entregas;
+    }
+  }catch(e){ console.warn("Servidor: falha ao buscar entregas", e.message); }
+  return JSON.parse(localStorage.getItem('bh_entregas')||'[]');
+}
+
 async function carregarEntregas(){
-  const todas=JSON.parse(localStorage.getItem('bh_entregas')||'[]');
+  // ✅ Busca entregas do servidor (compartilhado com motoboy)
+  const todas=await buscarEntregasServidor();
   const hoje=hojeStrEnt();
   const emRota=todas.filter(e=>e.status==="em_rota"||e.status==="chegou");
   const concluidas=todas.filter(e=>e.status==="entregue"&&e.data===hoje);
@@ -773,6 +817,9 @@ async function enviarParaEntrega(pedidoId,num,cliente,endereco,itens,total,fone,
   const entregas=JSON.parse(localStorage.getItem('bh_entregas')||'[]');
   entregas.push({id:Date.now().toString(),pedido_id:pedidoId,num,cliente,endereco,itens,total,telefone:fone||"",status:"em_rota",data:hoje,hora_saida:hora,hora_chegada:null,hora_entrega:null,pagaNaEntrega});
   localStorage.setItem('bh_entregas',JSON.stringify(entregas));
+  // ✅ Salva no servidor para o motoboy ver
+  const novaEntrega = entregas[entregas.length-1];
+  await salvarEntregaServidor(novaEntrega);
   mostrarToast("🛵 Pedido enviado para entrega!");
   renderizarPedidos();
   carregarEntregas();
@@ -784,6 +831,8 @@ async function marcarChegou(entregaId){
   entregas[idx].hora_chegada=agora();
   entregas[idx].status="chegou";
   localStorage.setItem('bh_entregas',JSON.stringify(entregas));
+  // ✅ Sincroniza status com servidor
+  await atualizarEntregaServidor(entregaId, entregas[idx]);
   // ✅ Envia SOMENTE o áudio (sem texto)
   const fone=entregas[idx].telefone;
   if(fone){
@@ -800,6 +849,7 @@ async function marcarEntregue(entregaId){
   entregas[idx].status="entregue";
   entregas[idx].hora_entrega=agora();
   localStorage.setItem('bh_entregas',JSON.stringify(entregas));
+  await atualizarEntregaServidor(entregaId, entregas[idx]);
   if(entregas[idx].telefone){
     await zapiTexto(entregas[idx].telefone,`✅ *Pedido entregue com sucesso!*\n\nObrigado pela preferência, *${entregas[idx].cliente}*! 🙏\nEsperamos que aproveite muito! 🍔\n\n⭐ Avalie nosso atendimento!\n\n📲 *Quality+ Burger*`);
   }
@@ -813,6 +863,7 @@ async function marcarNaoEncontrado(entregaId){
   entregas[idx].status="nao_encontrado";
   entregas[idx].hora_entrega=agora();
   localStorage.setItem('bh_entregas',JSON.stringify(entregas));
+  await atualizarEntregaServidor(entregaId, entregas[idx]);
   if(entregas[idx].telefone){
     await zapiTexto(entregas[idx].telefone,`⚠️ Olá *${entregas[idx].cliente}*!\n\nNosso entregador está no local mas *não conseguiu contato*.\n\nPor favor, responda esta mensagem *urgente*.\n\n🍔 *Quality+ Burger*`);
   }
