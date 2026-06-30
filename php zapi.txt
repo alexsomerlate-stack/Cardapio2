@@ -1,0 +1,187 @@
+<?php
+/**
+ * zapi-proxy.php — Quality+ Burger
+ * Responsabilidades:
+ *  1. Repassar chamadas para a API do Z-API (envio de mensagens WhatsApp)
+ *  2. Persistir entregas em arquivo JSON local (compartilhado entre gerente e motoboy)
+ *
+ * Coloque este arquivo em: https://qualityburguer.com.br/zapi-proxy.php
+ * Permissão da pasta de dados: chmod 755 na pasta, chmod 644 no .json
+ */
+
+// ─── CORS — permite chamadas do seu domínio e do app ───────────────────────
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+header("Content-Type: application/json; charset=utf-8");
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
+// ─── Arquivo onde as entregas ficam salvas no servidor ─────────────────────
+// Ajuste o caminho se necessário. O arquivo será criado automaticamente.
+define('ENTREGAS_FILE', __DIR__ . '/entregas_data.json');
+
+// ─── Lê o corpo da requisição ──────────────────────────────────────────────
+$raw  = file_get_contents('php://input');
+$body = json_decode($raw, true);
+
+if (!$body) {
+    echo json_encode(['ok' => false, 'erro' => 'Body JSON inválido']);
+    exit;
+}
+
+$acao = $body['acao'] ?? null;
+
+// ══════════════════════════════════════════════════════════════════════════════
+// AÇÕES DE ENTREGA (não passam para o Z-API)
+// ══════════════════════════════════════════════════════════════════════════════
+
+// ── Salvar nova entrega ────────────────────────────────────────────────────
+if ($acao === 'salvar_entrega') {
+    $entrega = $body['entrega'] ?? null;
+    if (!$entrega || empty($entrega['id'])) {
+        echo json_encode(['ok' => false, 'erro' => 'Entrega inválida']);
+        exit;
+    }
+    $todas = lerEntregas();
+    // Evita duplicata pelo id
+    $existe = false;
+    foreach ($todas as &$e) {
+        if ($e['id'] === $entrega['id']) { $e = $entrega; $existe = true; break; }
+    }
+    if (!$existe) $todas[] = $entrega;
+    salvarEntregas($todas);
+    echo json_encode(['ok' => true, 'msg' => 'Entrega salva']);
+    exit;
+}
+
+// ── Atualizar status de entrega ────────────────────────────────────────────
+if ($acao === 'atualizar_entrega') {
+    $id     = $body['id']     ?? null;
+    $campos = $body['campos'] ?? [];
+    if (!$id) {
+        echo json_encode(['ok' => false, 'erro' => 'ID não informado']);
+        exit;
+    }
+    $todas = lerEntregas();
+    $found = false;
+    foreach ($todas as &$e) {
+        if ($e['id'] === $id) {
+            foreach ($campos as $k => $v) $e[$k] = $v;
+            $found = true;
+            break;
+        }
+    }
+    if (!$found) {
+        echo json_encode(['ok' => false, 'erro' => 'Entrega não encontrada']);
+        exit;
+    }
+    salvarEntregas($todas);
+    echo json_encode(['ok' => true, 'msg' => 'Entrega atualizada']);
+    exit;
+}
+
+// ── Buscar todas as entregas ───────────────────────────────────────────────
+if ($acao === 'buscar_entregas') {
+    $todas = lerEntregas();
+    // Opcional: filtra só as dos últimos 2 dias para não acumular infinito
+    $corte = date('Y-m-d', strtotime('-2 days'));
+    $filtradas = array_filter($todas, function($e) use ($corte) {
+        return isset($e['data']) && $e['data'] >= $corte;
+    });
+    echo json_encode(['ok' => true, 'entregas' => array_values($filtradas)]);
+    exit;
+}
+
+// ── Limpar entregas antigas (opcional, pode chamar manualmente) ────────────
+if ($acao === 'limpar_antigas') {
+    $hoje = date('Y-m-d');
+    $todas = lerEntregas();
+    $filtradas = array_filter($todas, fn($e) => ($e['data'] ?? '') === $hoje);
+    salvarEntregas(array_values($filtradas));
+    echo json_encode(['ok' => true, 'msg' => 'Entregas antigas removidas']);
+    exit;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// AÇÕES DO Z-API (repasse para api.z-api.io)
+// ══════════════════════════════════════════════════════════════════════════════
+
+$endpoint    = $body['endpoint']    ?? null;
+$payload     = $body['payload']     ?? [];
+$instance    = $body['instance']    ?? null;
+$token       = $body['token']       ?? null;
+$clientToken = $body['clientToken'] ?? null;
+
+if (!$endpoint || !$instance || !$token || !$clientToken) {
+    echo json_encode(['ok' => false, 'erro' => 'Parâmetros Z-API incompletos']);
+    exit;
+}
+
+// Monta a URL do Z-API
+$baseUrl = "https://api.z-api.io/instances/{$instance}/token/{$token}";
+
+$url = match($endpoint) {
+    'send-text'  => "{$baseUrl}/send-text",
+    'send-audio' => "{$baseUrl}/send-audio",
+    'status'     => "{$baseUrl}/status",
+    default      => null
+};
+
+if (!$url) {
+    echo json_encode(['ok' => false, 'erro' => "Endpoint desconhecido: {$endpoint}"]);
+    exit;
+}
+
+// Chama o Z-API via cURL
+$ch = curl_init($url);
+curl_setopt_array($ch, [
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_POST           => true,
+    CURLOPT_POSTFIELDS     => json_encode($payload),
+    CURLOPT_HTTPHEADER     => [
+        'Content-Type: application/json',
+        'Client-Token: ' . $clientToken,
+    ],
+    CURLOPT_TIMEOUT        => 15,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_SSL_VERIFYPEER => true,  // mantenha true em produção
+]);
+
+$resp   = curl_exec($ch);
+$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+$err    = curl_error($ch);
+curl_close($ch);
+
+if ($err) {
+    echo json_encode(['ok' => false, 'erro' => 'cURL: ' . $err]);
+    exit;
+}
+
+$decoded = json_decode($resp, true);
+
+if ($status >= 200 && $status < 300) {
+    echo json_encode(array_merge(['ok' => true], $decoded ?? []));
+} else {
+    http_response_code($status);
+    echo json_encode(array_merge(['ok' => false], $decoded ?? ['erro' => $resp]));
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// FUNÇÕES AUXILIARES
+// ══════════════════════════════════════════════════════════════════════════════
+
+function lerEntregas(): array {
+    if (!file_exists(ENTREGAS_FILE)) return [];
+    $conteudo = file_get_contents(ENTREGAS_FILE);
+    if (!$conteudo) return [];
+    $dados = json_decode($conteudo, true);
+    return is_array($dados) ? $dados : [];
+}
+
+function salvarEntregas(array $entregas): void {
+    file_put_contents(ENTREGAS_FILE, json_encode($entregas, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT), LOCK_EX);
+}
