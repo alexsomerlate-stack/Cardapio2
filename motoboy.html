@@ -57,7 +57,10 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 #btn-refresh{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:16px;padding:13px;background:var(--bg3);border:1.5px solid #333;border-radius:50px;color:var(--text2);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;}
 .spin{display:inline-block;animation:spin 1s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.loading-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:100;flex-direction:column;gap:12px;font-size:14px;color:var(--text2);}
+#fonte-indicador{text-align:center;font-size:11px;padding:6px;margin-bottom:4px;border-radius:8px;}
+#fonte-indicador.servidor{background:#1a3a1a;color:var(--green);}
+#fonte-indicador.local{background:#3a2a00;color:var(--gold);}
+#fonte-indicador.erro{background:#3a1a1a;color:var(--red);}
 </style>
 </head>
 <body>
@@ -94,6 +97,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
   </div>
   <div id="conteudo">
+    <div id="fonte-indicador" class="local" style="display:none;"></div>
     <div class="sec-titulo">EM ROTA AGORA</div>
     <div id="lista-rota"><div class="vazio">Carregando...</div></div>
     <div class="sec-titulo">CONCLUÍDAS HOJE</div>
@@ -106,45 +110,15 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 
 <script>
 // =====================================================
-// CONFIGURAÇÕES — mesmas do gerente
+// CONFIGURAÇÕES
 // =====================================================
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwa3VKQEkUI9jsx5VzLYZqg8ddiYDAxindVBFUxsPlDPqiMn5Db0MgPto3MmzR-jQzHxQ/exec";
 const PROXY_URL  = "https://qualityburguer.com.br/zapi-proxy.php";
 
-// Credenciais fixas do motoboy + aceita credenciais do gerente salvas no localStorage
 const CRED_MOTOBOY = { u:"motoboy", s:"moto123" };
 
-// =====================================================
-// CHAVE DA PLANILHA: o gerente salva as entregas no
-// Google Sheets via ação "entregas" — o motoboy lê de lá
-// IMPORTANTE: as entregas precisam estar na planilha,
-// não no localStorage do gerente.
-// Enquanto o Sheets não tiver aba entregas, usamos
-// uma solução híbrida: tenta Sheets, fallback para
-// localStorage compartilhado via URL hash (workaround).
-// =====================================================
-
 function getZapi(){
-  // Tenta pegar do localStorage (se motoboy usa mesmo device)
-  // ou dos defaults embutidos
   try{ return JSON.parse(localStorage.getItem('bh_zapi'))||{}; }catch{ return {}; }
-}
-
-// =====================================================
-// JSONP helper — igual ao gerente
-// =====================================================
-function chamarGet(params){
-  return new Promise((resolve,reject)=>{
-    const cb='cb_'+Date.now()+'_'+Math.random().toString(36).slice(2);
-    const t=setTimeout(()=>{delete window[cb];reject(new Error("Timeout"));},15000);
-    window[cb]=(data)=>{clearTimeout(t);delete window[cb];resolve(data);};
-    const qs=Object.entries({...params,callback:cb}).map(([k,v])=>`${k}=${encodeURIComponent(v)}`).join('&');
-    const s=document.createElement('script');
-    s.src=`${SCRIPT_URL}?${qs}`;
-    s.onerror=()=>{clearTimeout(t);delete window[cb];reject(new Error("Erro de conexão"));};
-    document.head.appendChild(s);
-    setTimeout(()=>s.remove(),18000);
-  });
 }
 
 // =====================================================
@@ -156,13 +130,12 @@ document.getElementById("l-pass").addEventListener("keydown",e=>{if(e.key==="Ent
 function login(){
   const u=document.getElementById("l-user").value.trim();
   const s=document.getElementById("l-pass").value;
-  // Aceita motoboy/moto123 ou as mesmas credenciais do gerente
   const credsGerente=JSON.parse(localStorage.getItem('bh_credenciais')||'{"usuario":"admin","senha":"1234"}');
   if((u===CRED_MOTOBOY.u&&s===CRED_MOTOBOY.s)||(u===credsGerente.usuario&&s===credsGerente.senha)){
     document.getElementById("login-screen").style.display="none";
     document.getElementById("app").style.display="block";
     carregar();
-    setInterval(carregar,30000); // auto-refresh 30s
+    setInterval(carregar,30000);
   } else {
     document.getElementById("login-erro").style.display="block";
   }
@@ -185,7 +158,7 @@ function toast(msg,cor="var(--green)"){
 }
 
 // =====================================================
-// HELPERS DE TEMPO
+// HELPERS
 // =====================================================
 function hojeStr(){
   const a=new Date(new Date().toLocaleString("en-US",{timeZone:"America/Sao_Paulo"}));
@@ -203,36 +176,60 @@ function diffMin(h1,h2){
 }
 
 // =====================================================
-// CARREGAR ENTREGAS
-// Tenta buscar do Google Sheets (ação "entregas").
-// Se não existir a aba ainda, usa o localStorage como
-// fallback (funciona se gerente e motoboy usam o mesmo
-// dispositivo ou navegador).
+// ✅ CARREGAR ENTREGAS — PRIORIDADE: SERVIDOR
+// Usa o mesmo endpoint do gerente (zapi-proxy.php)
+// so os dois veem os mesmos dados, independente do device.
 // =====================================================
+async function buscarEntregasServidor(){
+  const r = await fetch(PROXY_URL, {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({acao:"buscar_entregas"})
+  });
+  if(!r.ok) throw new Error("HTTP "+r.status);
+  const j = await r.json();
+  if(!j.ok || !j.entregas) throw new Error(j.erro||"Sem entregas no servidor");
+  return j.entregas;
+}
+
 async function carregar(){
   const btn=document.getElementById("btn-refresh");
+  const ind=document.getElementById("fonte-indicador");
   btn.innerHTML='<span class="spin">⏳</span> Atualizando...';
 
   let todas=[];
   const hoje=hojeStr();
 
-  // 1️⃣ Tenta buscar do Google Sheets
+  // 1️⃣ Servidor compartilhado (funciona em qualquer device)
   try{
-    const res=await chamarGet({acao:"entregas", data:hoje});
-    if(res.ok && res.entregas){
-      todas=res.entregas;
-      console.log("✅ Entregas carregadas do Sheets:",todas.length);
-    } else {
-      throw new Error("Sheets sem aba entregas");
+    todas = await buscarEntregasServidor();
+    ind.style.display="block";
+    ind.className="fonte-indicador servidor";
+    ind.textContent="✅ Dados do servidor — sincronizado com o gerente";
+    console.log("✅ Entregas do servidor:",todas.length);
+  } catch(e){
+    // 2️⃣ Fallback: Google Sheets (JSONP)
+    console.warn("⚠️ Servidor indisponível, tentando Sheets:",e.message);
+    try{
+      const res = await chamarGet({acao:"entregas", data:hoje});
+      if(res.ok && res.entregas){
+        todas = res.entregas;
+        ind.style.display="block";
+        ind.className="fonte-indicador local";
+        ind.textContent="⚠️ Usando Google Sheets — servidor offline";
+      } else throw new Error("Sheets sem dados");
+    } catch(e2){
+      // 3️⃣ Último recurso: localStorage (só funciona no mesmo device)
+      console.warn("⚠️ Sheets falhou, usando localStorage:",e2.message);
+      todas = JSON.parse(localStorage.getItem('bh_entregas')||'[]');
+      ind.style.display="block";
+      ind.className="fonte-indicador erro";
+      ind.textContent="❌ Offline — mostrando dados locais (pode estar desatualizado)";
     }
-  }catch(e){
-    // 2️⃣ Fallback: localStorage (mesmo dispositivo)
-    console.warn("⚠️ Sheets não retornou entregas, usando localStorage:", e.message);
-    todas=JSON.parse(localStorage.getItem('bh_entregas')||'[]');
   }
 
-  const emRota=todas.filter(e=>e.status==="em_rota"||e.status==="chegou");
-  const concluidas=todas.filter(e=>(e.status==="entregue"||e.status==="nao_encontrado")&&e.data===hoje);
+  const emRota   = todas.filter(e=>e.status==="em_rota"||e.status==="chegou");
+  const concluidas = todas.filter(e=>(e.status==="entregue"||e.status==="nao_encontrado")&&e.data===hoje);
 
   // Stats
   document.getElementById("st-rota").textContent=emRota.length;
@@ -251,8 +248,8 @@ async function carregar(){
           <span class="entrega-num">#${String(e.num||"?").padStart(2,"0")}</span>
           <span class="entrega-hora"> · Saiu ${e.hora_saida||"—"}</span>
         </div>
-        <span class="badge ${e.pagaNaEntrega==="true"||e.paga_na_entrega==="true"?'badge-pendente':'badge-rota'}">
-          ${e.pagaNaEntrega==="true"||e.paga_na_entrega==="true"?'💰 COBRAR':'🛵 EM ROTA'}
+        <span class="badge ${e.pagaNaEntrega==="true"||e.paga_na_entrega==="true"||e.pagaNaEntrega===true?'badge-pendente':'badge-rota'}">
+          ${e.pagaNaEntrega==="true"||e.paga_na_entrega==="true"||e.pagaNaEntrega===true?'💰 COBRAR':'🛵 EM ROTA'}
         </span>
       </div>
       <div class="entrega-cliente">👤 ${e.cliente||"—"}</div>
@@ -290,27 +287,46 @@ async function carregar(){
 }
 
 // =====================================================
-// AÇÕES DO MOTOBOY — salvam no Sheets E no localStorage
+// JSONP helper (fallback)
 // =====================================================
-async function atualizarEntrega(id, campos){
-  // Atualiza localStorage
-  const todas=JSON.parse(localStorage.getItem('bh_entregas')||'[]');
-  const idx=todas.findIndex(e=>e.id===id);
-  if(idx!==-1){
-    Object.assign(todas[idx], campos);
-    localStorage.setItem('bh_entregas',JSON.stringify(todas));
-  }
-  // Atualiza Sheets
+function chamarGet(params){
+  return new Promise((resolve,reject)=>{
+    const cb='cb_'+Date.now()+'_'+Math.random().toString(36).slice(2);
+    const t=setTimeout(()=>{delete window[cb];reject(new Error("Timeout"));},15000);
+    window[cb]=(data)=>{clearTimeout(t);delete window[cb];resolve(data);};
+    const qs=Object.entries({...params,callback:cb}).map(([k,v])=>`${k}=${encodeURIComponent(v)}`).join('&');
+    const s=document.createElement('script');
+    s.src=`${SCRIPT_URL}?${qs}`;
+    s.onerror=()=>{clearTimeout(t);delete window[cb];reject(new Error("Erro de conexão"));};
+    document.head.appendChild(s);
+    setTimeout(()=>s.remove(),18000);
+  });
+}
+
+// =====================================================
+// AÇÕES DO MOTOBOY — atualiza no servidor
+// =====================================================
+async function atualizarEntregaServidor(id, campos){
   try{
-    await chamarGet({acao:"atualizar_entrega", id, ...campos});
+    const r = await fetch(PROXY_URL,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({acao:"atualizar_entrega", id, campos})
+    });
+    const j = await r.json();
+    if(!j.ok) console.warn("Servidor não atualizou:",j);
+    else console.log("✅ Status atualizado no servidor");
   }catch(e){
-    console.warn("Sheets não atualizou entrega:", e.message);
+    console.warn("Falha ao atualizar servidor:",e.message);
+    // Atualiza localStorage como fallback
+    const todas=JSON.parse(localStorage.getItem('bh_entregas')||'[]');
+    const idx=todas.findIndex(e=>e.id===id);
+    if(idx!==-1){ Object.assign(todas[idx],campos); localStorage.setItem('bh_entregas',JSON.stringify(todas)); }
   }
 }
 
 async function marcarChegou(id, fone){
-  await atualizarEntrega(id,{status:"chegou", hora_chegada:agora()});
-  // Envia SOMENTE áudio via proxy
+  await atualizarEntregaServidor(id,{status:"chegou", hora_chegada:agora()});
   if(fone){
     const z=getZapi();
     if(z.audioUrl && z.instance && z.token && z.clientToken){
@@ -322,13 +338,13 @@ async function marcarChegou(id, fone){
 }
 
 async function marcarEntregue(id, fone){
-  await atualizarEntrega(id,{status:"entregue", hora_entrega:agora()});
+  await atualizarEntregaServidor(id,{status:"entregue", hora_entrega:agora()});
   toast("✅ Entrega concluída!");
   carregar();
 }
 
 async function marcarNaoEncontrado(id, fone){
-  await atualizarEntrega(id,{status:"nao_encontrado", hora_entrega:agora()});
+  await atualizarEntregaServidor(id,{status:"nao_encontrado", hora_entrega:agora()});
   if(fone){
     const z=getZapi();
     if(z.instance && z.token && z.clientToken){
