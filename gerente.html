@@ -440,9 +440,17 @@ async function salvarConfiguracoes(){
   try{await chamarPost({acao:"config",config:cfg});mostrarToast("✅ Configurações salvas no cardápio!");}
   catch(e){salvar("config",cfg);mostrarToast("✅ Configurações salvas!");}
 }
-function salvarZapi(){
-  salvar("zapi",{instance:document.getElementById("cfg-zapi-instance").value.trim(),token:document.getElementById("cfg-zapi-token").value.trim(),clientToken:document.getElementById("cfg-zapi-client-token").value.trim(),audioUrl:document.getElementById("cfg-zapi-audio").value.trim()});
-  mostrarToast("✅ Z-API salva!");
+async function salvarZapi(){
+  const config={instance:document.getElementById("cfg-zapi-instance").value.trim(),token:document.getElementById("cfg-zapi-token").value.trim(),clientToken:document.getElementById("cfg-zapi-client-token").value.trim(),audioUrl:document.getElementById("cfg-zapi-audio").value.trim()};
+  // Salva no localStorage (backup local)
+  salvar("zapi",config);
+  // ✅ Salva no Cloudflare Worker (para o motoboy acessar de qualquer device)
+  try{
+    const r=await fetch(PROXY_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({acao:"salvar_zapi",config})});
+    const j=await r.json();
+    if(j.ok) mostrarToast("✅ Z-API salva e sincronizada com o motoboy!");
+    else mostrarToast("⚠️ Z-API salva localmente. Erro no servidor: "+j.erro);
+  }catch(e){mostrarToast("⚠️ Z-API salva localmente apenas.");}
 }
 function salvarSenha(){
   const u=document.getElementById("cfg-usuario").value.trim(),s=document.getElementById("cfg-senha").value;
