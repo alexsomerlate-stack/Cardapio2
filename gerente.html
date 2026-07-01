@@ -321,7 +321,7 @@ function chamarGet(params){
 function chamarPost(body){return fetch(SCRIPT_URL,{method:'POST',body:JSON.stringify(body)}).then(r=>r.json());}
 
 // ===== Z-API PROXY =====
-const PROXY_URL="https://qualityburguer.com.br/zapi-proxy.php";
+const PROXY_URL="https://quality-burguer-proxy.qualitymais-hb.workers.dev";
 function getZapi(){return getDados("zapi");}
 
 async function chamarProxy(endpoint,payload){
@@ -700,7 +700,7 @@ function agora(){const a=new Date(new Date().toLocaleString("en-US",{timeZone:"A
 // =====================================================
 async function salvarEntregaServidor(entrega){
   try{
-    await fetch("https://qualityburguer.com.br/zapi-proxy.php",{
+    await fetch("https://quality-burguer-proxy.qualitymais-hb.workers.dev",{
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({acao:"salvar_entrega", entrega})
@@ -711,7 +711,7 @@ async function salvarEntregaServidor(entrega){
 
 async function atualizarEntregaServidor(id, entrega){
   try{
-    await fetch("https://qualityburguer.com.br/zapi-proxy.php",{
+    await fetch("https://quality-burguer-proxy.qualitymais-hb.workers.dev",{
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({acao:"atualizar_entrega", id, campos: entrega})
@@ -722,7 +722,7 @@ async function atualizarEntregaServidor(id, entrega){
 
 async function buscarEntregasServidor(){
   try{
-    const r=await fetch("https://qualityburguer.com.br/zapi-proxy.php",{
+    const r=await fetch("https://quality-burguer-proxy.qualitymais-hb.workers.dev",{
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({acao:"buscar_entregas"})
