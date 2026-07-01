@@ -117,7 +117,28 @@ const PROXY_URL  = "https://quality-burguer-proxy.qualitymais-hb.workers.dev";
 
 const CRED_MOTOBOY = { u:"motoboy", s:"moto123" };
 
-function getZapi(){
+// =====================================================
+// ✅ CONFIG Z-API — busca do Cloudflare Worker
+// Assim o motoboy usa as mesmas credenciais do gerente
+// em qualquer dispositivo, sem depender do localStorage.
+// =====================================================
+let _zapiConfig = null;
+
+async function getZapi(){
+  if(_zapiConfig) return _zapiConfig;
+  try{
+    const r = await fetch(PROXY_URL, {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({acao:"buscar_zapi"})
+    });
+    const j = await r.json();
+    if(j.ok && j.config){
+      _zapiConfig = j.config;
+      return _zapiConfig;
+    }
+  }catch(e){ console.warn("Falha ao buscar config Z-API:", e.message); }
+  // fallback: localStorage (caso o Worker esteja offline)
   try{ return JSON.parse(localStorage.getItem('bh_zapi'))||{}; }catch{ return {}; }
 }
 
@@ -141,6 +162,7 @@ function login(){
   }
 }
 function logout(){
+  _zapiConfig = null; // limpa cache ao sair
   document.getElementById("login-screen").style.display="flex";
   document.getElementById("app").style.display="none";
   document.getElementById("l-user").value="";
@@ -176,9 +198,7 @@ function diffMin(h1,h2){
 }
 
 // =====================================================
-// ✅ CARREGAR ENTREGAS — PRIORIDADE: SERVIDOR
-// Usa o mesmo endpoint do gerente (zapi-proxy.php)
-// so os dois veem os mesmos dados, independente do device.
+// CARREGAR ENTREGAS — PRIORIDADE: SERVIDOR
 // =====================================================
 async function buscarEntregasServidor(){
   const r = await fetch(PROXY_URL, {
@@ -200,16 +220,13 @@ async function carregar(){
   let todas=[];
   const hoje=hojeStr();
 
-  // 1️⃣ Servidor compartilhado (funciona em qualquer device)
   try{
     todas = await buscarEntregasServidor();
     ind.style.display="block";
     ind.className="fonte-indicador servidor";
     ind.textContent="✅ Dados do servidor — sincronizado com o gerente";
-    console.log("✅ Entregas do servidor:",todas.length);
   } catch(e){
-    // 2️⃣ Fallback: Google Sheets (JSONP)
-    console.warn("⚠️ Servidor indisponível, tentando Sheets:",e.message);
+    console.warn("⚠️ Servidor indisponível:",e.message);
     try{
       const res = await chamarGet({acao:"entregas", data:hoje});
       if(res.ok && res.entregas){
@@ -219,19 +236,16 @@ async function carregar(){
         ind.textContent="⚠️ Usando Google Sheets — servidor offline";
       } else throw new Error("Sheets sem dados");
     } catch(e2){
-      // 3️⃣ Último recurso: localStorage (só funciona no mesmo device)
-      console.warn("⚠️ Sheets falhou, usando localStorage:",e2.message);
       todas = JSON.parse(localStorage.getItem('bh_entregas')||'[]');
       ind.style.display="block";
       ind.className="fonte-indicador erro";
-      ind.textContent="❌ Offline — mostrando dados locais (pode estar desatualizado)";
+      ind.textContent="❌ Offline — dados locais (podem estar desatualizados)";
     }
   }
 
   const emRota   = todas.filter(e=>e.status==="em_rota"||e.status==="chegou");
   const concluidas = todas.filter(e=>(e.status==="entregue"||e.status==="nao_encontrado")&&e.data===hoje);
 
-  // Stats
   document.getElementById("st-rota").textContent=emRota.length;
   document.getElementById("st-ok").textContent=concluidas.filter(e=>e.status==="entregue").length;
   const tempos=concluidas.filter(e=>e.status==="entregue"&&e.hora_saida&&e.hora_entrega)
@@ -239,7 +253,6 @@ async function carregar(){
   document.getElementById("st-tempo").textContent=tempos.length
     ?Math.round(tempos.reduce((a,b)=>a+b,0)/tempos.length)+"min":"—";
 
-  // Em rota
   const lr=document.getElementById("lista-rota");
   lr.innerHTML=emRota.length?emRota.map(e=>`
     <div class="entrega-card em-rota" id="card-${e.id}">
@@ -267,7 +280,6 @@ async function carregar(){
     </div>
   `).join(""):`<div class="vazio">Nenhuma entrega em andamento.</div>`;
 
-  // Concluídas
   const lc=document.getElementById("lista-concluidas");
   const ord=[...concluidas].sort((a,b)=>(b.hora_entrega||"").localeCompare(a.hora_entrega||""));
   lc.innerHTML=ord.length?ord.map(e=>{
@@ -287,7 +299,7 @@ async function carregar(){
 }
 
 // =====================================================
-// JSONP helper (fallback)
+// JSONP helper (fallback Sheets)
 // =====================================================
 function chamarGet(params){
   return new Promise((resolve,reject)=>{
@@ -304,7 +316,7 @@ function chamarGet(params){
 }
 
 // =====================================================
-// AÇÕES DO MOTOBOY — atualiza no servidor
+// AÇÕES DO MOTOBOY
 // =====================================================
 async function atualizarEntregaServidor(id, campos){
   try{
@@ -315,12 +327,10 @@ async function atualizarEntregaServidor(id, campos){
     });
     const j = await r.json();
     if(!j.ok) console.warn("Servidor não atualizou:",j);
-    else console.log("✅ Status atualizado no servidor");
   }catch(e){
     console.warn("Falha ao atualizar servidor:",e.message);
-    // Atualiza localStorage como fallback
     const todas=JSON.parse(localStorage.getItem('bh_entregas')||'[]');
-    const idx=todas.findIndex(e=>e.id===id);
+    const idx=todas.findIndex(x=>x.id===id);
     if(idx!==-1){ Object.assign(todas[idx],campos); localStorage.setItem('bh_entregas',JSON.stringify(todas)); }
   }
 }
@@ -328,7 +338,7 @@ async function atualizarEntregaServidor(id, campos){
 async function marcarChegou(id, fone){
   await atualizarEntregaServidor(id,{status:"chegou", hora_chegada:agora()});
   if(fone){
-    const z=getZapi();
+    const z = await getZapi(); // ✅ busca do Worker, não do localStorage
     if(z.audioUrl && z.instance && z.token && z.clientToken){
       await chamarProxy("send-audio",{phone:fone.replace(/\D/g,""),audio:z.audioUrl,waveform:true});
     }
@@ -346,7 +356,7 @@ async function marcarEntregue(id, fone){
 async function marcarNaoEncontrado(id, fone){
   await atualizarEntregaServidor(id,{status:"nao_encontrado", hora_entrega:agora()});
   if(fone){
-    const z=getZapi();
+    const z = await getZapi(); // ✅ busca do Worker, não do localStorage
     if(z.instance && z.token && z.clientToken){
       await chamarProxy("send-text",{
         phone:fone.replace(/\D/g,""),
@@ -364,7 +374,7 @@ function abrirMapa(enderecoEnc){
 }
 
 async function chamarProxy(endpoint, payload){
-  const z=getZapi();
+  const z = await getZapi(); // ✅ busca do Worker, não do localStorage
   if(!z.instance||!z.token||!z.clientToken) return;
   try{
     await fetch(PROXY_URL,{
